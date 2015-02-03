@@ -1,0 +1,19 @@
+reportPage:
+    path: /
+    defaults: { _controller: BlogReportBundle:Report:list }
+
+addReportPage:
+    path: /new
+    defaults: { _controller: BlogReportBundle:Report:generateReport }
+
+editReportPage:
+    path: /edit/{reportId}
+    defaults: { _controller: BlogReportBundle:Report:editReport }
+
+deleteReportPage:
+    path: /delete/{reportId}
+    defaults: { _controller: BlogReportBundle:Report:deleteReport }
+    
+showReportPage:
+    path: /{reportId}
+    defaults: { _controller: BlogReportBundle:Report:show }

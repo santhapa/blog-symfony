@@ -1,0 +1,7 @@
+.controls ul {
+	display: inline-block;
+}
+
+.controls ul li{
+	list-style: none;
+}

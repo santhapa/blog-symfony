@@ -1,0 +1,12 @@
+
+#    post.example:
+#        class: PostBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+services:
+    report_generator:
+        class: Blog\ReportBundle\Form\Type\GenerateReportFormType
+        tags:
+            - {name: form.type, alias: generate_report}
+
+    report_utility:
+        class: Blog\ReportBundle\Utility\Utility 

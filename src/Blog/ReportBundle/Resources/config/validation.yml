@@ -1,0 +1,9 @@
+Blog\ReportBundle\Entity\Report:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:   
+            fields: name
+            message: Report name must be unique for slug value!
+        
+    properties:
+        name:
+            - NotBlank: ~

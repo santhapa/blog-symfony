@@ -1,0 +1,15 @@
+adminIndexPage:
+    path: /
+    defaults: { _controller: BlogUserBundle:Admin:index }
+
+adminEditUserPage:
+    path:  /user/edit
+    defaults: { _controller: BlogUserBundle:Admin:editUser }
+
+adminDeleteUserPage:
+    path:  /user/delete/{slug}
+    defaults: { _controller: BlogUserBundle:Admin:deleteUser }
+
+adminRegisterUserPage:
+    path: /user/new
+    defaults: { _controller: BlogUserBundle:Registration:register }

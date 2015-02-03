@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+	{% stylesheets '@BlogReportBundle/Resources/public/css/report.css' filter="cssrewrite" %}
+	        <link href="{{ asset_url }}" rel="stylesheet" type="text/css" />
+	{% endstylesheets %}
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

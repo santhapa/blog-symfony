@@ -1,0 +1,42 @@
+{% extends "BlogUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+	<form action="" method="POST" class="form-horizontal" >
+
+		<div class="control-group">
+			<label class="control-label" for="inputUsername">Username:</label>	        
+	        <div class="controls">
+	        	<input type="text" id="inputUsername" name="username" value="{{ user.getUsername() }}" disabled>
+	        </div>
+	    </div>
+
+	    <div class="control-group">
+			<label class="control-label" for="inputName">Name:</label>	        
+	        <div class="controls">
+	        	<input type="text" id="inputName" name="name" value="{{ user.getName() }}" disabled>
+	        </div>
+	    </div>
+
+	    <div class="control-group">
+			<label class="control-label" for="inputRole">Active:</label>
+			<div class="controls">
+				<select class="form-control" id="inputRole" name="roles" required>
+					<option value="ROLE_USER" {{ user.hasRole('ROLE_USER') ? 'selected' : '' }}>User</option>
+					<option value="ROLE_AUTHOR" {{ user.hasRole('ROLE_AUTHOR') ? 'selected' : '' }}>Author</option>
+					<option value="ROLE_ADMIN" {{ user.hasRole('ROLE_ADMIN') ? 'selected' : '' }}>Admin</option>
+				</select>
+			</div>
+		</div>
+
+	    
+	    <div class="control-group">
+	    	<div class="controls">
+	        	<input type="submit" class="btn" name="updateRole" value="Update" />
+	        </div>
+	    </div>
+
+	</form>
+
+
+{% endblock body %}

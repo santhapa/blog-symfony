@@ -1,0 +1,70 @@
+<?php 
+	namespace Blog\UserBundle\Entity;
+
+    use FOS\UserBundle\Model\User as BaseUser;
+	use Doctrine\ORM\Mapping as ORM;
+
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Blog\PostBundle\Entity;
+
+	/**
+	* @ORM\Entity
+	* @ORM\Table(name="tbl_fos_users")
+	*/
+	class User extends BaseUser
+	{
+		/**
+		* @ORM\Column(type="integer")
+		* @ORM\Id
+		* @ORM\GeneratedValue(strategy="AUTO")
+		*/
+		protected $id;
+
+		/**
+		* @ORM\Column(type="string")
+		*/
+	    protected $name;
+
+        /** @ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Post", mappedBy="author")
+        **/
+        protected $post_author = null;
+
+        /**
+        *@ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Comment", mappedBy="user")
+        */
+        protected $user_comments;
+
+
+        public function __construct()
+        {
+            parent::__construct();
+            $this->post_author = new ArrayCollection();
+            $this->user_comments = new ArrayCollection();
+
+        }
+	
+        public function getId()
+        {
+            return $this->id;
+        }
+
+        public function setName($name)
+        {
+            $this->name = $name;
+        }
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function addPostAuthor($post)
+        {
+            $this->post_author[] = $post;
+        }
+
+        public function addUserComment($comment)
+        {
+            $this->user_comments[] = $comment;
+        }
+}

@@ -1,0 +1,15 @@
+	<div class="media">
+		<a class="pull-left" href="{{ asset('assets/img/placehold.gif') }}">
+			<img class="media-object" src="{{ asset('assets/img/placehold.gif') }}" alt="">
+		</a>
+		<div class="media-body">
+			<h4 class="media-heading">
+				{{ comment.user ? comment.user.getName() : 'Anonymous User' }}
+				<small>{{ comment.getDateTime|date('Y-m-d H:i:s') }}</small>
+				{% if is_granted('ROLE_ADMIN') %}
+					<small><a href="{{ path('deleteCommentPage', {'slug': comment.getId() }) }}" class="btn btn-info">Delete</a></small> 
+				{% endif %}
+			</h4>
+			{{ comment.getComment() }}
+		</div>
+	</div>

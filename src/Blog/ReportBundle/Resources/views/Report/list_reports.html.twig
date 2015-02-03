@@ -1,0 +1,48 @@
+{% extends ('BlogReportBundle::report_base.html.twig') %}
+
+{% block body %}
+
+	<div class="container">
+		<h3 class="page-title"> {{ title }}</h3>
+		<a href="{{ path('addReportPage') }}" class="btn btn-info">Add New</a>
+
+		{% if not reports %}
+			<div class="alert alert-error alert-msg">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				<strong>No any reports created!</strong>
+			</div>
+		{% else %}
+		
+			<table class="table table-striped">
+				<thead>
+					<tr class="info">
+						<th>S.N.</th>
+						<th>Report Name</th>
+						<th>Description</th>
+						<th>Action</th>
+					</tr>
+
+				</thead>
+				<tbody>
+					{% for report in reports %}
+				        <tr>
+							<td>{{ loop.index }}</td>
+							<td> {{ report.name|capitalize }}</td>
+							<td> {{ report.description ? report.description : 'None' }}</td>
+							<td> 
+								<a href="{{ url('showReportPage', {'reportId': report.slug}) }}">Execute
+								</a>||
+								<a href="{{ url('editReportPage', {'reportId': report.slug}) }}">Edit
+								</a>|| 
+								<a href="{{ url('deleteReportPage', {'reportId': report.slug}) }}">Delete
+								</a>  
+							</td>
+						</tr>
+				    {% endfor %}
+					
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+
+{% endblock body %}

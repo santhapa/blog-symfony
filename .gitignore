@@ -1,0 +1,5 @@
+app/cache
+
+vendor
+vendor/
+vendor/*

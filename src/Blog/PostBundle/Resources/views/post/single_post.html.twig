@@ -1,0 +1,41 @@
+{% extends 'BlogPostBundle::post_base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+	
+		<div class="post-area">
+
+			<div class="post-title">
+				<h3><a href="{{ path('singlePostPage', {'slug':post.getId()}) }}"> {{ post.getTitle() }} </a> </h3>
+			</div>
+
+			<div class="post-content">
+				{{ post.getContent() }}
+			</div>
+
+			<div class="post-metaarea">
+				<ul>
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_AUTHOR') %}
+						<li ><a href="{{ path('editPostPage', {'slug': post.getId() }) }}"> <span class="btn btn-info">Edit</span> </a> </li>
+					{% endif %}
+					<li><a href="#"> {{ post.author ? post.author.getName() : 'Anonymous User' }} </a> </li>
+					<li> {{ post.getDateTime()|date('Y-m-d H:i:s') }} </li>
+				</ul>
+			</div>
+
+		</div>
+
+		<!-- Blog Comments -->
+		{{ include('BlogPostBundle::comment/create_comment.html.twig',{'id' : post.getId() }) }}
+
+		<!-- Posted Comments -->
+		{% for comment in comments %}
+			{{ include('BlogPostBundle::comment/list_comments.html.twig', {'comment' : comment}) }}
+		{% endfor %}
+		
+	</div>
+{% endblock %}

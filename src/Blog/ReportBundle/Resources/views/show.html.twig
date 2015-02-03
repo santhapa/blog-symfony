@@ -1,0 +1,45 @@
+{% extends ('BlogReportBundle::report_base.html.twig') %}
+
+{% block body %}
+    <form action="{{ url('showReportPage', {'reportId':app.request.attributes.get('reportId')}) }}" method="POST">
+        {{ form_widget(form) }}
+        <input type="submit" value="{% trans from 'BlogReportBundle' %}Generate{% endtrans %}"/>
+    </form>
+
+    {% if result %}
+        <table border='1' width='100%' cellpadding='0' cellspacing='0'>
+            <thead>
+            <tr>
+                <th> S.N</th>
+                {% for key,value in result %}
+                {% if loop.index0 == 0 %}
+                    {% for k, v in value %}
+                        
+                        <th>
+                                {{ k }}
+                        </th>
+                        
+                    {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for key,row in result %}
+            <tr>
+                <td> {{ key+1 }} </td>
+                {% for value in row %}
+                <td>
+                    {{ value }}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        {% trans from 'PostReportBundle' %}no_result{% endtrans %}
+    {% endif %}
+
+{% endblock body %}
