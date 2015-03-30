@@ -1,0 +1,51 @@
+{% extends 'BlogPostBundle::post_base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="page-header">
+	  		<h2>{{ title }} <small>(Sorted as Author)</small></h2>
+		</div>
+
+		<div class="post-area">
+			{% if not list %}
+				<div class="alert alert-error alert-msg">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<strong>No any post!</strong>
+				</div>
+			{% else %}
+
+				{% for post in posts %}
+
+					<div class="post-title">
+						<h4><a href="{{ path('singlePostPage', {'slug':post.getId()}) }}"> {{ post.getTitle() }} </a> </h4>
+					</div>
+
+					<div class="post-content">
+						{{ post.getContent() }}
+					</div>
+
+					<div class="post-metaarea">
+						<ul>
+							{% if app.user and is_granted('OPERATOR', post) %}
+								<li ><a href="{{ path('editPostPage', {'slug': post.getId() }) }}"> <span class="btn btn-info">Edit</span> </a> </li>
+							{% endif %}
+							<li >
+								<a href="{{ path('authorPostPage', {'slug': post.author ? post.author.getId() : '#' }) }}"> 
+									{{ post.author ? post.author.getName() : 'Anonymous User' }} 
+								</a>
+							</li>
+							<li > {{ post.getDateTime()|date('Y-m-d H:i:s') }} </li>
+						</ul>
+					</div>
+					<hr>
+
+				{% endfor %}
+
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

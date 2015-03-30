@@ -1,0 +1,58 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('editProfilePage') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
+
+    {{ form_errors(form) }}
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form_label(form.username) }}</label>
+        <div class="col-sm-8">
+            {{ form_widget(form.username, {"attr" : {"placeholder" : "Username", "class": "form-control"}}) }}
+            {% if form_errors(form.username) %}
+                <span class="alert alert-error">{{ form_errors(form.username) }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form_label(form.name) }}</label>
+        <div class="col-sm-8">
+            {{ form_widget(form.name, {"attr" : {"placeholder" : "Suresh Mainali", "class": "form-control"}}) }}
+
+            {% if form_errors(form.name) %}
+                <span class="alert alert-error">{{ form_errors(form.name) }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form_label(form.email) }}</label>
+        <div class="col-sm-8">
+            {{ form_widget(form.email, {"attr" : {"placeholder" : "Email Address", "class": "form-control"}}) }}
+
+            {% if form_errors(form.email) %}
+                <span class="alert alert-error">{{ form_errors(form.email) }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ form_label(form.current_password) }}</label>
+        <div class="col-sm-8">
+            {{ form_widget(form.current_password, {"attr" : {"placeholder" : "Confirm Password", "class": "form-control"}}) }}
+
+            {% if form_errors(form.current_password) %}
+                <span class="alert alert-error">{{ form_errors(form.current_password) }}</span>
+            {% endif %}
+        </div>
+    </div>
+	
+	{{form_rest(form)}} 
+    
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+            <button type="submit" class="btn btn-info" value="Update">Update</button>
+        </div>
+    </div>
+
+</form>

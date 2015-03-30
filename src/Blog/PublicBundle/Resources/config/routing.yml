@@ -1,0 +1,3 @@
+publicHomepage:
+    path:     /
+    defaults: { _controller: BlogPublicBundle:Index:index }

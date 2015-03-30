@@ -1,0 +1,18 @@
+blog_admin:
+    resource: "@BlogAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+blog_public:
+    resource: "@BlogPublicBundle/Resources/config/routing.yml"
+    prefix:   /
+
+blog_post:
+    resource: "@BlogPostBundle/Resources/config/routing.yml"
+    prefix:   /
+
+blog_user:
+    resource: "@BlogUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+logout:
+    path: /logout

@@ -1,0 +1,18 @@
+services:
+#    blog_post.example:
+#        class: Blog\PostBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    sonata.admin.post:
+        class: Blog\PostBundle\Admin\PostAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Post" }
+        arguments:
+            - ~
+            - Blog\PostBundle\Entity\Post
+            - ~
+        calls:
+            - [ setTranslationDomain, [BlogPostBundle]]
+
+    blog.post:
+        class: Blog\PostBundle\Controller\PostController
+        # arguments: ["@white_october_breadcrumbs"]

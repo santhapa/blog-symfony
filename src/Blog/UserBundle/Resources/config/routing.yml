@@ -1,0 +1,75 @@
+#User Controller
+userIndexPage:
+    path: /admin/user
+    defaults: { _controller: BlogUserBundle:User:index }
+
+editUserPage:
+    path:  /admin/user/edit
+    defaults: { _controller: BlogUserBundle:User:editUser }
+
+deleteUserPage:
+    path:  /admin/user/delete/u-{slug}
+    defaults: { _controller: BlogUserBundle:User:deleteUser }
+
+userGroupAssignPage:
+    path:  /admin/user/u-{user}/group
+    defaults: { _controller: BlogUserBundle:User:assignToGroup }
+
+#Registration controller
+registerUserPage:
+    path: /user/new
+    defaults: { _controller: BlogUserBundle:Registration:register }
+
+
+# Change Password Controller
+changePasswordPage:
+    path: /user/profile/change-password
+    defaults: { _controller: BlogUserBundle:ChangePassword:changePassword }
+
+
+# Profile Controller
+profilePage:
+    path: /user/profile
+    defaults: { _controller: BlogUserBundle:Profile:show }
+
+
+# Change Password Controller
+editProfilePage:
+    path: /user/profile/edit
+    defaults: { _controller: BlogUserBundle:Profile:edit }
+
+#Security Controller 
+loginPage:
+    path: /login
+    defaults: { _controller: BlogUserBundle:Security:login }
+
+loginCheckPage:
+    path: /login_check
+    defaults: { _controller: BlogUserBundle:Security:check }
+
+#Group Controller
+listGroupPage:
+    path: /admin/group
+    defaults: { _controller: BlogUserBundle:Group:list }
+
+createGroupPage:
+    path: /admin/group/new
+    defaults: { _controller: BlogUserBundle:Group:new }
+
+editGroupPage:
+    path: /admin/group/edit/{slug}
+    defaults: { _controller: BlogUserBundle:Group:edit }
+
+deleteGroupPage:
+    path: /admin/group/delete/{slug}
+    defaults: { _controller: BlogUserBundle:Group:delete }
+
+groupPermissionPage:
+    path: /admin/group/{slug}/permission
+    defaults: { _controller: BlogUserBundle:Group:groupPermission }
+
+
+#Route Controller
+routeListPage:
+    path: admin/route
+    defaults: { _controller: BlogUserBundle:Route:index }

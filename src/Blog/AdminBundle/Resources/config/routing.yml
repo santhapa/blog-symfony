@@ -1,0 +1,3 @@
+adminIndexPage:
+    path: /admin
+    defaults: { _controller: BlogAdminBundle:Admin:index }

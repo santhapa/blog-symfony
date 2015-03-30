@@ -1,0 +1,37 @@
+postPage:
+    path:     /post
+    defaults: { _controller: BlogPostBundle:Post:index }
+
+authorPostPage:
+    path:      /post/author/{slug}
+    defaults:  { _controller: BlogPostBundle:Post:authorPost} 
+
+singlePostPage:
+    path:     /post/{slug}
+    defaults: { _controller: BlogPostBundle:Post:singlePost }
+
+createPostPage:
+    path:     /admin/post/new
+    defaults: { _controller: BlogPostBundle:Post:createPost }
+
+editPostPage:
+    path:     /admin/post/edit/{slug}
+    defaults: { _controller: BlogPostBundle:Post:editPost }
+
+deletePostPage:
+    path:     /admin/post/delete/{slug}
+    defaults: { _controller: BlogPostBundle:Post:deletePost }
+
+postDashPage:
+    path:     /admin/post/{curPage}
+    defaults: { _controller: BlogPostBundle:Post:dashboardPost, curPage:1 }
+
+
+#Comment Controller
+createCommentPage:
+    path:     /comment/create
+    defaults: { _controller: BlogPostBundle:Comment:createComment }
+
+deleteCommentPage:
+    path:     /comment/delete/{slug}
+    defaults: { _controller: BlogPostBundle:Comment:deleteComment }

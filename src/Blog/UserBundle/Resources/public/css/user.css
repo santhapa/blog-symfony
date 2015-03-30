@@ -1,0 +1,7 @@
+.form-group ul {
+	display: inline-block;
+}
+
+.form-group ul li{
+	list-style: none;
+}

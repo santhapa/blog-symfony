@@ -1,0 +1,17 @@
+Blog\PostBundle\Entity\Post:
+
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:   
+            fields: title
+            message: This title already used. Please use different name for title.
+        
+    properties:
+        title:
+            - NotBlank: ~
+        content:
+            - NotBlank: ~
+            - Length:
+                min: 50
+                minMessage: Your content cannot be less than 50 characters.
+        active:
+            - NotBlank: ~

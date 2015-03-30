@@ -1,0 +1,29 @@
+services:
+    blog_user.registration.form.type:
+        class: Blog\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: blog_user_registration }
+
+    blog_user.profile.form.type:
+        class: Blog\UserBundle\Form\Type\ProfileFormType
+        tags:
+            - { name: form.type, alias: blog_user_profile }
+
+    blog_user.change_password.form.type:
+        class: Blog\UserBundle\Form\Type\ChangePasswordFormType
+        tags:
+            - { name: form.type, alias: blog_user_change_password }
+
+    blog_user.group.form.type:
+        class: Blog\UserBundle\Form\Type\GroupFormType
+        tags:
+            - { name: form.type, alias: blog_user_group }
+
+    user_access:
+        class: Blog\UserBundle\Utility\Permission
+        arguments: [@service_container]
+        tags:
+            - {name: permission , alias: check_permission}
+
+parameters:
+    security.acl.permission.map.class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap  

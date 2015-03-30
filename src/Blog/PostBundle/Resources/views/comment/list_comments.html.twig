@@ -1,0 +1,15 @@
+	<div class="media">
+		<a class="pull-left" href="#">
+			<img class="img-circle img-responsive" src="{{ asset('dist/img/avatar.png') }}" alt="avatar" style=" width:40px; height:40px ">
+		</a>
+		<div class="media-body">
+			<h4 class="media-heading">
+				{{ comment.user ? comment.user.getName() : 'Anonymous User' }}
+				<small>{{ comment.getDateTime|date('Y-m-d H:i:s') }}</small>
+				{% if app.user and is_granted('DELETE', comment) %}
+					<small><a href="{{ path('deleteCommentPage', {'slug': comment.getId() }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</a></small> 
+				{% endif %}
+			</h4>
+			{{ comment.getComment() }}
+		</div>
+	</div>
