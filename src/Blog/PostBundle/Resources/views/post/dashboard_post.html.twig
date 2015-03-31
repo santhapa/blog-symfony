@@ -67,9 +67,7 @@
 									</tr>
 								</tfoot>
 							</table>
-							{% if pages is not null %}
-								{{ pages|raw }}
-							{% endif %}
+							{{ knp_pagination_render(posts) }}
 						</div><!-- /.box-body -->
 					</div><!-- /.box -->
 				</div><!-- /.col -->

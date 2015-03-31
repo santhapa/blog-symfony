@@ -12,6 +12,7 @@ use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -58,33 +59,23 @@ class PostController extends Controller
 	}
 
 	
-	public function dashboardPostAction($curPage=1)
+	public function dashboardPostAction(Request $request, $curPage=1)
 	{
 		try {
 			$data['list'] = null;
 
 			$rpp = 5;
-			$posts = $this->getDoctrine()
+			$dbPosts = $this->getDoctrine()
 							->getManager()
 							->getRepository('BlogPostBundle:Post')
-							//->findAll();
-							->getAllPosts($rpp, $curPage);
+							->findAll();
 
-			$posts = new Paginator($posts, $fetchJoinCollection = true);
-			$totalPage = ceil(count($posts)/$rpp);
-
-			if($curPage>$totalPage)
-				throw new \Exception("No posts found");			
-
-				
-			//config variables for paginator class
-			$config['base_url'] = $this->generateUrl('postDashPage');
-			$config['total_count'] = count($posts);
-			$config['rpp'] = $rpp;
-			//$pagination = $this->getPagination($curPage, $baseUrl, $totalPage);
-
-			$paginator = new \Common\Utility\Paginator($config);
-			$pages = $paginator->getPages($curPage);
+			$paginator  = $this->get('knp_paginator');
+		    $posts = $paginator->paginate(
+		        $dbPosts,
+		        $request->query->get('page', 1)/*page number*/,
+		        3/*limit per page*/
+		    );
 
 			if($posts)
 			{
