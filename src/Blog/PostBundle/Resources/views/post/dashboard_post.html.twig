@@ -37,7 +37,7 @@
 								</thead>
 								<tbody>
 									{% for post in posts%}
-									{% if app.user and is_granted('OPERATOR', post) %}
+									{% if (app.user and is_granted('OPERATOR', post)) or (app.user and is_granted('ROLE_ADMIN')) %}
 								        <tr>
 											<td>{{ loop.index }}</td>
 											<td> <a href="{{ path('singlePostPage', {'slug' : post.getId()}) }}"> {{ post.getTitle() }} </a> </td>

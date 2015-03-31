@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 
             //my bundles
             new Blog\UserBundle\BlogUserBundle(),
