@@ -24,6 +24,3 @@ services:
         arguments: [@service_container]
         tags:
             - {name: permission , alias: check_permission}
-
-parameters:
-    security.acl.permission.map.class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap  
