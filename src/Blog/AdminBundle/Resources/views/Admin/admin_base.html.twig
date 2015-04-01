@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} San's Blog | Dashboard {% endblock title %}</title>
+    <title>{% block title %} Blog | Dashboard {% endblock title %}</title>
     
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
@@ -99,6 +99,11 @@
                                     <i class="fa fa-group"></i>Group
                                 </a>
                             </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa  fa-folder"></i>Settings <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
                             <li>
                                 <a href="{{ path('routeListPage') }}">
                                     <i class="fa fa-gears"></i>Route
@@ -176,6 +181,18 @@
                                     <a href="{{ path('createGroupPage') }}"><span><i class="fa  fa-plus"></i> Add New</span></a> 
                                 </div>
                             </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa  fa-folder"></i> Settings</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div><!-- /.box-tools -->
+                        </div><!-- /.box-header -->
+                        
+                        <div class="box-body">
                             <div class="row">
                                 <div class="col-sm-3" >Routes</div>
                                 <div class="col-sm-8">
