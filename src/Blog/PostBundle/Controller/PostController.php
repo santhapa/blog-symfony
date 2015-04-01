@@ -61,41 +61,29 @@ class PostController extends Controller
 	
 	public function dashboardPostAction(Request $request, $curPage=1)
 	{
-		try {
-			$data['list'] = null;
+		$data['list'] = null;
 
-			$rpp = 5;
-			$dbPosts = $this->getDoctrine()
-							->getManager()
-							->getRepository('BlogPostBundle:Post')
-							->findAll();
+		$rpp = 5;
+		$posts = $this->getDoctrine()
+						->getManager()
+						->getRepository('BlogPostBundle:Post')
+						->findAll();
 
-			$paginator  = $this->get('knp_paginator');
-		    $posts = $paginator->paginate(
-		        $dbPosts,
-		        $request->query->get('page', 1)/*page number*/,
-		        3/*limit per page*/
-		    );
+		// $paginator  = $this->get('knp_paginator');
+	 //    $posts = $paginator->paginate(
+	 //        $dbPosts,
+	 //        $request->query->get('page', 1)/*page number*/,
+	 //        3/*limit per page*/
+	 //    );
 
-			if($posts)
-			{
-				$data['list'] = true;
-				$data['posts'] = $posts;
-			}
-
-			$data['pages'] = $pages;
-			$data['title'] = "Dashboard: Post";
-		} catch (\Exception $e) {
-			if($posts)
-			{
-				$data['list'] = true;
-				$data['posts'] = $posts;
-			}
-
-			$data['pages'] = null;
-			$data['title'] = "Dashboard: Post";
-			return $this->render('BlogPostBundle::post/dashboard_post.html.twig', $data);
+		if($posts)
+		{
+			$data['list'] = true;
+			$data['posts'] = $posts;
 		}
+
+		$data['title'] = "Dashboard: Post";
+		
 		return $this->render('BlogPostBundle::post/dashboard_post.html.twig', $data);
 	}
 
