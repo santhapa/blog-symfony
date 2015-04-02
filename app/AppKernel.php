@@ -29,6 +29,8 @@ class AppKernel extends Kernel
             new Blog\PublicBundle\BlogPublicBundle(),
             new Blog\PostBundle\BlogPostBundle(),
             new Blog\AdminBundle\BlogAdminBundle(),
+
+            new SpBar\Bundle\BlogBundle\SpBarBlogBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

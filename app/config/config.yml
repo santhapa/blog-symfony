@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    # - { resource: @BlogPostBundle/Resources/config/services.yml }
+    - { resource: doctrine_extensions.yml }
 
 framework:
     #esi:             ~

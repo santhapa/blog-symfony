@@ -16,3 +16,7 @@ blog_user:
 
 logout:
     path: /logout
+
+
+sp_blog:
+    resource: "@SpBarBlogBundle/Resources/config/routing.yml"

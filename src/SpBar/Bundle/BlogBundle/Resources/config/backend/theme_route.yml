@@ -1,0 +1,19 @@
+sp_blog_theme_index:
+    path: /
+    defaults: { _controller: SpBarBlogBundle:Backend/Theme:index }
+
+sp_blog_theme_list:
+    path: /list/
+    defaults: { _controller: SpBarBlogBundle:Backend/Theme:list }
+
+sp_blog_theme_new:
+    path: /new/
+    defaults: { _controller: SpBarBlogBundle:Backend/Theme:new }
+
+sp_blog_theme_edit:
+    path: /{slug}/edit/
+    defaults: { _controller: SpBarBlogBundle:Backend/Theme:edit }
+
+sp_blog_theme_delete:
+    path: /{slug}/delete/
+    defaults: { _controller: SpBarBlogBundle:Backend/Theme:delete }

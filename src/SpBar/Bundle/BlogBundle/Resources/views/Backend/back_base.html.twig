@@ -1,0 +1,299 @@
+{% extends('BlogAdminBundle::Admin/admin_base.html.twig') %}
+
+
+{% block body_content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Hurray!</h4>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Oops!</h4>
+                {{ message }}
+            </div>
+        {% endfor %}
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {% if page_title is defined %} {{page_title}} {% endif %}
+                {# <small>(Manage blog)</small> #}
+            </h1>
+            {{ wo_render_breadcrumbs() }}
+        </section>
+
+        {% block body_container %}
+            
+        {% endblock body_container %}
+    </div>
+        
+{% endblock body_content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Blog | Dashboard {% endblock title %}</title>
+    
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Theme style -->
+    <link href="{{ asset('dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('dist/css/skins/skin-blue.min.css') }}" rel="stylesheet" type="text/css" />
+
+    {% block css %}
+    {% endblock css %}
+</head>
+
+<body class="skin-blue">
+    <div class="wrapper">
+
+        <!-- Main Header -->
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="{{ path('publicHomepage') }}" class="logo"><b>Blog</b> </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="{{ asset('dist/img/avatar04.png') }}" class="user-image" alt="User Image"/>
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">{{ app.user.name }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="{{ asset('dist/img/avatar04.png') }}" class="img-circle" alt="User Image" />
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="{{ path('profilePage') }}" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu">
+                    <li>&nbsp; </li>
+                    {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{ path('adminIndexPage') }}">
+                            <i class="fa fa-dashboard"></i>Dashboard
+                        </a>
+                    </li>                    
+                    <li class="treeview">
+                        <a href="#"><i class="fa  fa-folder"></i>Users <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ path('userIndexPage') }}">
+                                    <i class="fa fa-user"></i>User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('listGroupPage') }}">
+                                    <i class="fa fa-group"></i>Group
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class="fa  fa-folder"></i>Settings <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="{{ path('routeListPage') }}">
+                                    <i class="fa fa-gears"></i>Route
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="{{ path('postDashPage') }}">
+                            <i class="fa fa-pinterest-square"></i>Posts
+                        </a>
+                    </li>
+                </ul><!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        {% block body_content %}
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Dashboard
+                        <small>(Manage blog)</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+                    </ol>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa  fa-folder"></i> Blog</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div><!-- /.box-tools -->
+                        </div><!-- /.box-header -->
+                        
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-3" >Posts</div>
+                                <div class="col-sm-8">
+                                    <a href="{{ path('postDashPage') }}"><span><i class="fa  fa-list"></i> List</span></a>  &emsp;
+                                    <a href="{{ path('createPostPage') }}"><span><i class="fa  fa-plus"></i> Add New</span></a> 
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa  fa-folder"></i> User Management</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div><!-- /.box-tools -->
+                        </div><!-- /.box-header -->
+                        
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-3" >Users</div>
+                                <div class="col-sm-8">
+                                    <a href="{{ path('userIndexPage') }}"><span><i class="fa  fa-list"></i> List</span></a>  &emsp;
+                                    <a href="{{ path('registerUserPage') }}"><span><i class="fa  fa-plus"></i> Add New</span></a> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3" >Groups</div>
+                                <div class="col-sm-8">
+                                    <a href="{{ path('listGroupPage') }}"><span><i class="fa  fa-list"></i> List</span></a>  &emsp;
+                                    <a href="{{ path('createGroupPage') }}"><span><i class="fa  fa-plus"></i> Add New</span></a> 
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa  fa-folder"></i> Settings</h3>
+                            <div class="box-tools pull-right">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div><!-- /.box-tools -->
+                        </div><!-- /.box-header -->
+                        
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-3" >Routes</div>
+                                <div class="col-sm-8">
+                                    <a href="{{ path('routeListPage') }}"><span><i class="fa  fa-list"></i> List</span></a>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                </section><!-- /.content -->
+            </div><!-- /.content-wrapper -->
+        {% endblock body_content %}
+
+        
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2015. All rights reserved. </strong>
+        </footer>
+
+    </div><!-- ./wrapper -->
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery 2.1.3 -->
+    <script src="{{ asset('plugins/jQuery/jQuery-2.1.3.min.js') }}"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('dist/js/app.min.js') }}" type="text/javascript"></script>
+
+    {% block js %}
+    {% endblock js %}
+</body>
+</html>
+
+#}

@@ -1,0 +1,7 @@
+sp_blog_config:
+    resource: "@SpBarBlogBundle/Resources/config/backend/config_route.yml"
+    prefix:   /config
+
+sp_blog_theme:
+    resource: "@SpBarBlogBundle/Resources/config/backend/theme_route.yml"
+    prefix:   /theme

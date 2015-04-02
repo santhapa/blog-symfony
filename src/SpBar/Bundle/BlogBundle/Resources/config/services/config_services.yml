@@ -1,0 +1,9 @@
+services:
+    spbar.blog_config:
+        class: SpBar\Bundle\BlogBundle\Form\Type\ConfigFormType
+        tags:
+            - { name: form.type, alias: spbar_blog_config }
+
+    spbar.blog_config_manager:
+        class: SpBar\Bundle\BlogBundle\Model\ConfigManager
+        arguments: ["@doctrine.orm.entity_manager"]

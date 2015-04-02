@@ -1,13 +1,13 @@
 {% if wo_breadcrumbs()|length %}
-    {% spaceless %}
-        <ol class="{{ listClass }}">
-            {% for b in breadcrumbs %}
-                <li>
-                    {% if b.url and not loop.last %}<a href="{{ b.url }}">{% endif %}
-                        {{- b.text -}}
-                    {% if b.url and not loop.last %}</a>{% endif %}                
-                </li>
-            {% endfor %}
-        </ol>
-    {% endspaceless %}
+  {% spaceless %}
+    <ol class="{{ listClass }}">
+        {% for b in breadcrumbs %}
+            <li {% if (loop.last) %} class="active"{% endif %}>
+                {% if b.url and not loop.last %}<a href="{{ b.url }}">{% endif %}
+                    {{- b.text -}}
+                {% if b.url and not loop.last %}</a>{% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+  {% endspaceless %}
 {% endif %}

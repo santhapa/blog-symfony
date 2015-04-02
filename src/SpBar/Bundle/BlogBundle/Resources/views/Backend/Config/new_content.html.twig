@@ -1,0 +1,29 @@
+<div class="box-body">
+	<form class="form-horizontal" method="POST" action="{{ path('sp_blog_config_new') }}">
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{ form_label(form.name) }}:</label>
+			<div class="col-sm-8">
+				{{ form_widget(form.name, {"attr" : {"placeholder" : "Type new configuration key", "class": "form-control"}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">{{ form_label(form.content) }}:</label>
+			<div class="col-sm-8">
+				{{ form_widget(form.content, {"attr" : {"placeholder" : "Type the value", "class": "form-control ckeditor"}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+	        <div class="col-sm-offset-4 col-sm-8">
+	            <button type="submit" class="btn btn-info" value="Create">Create</button>
+	        </div>
+	    </div>
+
+	</form>
+</div><!-- /.box-body -->
+
+{% block js %}
+    <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+{% endblock js %}
