@@ -2,6 +2,10 @@ sp_blog_config_index:
     path: /
     defaults: { _controller: SpBarBlogBundle:Backend/Config:index }
 
+sp_blog_config_default:
+    path: /default/
+    defaults: { _controller: SpBarBlogBundle:Backend/Config:default }
+
 sp_blog_config_list:
     path: /list/
     defaults: { _controller: SpBarBlogBundle:Backend/Config:list }
@@ -11,9 +15,9 @@ sp_blog_config_new:
     defaults: { _controller: SpBarBlogBundle:Backend/Config:new }
 
 sp_blog_config_edit:
-    path: /edit/
+    path: /{slug}/edit/
     defaults: { _controller: SpBarBlogBundle:Backend/Config:edit }
 
 sp_blog_config_delete:
-    path: /delete/
+    path: /{slug}/delete/
     defaults: { _controller: SpBarBlogBundle:Backend/Config:delete }

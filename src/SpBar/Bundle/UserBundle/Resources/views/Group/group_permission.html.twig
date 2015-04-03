@@ -1,0 +1,85 @@
+{% extends "BlogAdminBundle::Admin/admin_base.html.twig" %}
+
+{% block title %}
+	{{ group_name|capitalize }} - Route Permission
+
+{% endblock title %}
+
+{% block body_content %}
+
+	<div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+			<h1>Group<small>(Manage blog user groups)</small></h1>
+			<ol class="breadcrumb">
+				<li><a href="{{ path('adminIndexPage') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+				<li> <a href="{{ path('listGroupPage') }}">Group</a></li>
+				<li class="active">Assign Permission</li>
+			</ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">
+								<strong>Assing Route Permission</strong>
+							</h3>
+						</div><!-- /.box-header -->
+						<div class="box-body">
+							<form action="" method="post">
+								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+									{% for controller, route in routes %}
+										<div class="panel panel-default">
+											<div class="panel-heading" role="tab" id="{{ loop.index }}-heading">
+												<h4 class="panel-title" id="{{ loop.index }}-title">
+													<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{ loop.index }}-list-group" aria-expanded="false" aria-controls="{{ loop.index }}-list-group">
+														{{ controller }}
+													</a>
+													<a class="anchorjs-link" href="#{{ loop.index }}-title"><span class="anchorjs-icon"></span></a>
+												</h4>
+											</div>
+											
+											<div id="{{ loop.index }}-list-group" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{ loop.index }}-heading" aria-expanded="false">
+												<ul class="list-group">
+													{% for pname, r in route %}
+												    	<li class="list-group-item">
+												    		<div class="row">
+												    			<div class="col-xs-6">
+												    				<input type="checkbox" 
+												      				{% if ('ROLE_' ~ pname|upper) | trans in roles %}
+												      					checked="checked"
+												      				{% endif %}
+												      				name="roles[]" 
+												      				value="ROLE_{{ r.name|upper }}">
+												    				{{ r.name }}
+												    				{% if r.desc is not null %}
+															      		<span>
+															      			-- ( {{ r.desc|capitalize }} )
+															      		</span>
+															      	{% endif %}	
+												    			</div>
+												    			<div class="col-xs-6">Url Pattern: <b><i> {{ r.url }}</i></b></div>
+												    		</div>					    
+												      	</li>						
+													{% endfor %}
+												</ul>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+								<div>
+									<button type="submit" class="btn btn-default" name="addPermission">Update</button>			
+								</div>
+							</form>
+						</div><!-- /.box-body -->
+					</div><!-- /.box -->
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
+{% endblock body_content %}
+

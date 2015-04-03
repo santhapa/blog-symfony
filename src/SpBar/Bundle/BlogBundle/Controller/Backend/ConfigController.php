@@ -9,16 +9,69 @@ class ConfigController extends Controller
 {
 	public function indexAction()
 	{
-		return $this->listAction();
+		$configManager = $this->get('spbar.blog_config_manager');
+
+		//form for new config
+		$config = $configManager->createConfig();
+        $form = $this->createForm('spbar_blog_config', $config);
+
+		//list of blog configs
+		$configs = $configManager->getConfigs();
+
+		//list of default configs
+		$defalutConfigs = $configManager->getConfigs(true);
+		$themes = $this->get('spbar.blog_theme_manager')->getThemesByType('index');
+
+		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Blog");
+	    $breadcrumbs->addItem("Config");
+
+		return $this->render("SpBarBlogBundle::Backend/Config/index.html.twig", array(
+			'page_title' => 'Blog Configurations',
+			'form' => $form->createView(),
+			'configs' => $configs,
+			'defaults' => $defalutConfigs, 'themes' => $themes,
+		));
 	}
 
 	public function listAction()
 	{
-		return $this->render("SpBarBlogBundle::Backend/Config/list.html.twig");
+		$configManager = $this->get('spbar.blog_config_manager');
+		$configs = $configManager->getConfigs();
+
+		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Blog");
+	    $breadcrumbs->addRouteItem("Config", "sp_blog_config_index");
+		$breadcrumbs->addItem('List');
+
+		return $this->render("SpBarBlogBundle::Backend/Config/list.html.twig", array(
+			'page_title' => 'List of Configuration',
+			'configs' => $configs,
+		));
 	}
 
-	public function defaultAction()
+	public function defaultAction(Request $request)
 	{
+		$configManager = $this->get('spbar.blog_config_manager');
+
+		if($request->request->all())
+		{
+			$ret = $configManager->updateDefaults($request->request->all());
+			if($ret)
+			{
+				$this->addFlash('success', "Default configs are successfully updated.");
+				return $this->redirectToRoute('sp_blog_config_index');
+			}else{
+				$this->addFlash('error', "Having trouble updating.");
+			}
+		}
+
+		$defalutConfigs = $configManager->getConfigs(true);
+
+		$themes = $this->get('spbar.blog_theme_manager')->getThemesByType('index');
+
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
 	    $breadcrumbs->addItem("Blog");
@@ -27,6 +80,8 @@ class ConfigController extends Controller
 
 		return $this->render("SpBarBlogBundle::Backend/Config/default.html.twig", array(
             'page_title' =>"Default Configuration",
+            'defaults' => $defalutConfigs,
+            'themes' => $themes,
         ));
 	}
 
@@ -43,6 +98,7 @@ class ConfigController extends Controller
     	{
     		$configManager->updateConfig($config);
 
+    		$this->addFlash('success', "New config {$config->getName()} has been added successfully");
 		    return $this->redirectToRoute('sp_blog_config_index');
 		}
 
@@ -53,19 +109,55 @@ class ConfigController extends Controller
 		$breadcrumbs->addItem('New');
 
 		return $this->render("SpBarBlogBundle::Backend/Config/new.html.twig", array(
-            'form' => $form->createview(), 
+            'form' => $form->createView(), 
             'page_title' =>"Add Configuration",
         ));
 	}
 
-	public function editAction()
+	public function editAction(Request $request, $slug)
 	{
-		return $this->render("SpBarBlogBundle::Backend/Config/new.html.twig");
+		$configManager = $this->get('spbar.blog_config_manager');
+        $config = $configManager->getConfigBySlug($slug);
+
+        $form = $this->createForm('spbar_blog_config', $config);
+
+        $form->handleRequest($request);
+
+    	if ($form->isValid()) 
+    	{
+    		$configManager->updateConfig($config);
+
+    		$this->addFlash('success', "Config {$config->getName()} has been updated successfully");
+		    return $this->redirectToRoute('sp_blog_config_index');
+		}
+
+		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Blog");
+	    $breadcrumbs->addRouteItem("Config", "sp_blog_config_index");
+		$breadcrumbs->addItem('Edit');
+		return $this->render("SpBarBlogBundle::Backend/Config/edit.html.twig", array(
+			'page_title' => "Edit Configuation",
+			'form' => $form->createView(),
+			'slug' => $slug,
+		));
 	}
 
-	public function deleteAction()
+	public function deleteAction($slug)
 	{
-		return $this->render("SpBarBlogBundle::Backend/Config/edit.html.twig");
+		$configManager = $this->get('spbar.blog_config_manager');
+        $config = $configManager->getConfigBySlug($slug);
+
+        if(!$config)
+        {
+        	$this->addFlash('error', "Configuration not found.");
+		    return $this->redirectToRoute('sp_blog_config_index');
+        }
+        $configName = $config->getName();
+        $configManager->removeConfig($config);
+
+        $this->addFlash('success', "Config {$configName} has been deleted.");
+		return $this->redirectToRoute('sp_blog_config_index');
 	}
 
 }

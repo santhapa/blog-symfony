@@ -1,0 +1,46 @@
+{% set postPerPage = {} %}
+{% set blogTheme = {} %}
+{% for config in defaults %}
+    {% if config.slug == 'post_per_page' %}
+    	{% set postPerPage = {'slug':config.slug, 'value':config.content} %}
+    {% endif %}
+    {% if config.slug == 'blog_theme' %}
+    	{% set blogTheme = {'slug':config.slug, 'value':config.content} %}
+    {% endif %}
+{% endfor %}
+
+<div class="box-body">
+	<form class="form-horizontal" method="POST" action="{{ path('sp_blog_config_default') }}">
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Post per page:</label>
+			<div class="col-sm-8">
+				<input class="form-control" type="text" name="{{ postPerPage.slug }}" value="{{ postPerPage.value ? : '' }}" placeholder="Type the value for no of posts per page">
+				<p><i>(access key: <b>{{ postPerPage.slug }} </b>)</i></p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Blog Posts theme:</label>
+			<div class="col-sm-8">
+				<select name="{{ blogTheme.slug }}" class="form-control" >
+					{% for theme in themes %}
+					    <option value="{{ theme.template }}" {% if theme.template == blogTheme.value %} selected="selected" {% endif %}>{{ theme.name }}</option>
+					{% endfor %}					
+				</select>
+				<p><i>(access key: <b>{{ blogTheme.slug }}</b>)</i></p>
+			</div>
+		</div>
+
+		<div class="form-group">
+	        <div class="col-sm-offset-4 col-sm-8">
+	            <button type="submit" class="btn btn-info" value="Update">Update</button>
+	        </div>
+	    </div>
+
+	</form>
+</div><!-- /.box-body -->
+
+{% block js %}
+    {# <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script> #}
+{% endblock js %}

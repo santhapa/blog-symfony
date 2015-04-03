@@ -35,7 +35,8 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ 'BlogUserBundle', 'BlogPostBundle', 'BlogPublicBundle']
+    # bundles:        [ 'BlogUserBundle', 'BlogPostBundle', 'BlogPublicBundle']
+    bundles:        [ 'SpBarUserBundle', 'BlogPostBundle', 'BlogPublicBundle']
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -75,22 +76,37 @@ swiftmailer:
 
 
 #Fos User Configuration
+# fos_user:
+#     db_driver: orm 
+#     firewall_name: main
+#     user_class: Blog\UserBundle\Entity\User
+#     group:
+#         group_class: Blog\UserBundle\Entity\Group
+#     registration:
+#         form:
+#             type: blog_user_registration
+#     profile: 
+#         form:
+#             type: blog_user_profile
+#     change_password:
+#         form:
+#             type: blog_user_change_password
+
 fos_user:
     db_driver: orm 
     firewall_name: main
-    user_class: Blog\UserBundle\Entity\User
+    user_class: SpBar\Bundle\UserBundle\Entity\User
     group:
-        group_class: Blog\UserBundle\Entity\Group
+        group_class: SpBar\Bundle\UserBundle\Entity\Group
     registration:
         form:
-            type: blog_user_registration
+            type: spbar_user_registration
     profile: 
         form:
-            type: blog_user_profile
+            type: spbar_user_profile
     change_password:
         form:
-            type: blog_user_change_password
-
+            type: spbar_user_change_password
 
 #Knp Menu Bundle Configuration
 #default config(optional)

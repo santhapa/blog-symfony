@@ -41,6 +41,12 @@ class ThemeManager
 		return $this->em->getRepository("SpBarBlogBundle:Theme")->findAll();
 	}
 
+	public function getThemesByType($type)
+	{
+		return $this->em->getRepository("SpBarBlogBundle:Theme")->findBy(array('type' => $type));
+
+	}
+
 	public function getThemeBySlug($slug)
 	{
 		return $this->em->getRepository("SpBarBlogBundle:Theme")->findOneBy(array('slug'=>$slug));

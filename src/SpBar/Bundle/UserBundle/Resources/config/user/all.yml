@@ -1,0 +1,7 @@
+sp_user:
+    resource: "@SpBarUserBundle/Resources/config/user/user.yml"
+    prefix:   /user
+
+sp_group:
+    resource: "@SpBarUserBundle/Resources/config/user/group.yml"
+    prefix:   /group

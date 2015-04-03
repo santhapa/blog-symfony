@@ -37,13 +37,32 @@ class ConfigManager
 		return;
 	}
 
-	public function getConfigs()
+	public function getConfigs($default=false)
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Config")->findAll();
+		return $this->em->getRepository("SpBarBlogBundle:Config")->findBy(array('default'=> $default));
 	}
 
 	public function getConfigBySlug($slug)
 	{
 		return $this->em->getRepository("SpBarBlogBundle:Config")->findOneBy(array('slug'=>$slug));
+	}
+
+	public function updateDefaults($defaults)
+	{
+		foreach ($defaults as $key => $value) {
+			$config = $this->getConfigBySlug($key);
+			$config->setContent($value);
+			$this->updateConfig($config, FALSE);
+		}
+		$this->em->flush();
+		return true;
+	}
+
+	public function removeConfig(Config $config)
+	{
+		$this->em->remove($config);
+		$this->em->flush();
+
+		return;
 	}
 }

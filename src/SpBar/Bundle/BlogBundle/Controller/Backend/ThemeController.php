@@ -9,7 +9,25 @@ class ThemeController extends Controller
 {
 	public function indexAction()
 	{
-		return $this->listAction();
+		$themeManager = $this->get('spbar.blog_theme_manager');
+
+		//new form for theme
+		$theme = $themeManager->createTheme();
+        $form = $this->createForm('spbar_blog_theme', $theme);
+        
+        //get list of available themes
+		$themes = $themeManager->getThemes();
+
+		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Blog");
+	    $breadcrumbs->addItem("Theme");
+
+		return $this->render("SpBarBlogBundle::Backend/Theme/index.html.twig", array(
+			'page_title' => 'Blog Themes',
+            'form' => $form->createView(),
+			'themes' => $themes,
+		));
 	}
 
 	public function listAction()
@@ -32,31 +50,34 @@ class ThemeController extends Controller
 
 	public function newAction(Request $request)
 	{
-		$themeManager = $this->get('spbar.blog_theme_manager');
-        $theme = $themeManager->createTheme();
+		$this->addFlash('error', "Adding theme is disabled for now.");
+		return $this->redirectToRoute('sp_blog_theme_index');
 
-        $form = $this->createForm('spbar_blog_theme', $theme);
+		// $themeManager = $this->get('spbar.blog_theme_manager');
+  //       $theme = $themeManager->createTheme();
 
-        $form->handleRequest($request);
+  //       $form = $this->createForm('spbar_blog_theme', $theme);
 
-    	if ($form->isValid()) 
-    	{
-    		$themeManager->updateTheme($theme);
-    		$this->addFlash('success', "Theme {$theme->getName()} successfully added.");
+  //       $form->handleRequest($request);
 
-		    return $this->redirectToRoute('sp_blog_theme_index');
-		}
+  //   	if ($form->isValid()) 
+  //   	{
+  //   		$themeManager->updateTheme($theme);
+  //   		$this->addFlash('success', "Theme {$theme->getName()} successfully added.");
 
-		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
-	    $breadcrumbs->addItem("Blog");
-	    $breadcrumbs->addRouteItem("Theme", "sp_blog_theme_index");
-		$breadcrumbs->addItem('New');
+		//     return $this->redirectToRoute('sp_blog_theme_index');
+		// }
 
-		return $this->render("SpBarBlogBundle::Backend/Theme/new.html.twig", array(
-            'form' => $form->createView(), 
-            'page_title' =>"Add New Theme",
-        ));
+		// $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	 //    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	 //    $breadcrumbs->addItem("Blog");
+	 //    $breadcrumbs->addRouteItem("Theme", "sp_blog_theme_index");
+		// $breadcrumbs->addItem('New');
+
+		// return $this->render("SpBarBlogBundle::Backend/Theme/new.html.twig", array(
+  //           'form' => $form->createView(), 
+  //           'page_title' =>"Add New Theme",
+  //       ));
 	}
 
 	public function editAction(Request $request, $slug)

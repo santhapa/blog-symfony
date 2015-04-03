@@ -1,5 +1,5 @@
 services:
-    spbar.blog_config:
+    spbar.blog_config_form_type:
         class: SpBar\Bundle\BlogBundle\Form\Type\ConfigFormType
         tags:
             - { name: form.type, alias: spbar_blog_config }

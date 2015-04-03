@@ -25,12 +25,13 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 
             //my bundles
-            new Blog\UserBundle\BlogUserBundle(),
+            // new Blog\UserBundle\BlogUserBundle(),
             new Blog\PublicBundle\BlogPublicBundle(),
             new Blog\PostBundle\BlogPostBundle(),
             new Blog\AdminBundle\BlogAdminBundle(),
 
             new SpBar\Bundle\BlogBundle\SpBarBlogBundle(),
+            new SpBar\Bundle\UserBundle\SpBarUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

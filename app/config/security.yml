@@ -21,11 +21,11 @@ security:
             anonymous:    true
 
     access_control:
-        - { path: ^/admin/post, role: [ROLE_AUTHOR, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
-        # - { path: ^/admin/route, role: ROLE_SUPER_ADMIN}
-        - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
-        - { path: ^/user/new, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/user, role: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/admin/post, role: [ROLE_AUTHOR, ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        # # - { path: ^/admin/route, role: ROLE_SUPER_ADMIN}
+        # - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        # - { path: ^/user/new, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/user, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
     acl:

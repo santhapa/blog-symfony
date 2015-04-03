@@ -48,7 +48,7 @@
                                 <!-- The user image in the navbar-->
                                 <img src="{{ asset('dist/img/avatar04.png') }}" class="user-image" alt="User Image"/>
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">{{ app.user.name }}</span>
+                                <span class="hidden-xs">{# app.user.username #}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -56,14 +56,14 @@
                                     <img src="{{ asset('dist/img/avatar04.png') }}" class="img-circle" alt="User Image" />
                                 </li>
                                 <!-- Menu Footer-->
-                                <li class="user-footer">
+                                {#<li class="user-footer">
                                     <div class="pull-left">
                                         <a href="{{ path('profilePage') }}" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="{{ path('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
-                                </li>
+                                </li>#}
                             </ul>
                         </li>
                     </ul>
@@ -80,7 +80,8 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li>&nbsp; </li>
-                    {% if app.user and is_granted('ROLE_ADMIN') %}
+
+                    {#{% if app.user and is_granted('ROLE_ADMIN') %}
                     <li>
                         <a href="{{ path('adminIndexPage') }}">
                             <i class="fa fa-dashboard"></i>Dashboard
@@ -100,7 +101,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> 
                     <li class="treeview">
                         <a href="#"><i class="fa  fa-folder"></i>Settings <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
@@ -110,23 +111,57 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li>#}
                     <li class="treeview">
                         <a href="#"><i class="fa  fa-folder"></i>Blog <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="{{ path('sp_blog_config_index') }}">
+                                <a href="">
                                     <i class="fa fa-gears"></i>Configuration
+                                    <i class="fa fa-angle-left pull-right"></i>
                                 </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{{ path('sp_blog_config_index') }}">
+                                            <i class="fa fa-circle-o"></i> Settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('sp_blog_theme_index') }}">
+                                            <i class="fa fa-circle-o"></i> Themes
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-user"></i>Users
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-circle-o"></i> User
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-circle-o"></i> Group
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
-                    {% endif %}
+                    {#{% endif %}
                     <li>
                         <a href="{{ path('postDashPage') }}">
                             <i class="fa fa-pinterest-square"></i>Posts
                         </a>
-                    </li>
+                    </li>#}
                 </ul><!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->

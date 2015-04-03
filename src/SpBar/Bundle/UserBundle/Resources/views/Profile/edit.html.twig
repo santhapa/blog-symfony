@@ -1,0 +1,9 @@
+{% extends "BlogUserBundle::user_base.html.twig" %}
+
+{% block body %}
+	<div class="page-header">
+  		<h2>Profile <small>(Edit your information)</small></h2>
+	</div>
+
+	{% include "BlogUserBundle:Profile:edit_content.html.twig" %}
+{% endblock body %}

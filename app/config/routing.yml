@@ -10,9 +10,9 @@ blog_post:
     resource: "@BlogPostBundle/Resources/config/routing.yml"
     prefix:   /
 
-blog_user:
-    resource: "@BlogUserBundle/Resources/config/routing.yml"
-    prefix:   /
+# blog_user:
+#     resource: "@BlogUserBundle/Resources/config/routing.yml"
+#     prefix:   /
 
 logout:
     path: /logout
@@ -20,3 +20,6 @@ logout:
 
 sp_blog:
     resource: "@SpBarBlogBundle/Resources/config/routing.yml"
+
+sp_userbundle:
+    resource: "@SpBarUserBundle/Resources/config/routing.yml"

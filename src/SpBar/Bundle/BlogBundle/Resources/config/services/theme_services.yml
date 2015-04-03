@@ -1,5 +1,5 @@
 services:
-    spbar.blog_theme:
+    spbar.blog_theme_form_type:
         class: SpBar\Bundle\BlogBundle\Form\Type\ThemeFormType
         tags:
             - { name: form.type, alias: spbar_blog_theme }

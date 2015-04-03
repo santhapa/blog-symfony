@@ -1,0 +1,3 @@
+sp_user_bundle:
+    resource: "@SpBarUserBundle/Resources/config/user/all.yml"
+    prefix:   /admin
