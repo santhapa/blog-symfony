@@ -26,11 +26,14 @@ class RegistrationController extends BaseController
 
             $this->addFash('success', "New User {$user->getName()} has been created successfully.");
             return $this->redirect($this->generateUrl('loginPage'));
+        }else{
+            if($form->isSubmitted())
+                $this->addFlash('error',"{$form->getErrors(true)}");
         }
 
         $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-        // $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
-        // $breadcrumbs->addRouteItem("User", "sp_user_index");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addRouteItem("User", "sp_user_index");
         $breadcrumbs->addItem("New");
 
         return $this->render('SpBarUserBundle:Registration:register.html.twig', array(

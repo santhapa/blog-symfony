@@ -1,3 +1,7 @@
+sp_user_index:
+    path: /index/
+    defaults: { _controller:SpBarUserBundle:User:index }
+
 sp_user_new:
     path: /new/
     defaults: { _controller:SpBarUserBundle:Registration:register }

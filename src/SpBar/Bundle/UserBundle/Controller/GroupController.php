@@ -24,7 +24,7 @@ class GroupController extends BaseController
     {
         $groups = $this->get('fos_user.group_manager')->findGroups();
 
-        return $this->render('BlogUserBundle:Group:list.html.twig', array(
+        return $this->render('SpBarUserBundle:Group:list.html.twig', array(
             'groups' => $groups
         ));
     }
@@ -34,9 +34,9 @@ class GroupController extends BaseController
      */
     public function editAction(Request $request, $slug)
     {
-        $group = $this->getDoctrine()->getManager()->getRepository('BlogUserBundle:Group')->findOneBy(array('slug' => $slug));
+        $group = $this->getDoctrine()->getManager()->getRepository('SpBarUserBundle:Group')->findOneBy(array('slug' => $slug));
 
-       	$form = $this->createForm('blog_user_group', $group);
+       	$form = $this->createForm('spbar_user_group', $group);
 		$form->setData($group);
         
         $form->handleRequest($request);
@@ -48,7 +48,12 @@ class GroupController extends BaseController
             return $this->redirectToRoute('listGroupPage');
         }
 
-        return $this->render('BlogUserBundle:Group:edit.html.twig', array(
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addRouteItem("Group", "sp_user_group_index");
+        $breadcrumbs->addItem("Edit");   
+
+        return $this->render('SpBarUserBundle:Group:edit.html.twig', array(
             'form'      => $form->createview(),
             'group_name'  => $group->getName(),
         ));
@@ -62,21 +67,25 @@ class GroupController extends BaseController
     	$groupManager = $this->get('fos_user.group_manager');
         $group = $groupManager->createGroup('');
 
-        $form = $this->createForm('blog_user_group', $group);
+        $form = $this->createForm('spbar_user_group', $group);
 
         $form->handleRequest($request);
 
     	if ($form->isValid()) {
-		    $em = $this->getDoctrine()->getManager();
-		    $group->setSlug(strtolower(str_replace(" ", "-", $form->get('name')->getData())));
-		    $em->persist($group);
-		    $em->flush();
+		    $groupManager->updateGroup($group);
+            $this->addFlash('success', "New group {$group->getName()} has been successfully added.");   
 
-		    return $this->redirectToRoute('listGroupPage');
+		    return $this->redirectToRoute('sp_user_group_index');
 		}
 
-        return $this->render('BlogUserBundle:Group:new.html.twig', array(
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addRouteItem("Group", "sp_user_group_index");
+        $breadcrumbs->addItem("New");   
+
+        return $this->render('SpBarUserBundle:Group:new.html.twig', array(
             'form' => $form->createview(),
+            'page_title' => "Add User Group"
         ));
     }
 
@@ -85,20 +94,20 @@ class GroupController extends BaseController
      */
     public function deleteAction(Request $request, $slug)
     {
-        $group = $this->getDoctrine()->getManager()->getRepository('BlogUserBundle:Group')->findOneBy(array('slug' => $slug));
+        $group = $this->getDoctrine()->getManager()->getRepository('SpBarUserBundle:Group')->findOneBy(array('slug' => $slug));
        
         $this->get('fos_user.group_manager')->deleteGroup($group);
 
         return $this->redirectToRoute('listGroupPage');
     }
 
-    public function groupPermissionAction($slug)
+    public function permissionAction($slug)
     {
-        $group = $this->getDoctrine()->getManager()->getRepository('BlogUserBundle:Group')->findOneBy(array('slug' => $slug));
+        $group = $this->getDoctrine()->getManager()->getRepository('SpBarUserBundle:Group')->findOneBy(array('slug' => $slug));
     	$dbRoles = $group->getRoles();
 
     	$em = $this->getDoctrine() ->getManager();
-	    $routes = $em->getRepository('BlogUserBundle:Route')->getRoutesArray();
+	    $routes = $em->getRepository('SpBarUserBundle:Route')->getRoutesArray();
 
     	if(isset($_POST['addPermission']))
 	    {
@@ -118,7 +127,7 @@ class GroupController extends BaseController
     		return $this->redirectToRoute('listGroupPage');
 	    }
     	
-    	return $this->render('BlogUserBundle:Group:group_permission.html.twig', array(
+    	return $this->render('SpBarUserBundle:Group:group_permission.html.twig', array(
             'routes' => $routes,
         	'roles' =>$dbRoles,
         	'group_name' => $group->getName(),

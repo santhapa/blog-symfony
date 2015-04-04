@@ -1,0 +1,23 @@
+sp_user_group_index:
+    path: /index/
+    defaults: { _controller:SpBarUserBundle:Group:index }
+
+sp_user_group_list:
+    path: /list/
+    defaults: { _controller:SpBarUserBundle:Group:list }
+
+sp_user_group_new:
+    path: /new/
+    defaults: { _controller:SpBarUserBundle:Group:new }
+
+sp_user_group_edit:
+    path: /{slug}/edit/
+    defaults: { _controller:SpBarUserBundle:Group:edit }
+
+sp_user_group_permission:
+    path: /{slug}/permission
+    defaults: { _controller:SpBarUserBundle:Group:permission }
+
+sp_user_group_delete:
+    path: /{slug}/delete
+    defaults: { _controller:SpBarUserBundle:Group:delete }

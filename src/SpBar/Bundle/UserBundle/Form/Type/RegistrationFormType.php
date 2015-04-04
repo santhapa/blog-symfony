@@ -19,8 +19,8 @@ class RegistrationFormType extends AbstractType
                 ))
             ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
-                    'first_options' => array('label' => 'Password:'),
-                    'second_options' => array('label' => 'Confirm Password:'),
+                    'first_options' => array('label' => 'Password'),
+                    'second_options' => array('label' => 'Confirm Password'),
                     'invalid_message' => 'Password mismatch!',
                     'required'=>true
                 ))
