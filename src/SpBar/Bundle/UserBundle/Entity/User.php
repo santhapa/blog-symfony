@@ -111,20 +111,20 @@ class User extends BaseUser
 
     /*******************************files to be changed*******************************************/
         /** 
-        *ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Post", mappedBy="author")
+        *@ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Post", mappedBy="author")
         */
-        // protected $post_author = null;
+        protected $post_author = null;
 
         /**
-        *ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Comment", mappedBy="user")
+        *@ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Comment", mappedBy="user")
         */
-        // protected $comments;
+        protected $comments;
 
         public function __construct()
         {
             parent::__construct();
-            // $this->post_author = new ArrayCollection();
-            // $this->comments = new ArrayCollection();
+            $this->post_author = new ArrayCollection();
+            $this->comments = new ArrayCollection();
         }
     /*******************************files to be changed*******************************************/
 
@@ -274,15 +274,15 @@ class User extends BaseUser
     }
 
     /*******************************files to be changed*******************************************/
-        // public function addPostAuthor($post)
-        // {
-        //     $this->post_author[] = $post;
-        // }
+        public function addPostAuthor($post)
+        {
+            $this->post_author[] = $post;
+        }
 
-        // public function addComment($comment)
-        // {
-        //     $this->comments[] = $comment;
-        // }
+        public function addComment($comment)
+        {
+            $this->comments[] = $comment;
+        }
     /*******************************files to be changed*******************************************/
 }
 

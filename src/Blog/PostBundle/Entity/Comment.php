@@ -36,7 +36,7 @@
 		protected $post;
 
 		/**
-		*@ORM\ManyToOne(targetEntity="\Blog\UserBundle\Entity\User", inversedBy="comments")
+		*@ORM\ManyToOne(targetEntity="\SpBar\Bundle\UserBundle\Entity\User", inversedBy="comments")
 		*@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
 		**/
 		protected $user;

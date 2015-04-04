@@ -35,7 +35,7 @@
         protected $dateTime;
 
 	    /**
-        *@ORM\ManyToOne(targetEntity="\Blog\UserBundle\Entity\User", inversedBy="post_author")
+        *@ORM\ManyToOne(targetEntity="\SpBar\Bundle\UserBundle\Entity\User", inversedBy="post_author")
         *@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
 		*/
 	    protected $author;
