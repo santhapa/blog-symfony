@@ -45,7 +45,7 @@ class User extends BaseUser
 
     /**
     * @Assert\NotBlank(groups={"Profile"})
-    * @ORM\Column(name="date_of_birth", type="datetime", nullable=true)
+    * @ORM\Column(name="date_of_birth", type="date", nullable=true)
     */
     protected $dateOfBirth;
 

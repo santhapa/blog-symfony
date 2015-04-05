@@ -45,7 +45,7 @@ class ProfileFormType extends AbstractType
                     'label'=>"Last Name",
                     'required'=> true
                 ))
-                ->add('dateOfBirth', 'text', array(
+                ->add('dateOfBirth', 'date', array(
                     'label'=>"Date of Birth",
                     'required' => true
                 ))
@@ -54,11 +54,11 @@ class ProfileFormType extends AbstractType
                     'choices'=> array('Male'=>'Male', 'Female'=>'Female'),
                     'required' => true
                 ))
-                ->add('phonenumber', 'text', array(
+                ->add('phoneNumber', 'text', array(
                     'label'=>"Telephone Number",
                     'required' => false
                 ))
-                ->add('mobilenumber', 'text', array(
+                ->add('mobileNumber', 'text', array(
                     'label'=>"Mobile Number",
                     'required' => false
                 ))

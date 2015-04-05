@@ -11,36 +11,131 @@
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="personal_tab">
-						<b>How to use:</b>
-						<p>Exactly like the original bootstrap tabs except you should use
-						the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
-						A wonderful serenity has taken possession of my entire soul,
-						like these sweet mornings of spring which I enjoy with my whole heart.
-						I am alone, and feel the charm of existence in this spot,
-						which was created for the bliss of souls like mine. I am so happy,
-						my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-						that I neglect my talents. I should be incapable of drawing a single stroke
-						at the present moment; and yet I feel that I never was a greater artist than now.
+						
+						<div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.firstname) }}:</label>
+				            <div class="col-sm-4">
+				                {{ form_widget(form.firstname, {"attr" : {"placeholder" : "Firstname", "class": "form-control"}}) }}
+				            </div>
+
+				            <label class="col-sm-2 control-label">{{ form_label(form.lastname) }}:</label>
+				            <div class="col-sm-4">
+				                {{ form_widget(form.lastname, {"attr" : {"placeholder" : "Lastname", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.email) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.email, {"attr" : {"placeholder" : "Type your valid email", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.dateOfBirth) }}<i>(A.D.)</i>:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.dateOfBirth, {"attr" : {"class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.gender) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.gender, {"attr" : {"class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.phoneNumber) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.phoneNumber, {"attr" : {"placeholder" : "Type your home number", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.mobileNumber) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.mobileNumber, {"attr" : {"placeholder" : "Type your mobile number", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.address) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.address, {"attr" : {"placeholder" : "Type your adddress", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.biography) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.biography, {"attr" : {"class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.website) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.website, {"attr" : {"placeholder" : "Type your personal site url", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+					        <div class="col-sm-offset-10 col-sm-2">
+					        	<a aria-expanded="false" href="#social_tab" data-toggle="tab"><button class="btn btn-info">Next</button></a>
+					        </div>
+					    </div>
+
 					</div><!-- /.tab-pane -->
 					
 					<div class="tab-pane" id="social_tab">
-						The European languages are members of the same family. Their separate existence is a myth.
-						For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-						in their grammar, their pronunciation and their most common words. Everyone realizes why a
-						new common language would be desirable: one could refuse to pay expensive translators. To
-						achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-						words. If several languages coalesce, the grammar of the resulting language is more simple
-						and regular than that of the individual languages.
+						<div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.facebookId) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.facebookId, {"attr" : {"placeholder" : "Type your facebook url", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.gplusId) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.gplusId, {"attr" : {"placeholder" : "Type your gplus url", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.twitterId) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.twitterId, {"attr" : {"placeholder" : "Type your twitter url", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+					        <div class="col-sm-offset-10 col-sm-2">
+					        	<a aria-expanded="false" href="#confirm_tab" data-toggle="tab"><button class="btn btn-info">Next</button></a>
+					        </div>
+					    </div>
 					</div><!-- /.tab-pane -->
 
 					<div class="tab-pane" id="confirm_tab">
-						The European languages are members of the same family. Their separate existence is a myth.
-						For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-						in their grammar, their pronunciation and their most common words. Everyone realizes why a
-						new common language would be desirable: one could refuse to pay expensive translators. To
-						achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-						words. If several languages coalesce, the grammar of the resulting language is more simple
-						and regular than that of the individual languages.
+						<div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.username) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.username, {"attr" : {"class": "form-control"}}) }}
+				            </div>
+				        </div>
+				        <div class="form-group">
+				            <label class="col-sm-2 control-label">{{ form_label(form.current_password) }}:</label>
+				            <div class="col-sm-8">
+				                {{ form_widget(form.current_password, {"attr" : {"placeholder" : "Type your current password", "class": "form-control"}}) }}
+				            </div>
+				        </div>
+
+				        <div class="form-group">
+				            <div class="col-sm-offset-2 col-sm-8">
+				                <button type="submit" class="btn btn-info" value="Update">Update</button>
+				            </div>
+				        </div>
 					</div><!-- /.tab-pane -->
 				</div><!-- /.tab-content -->
 			</div><!-- nav-tabs-custom -->
