@@ -10,49 +10,107 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-        $data['list'] = null;
-
+        //create new user
         $userManager = $this->get('fos_user.user_manager');
-        $users = $userManager->findUsers();
+        $user = $userManager->createUser();
+        $form = $this->createForm('spbar_user_registration', $user);
 
-        if($users)
-        {
-            $data['users'] = $users;
-            $data['list'] = true;
-        }
+        //list of users
+        $em = $this->getDoctrine()->getManager();
+        $activeUser = $em->getRepository('SpBarUserBundle:User')->findBy(array('enabled'=> true), array('username'=>'asc'));
+        $inactiveUser = $em->getRepository('SpBarUserBundle:User')->findBy(array('enabled'=> false), array('username'=>'asc'));
 
-        $data['title'] = "Dashboard: User";
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addItem("User");
 
-        return $this->render('BlogUserBundle:User:index.html.twig', $data);
+        return $this->render('SpBarUserBundle:User:index.html.twig', array(
+            'page_title'=>"SpBar User",
+            'activeUsers'=> $activeUser,
+            'inactiveUsers'=> $inactiveUser,
+            'form' => $form->createView(),
+        ));
     }
 
-    public function editUserAction(Request $request)
+    public function listAction()
+    {   
+        // $userManager = $this->get('fos_user.user_manager');
+        // $users = $userManager->findUsers();
+        $em = $this->getDoctrine()->getManager();
+        $activeUser = $em->getRepository('SpBarUserBundle:User')->findBy(array('enabled'=> true), array('username'=>'asc'));
+        $inactiveUser = $em->getRepository('SpBarUserBundle:User')->findBy(array('enabled'=> false), array('username'=>'asc'));
+
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addRouteItem("User", "sp_user_index");
+        $breadcrumbs->addItem("List");
+
+        return $this->render('SpBarUserBundle:User:list.html.twig', array(
+            'page_title'=>"List of User",
+            'activeUsers'=> $activeUser,
+            'inactiveUsers'=> $inactiveUser,
+        ));
+    }
+
+    public function enableAction($user)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($user);
+
+        if(!$user)
+        {
+            $this->addFlash('error', "User not found.");
+            return $this->redirectToRoute('sp_user_index');
+        }
+
+        if($user->isEnabled())
+        {
+            $this->addFlash('info', "User {$user->getUsername()} account is already enabled.");
+            return $this->redirectToRoute('sp_user_index');
+        }
+
+        //enable the user account
+        $user->setEnabled(true);
+        $userManager->updateUser($user);
+
+        $this->addFlash('success', "User '{$user->getUsername()}' account has been enabled.");
+        return $this->redirectToRoute('sp_user_index');
+    }
+
+    public function editAction(Request $request, $user)
 	{
 		$userManager = $this->get('fos_user.user_manager');
-		$user = $userManager->findUserByUsername($_GET['slug']);
+		$user = $userManager->findUserByUsername($user);
 
 		if(!$user)
 		{
-			throw $this->createNotFoundException("No user found!");
+			$this->addFlash('error', "User not found.");
+            return $this->redirectToRoute('sp_user_index');
 		}
 
-        if (isset($_POST['updateRole'])) 
-        {	
-        	foreach ($user->getRoles() as $role) {
-        		$user->removeRole($role);
-        	}
+        $formFactory = $this->get('fos_user.profile.form.factory');
+        $form = $formFactory->createForm();
+        $form->setData($user);
 
-        	$user->addRole($_POST['roles']);
+        $form->handleRequest($request);
 
+        if ($form->isValid()) {
             $userManager->updateUser($user);
 
-            return $this->redirect($this->generateUrl('userIndexPage'));
+            $this->addFash('success', "User '{$user->getUsername()}' has been successfully updated.");
+            return $this->redirectToRoute('sp_user_index');
         }
-		
-        $data['title'] = "Edit User";
-        $data['user'] = $user;
 
-        return $this->render('BlogUserBundle:User:edit_user.html.twig', $data);
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addRouteItem("User", "sp_user_index");
+        $breadcrumbs->addItem("Edit");
+
+        return $this->render('SpBarUserBundle:User:edit.html.twig', array(
+            'form' => $form->createView(),
+            'page_title'=>"Edit User",
+            'user'=> $user,
+        ));
 	}
 
 	public function deleteUserAction($slug)

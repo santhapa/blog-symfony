@@ -30,13 +30,9 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">{{ form_label(form.groups) }}</label>
+            <label class="col-sm-2 control-label">{{ form_label(form.groups) }}:</label>
             <div class="col-sm-8">
                 {{ form_widget(form.groups, {"attr" : {"class" : "form-control" }}) }}
-
-                {% if form_errors(form.groups) %}
-                    <span class="alert alert-error">{{ form_errors(form.groups) }}</span>
-                {% endif %}
             </div>
         </div>
         

@@ -4,6 +4,13 @@
 {% block body_content %}
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        {% for message in app.session.flashbag.get('info') %}
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-info"></i> Information!</h4>
+                {{ message }}
+            </div>
+        {% endfor %}
         {% for message in app.session.flashbag.get('success') %}
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

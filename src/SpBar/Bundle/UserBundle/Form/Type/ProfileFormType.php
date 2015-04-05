@@ -18,7 +18,7 @@ class ProfileFormType extends AbstractType
         $builder->add('username','text', array(
                     'label'=>'Username',
                     'attr'=> array('disabled'=>'disabled'),
-                ))
+                ));
 
         $builder->add('current_password', 'password', array(
                         'label' => 'Current Password',

@@ -1,0 +1,55 @@
+{% set na = "Not Provided" %}
+
+<div class="box-body">
+	<table id="postList" class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>S.N.</th>
+				<th>Username</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Groups</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+		        <tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.getName()|trim ? : na|raw }} </td>
+					<td> {{ user.email }} </td>
+					<td> 
+						{% for group in user.groups %}
+							{{ group.name }} {% if not loop.last %} , {% endif %}
+						{% endfor %}  
+					</td>
+					<td>
+						{% if inactive is defined and inactive == true %}
+						<a href="{{ path('sp_user_enable',{'user': user.username}) }}">
+							<i class="fa fa-unlock" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Enable User"></i>
+						</a>
+						{% else %}
+						<a href="{{ path('sp_user_edit',{'user': user.username}) }}">
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+						</a>
+						{% endif %}
+						<a href="{{ path('sp_user_delete',{'user': user.username}) }}">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+						</a>
+					</td>
+				</tr>
+		    {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>S.N.</th>
+				<th>Username</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Groups</th>
+				<th>Action</th>
+			</tr>
+		</tfoot>
+	</table>
+</div><!-- /.box-body -->

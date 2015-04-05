@@ -13,7 +13,6 @@ class RegistrationController extends BaseController
         $formFactory = $this->get('fos_user.registration.form.factory');
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->createUser();
-        $user->setEnabled(false);
 
         $form = $formFactory->createForm();
         $form->setData($user);
@@ -22,10 +21,13 @@ class RegistrationController extends BaseController
 
         if ($form->isValid()) 
         {
+            $user->setEnabled(false);
+            $role = "ROLE_". strtoupper($form->get('groups')->getData()->getSlug());
+            $user->addRole($role);
             $userManager->updateUser($user);
 
-            $this->addFash('success', "New User {$user->getName()} has been created successfully.");
-            return $this->redirect($this->generateUrl('loginPage'));
+            $request->getSession()->getFlashBag()->add('success', "New User {$user->getUsername()} has been created successfully.");
+            return $this->redirect($this->generateUrl('sp_user_index'));
         }else{
             if($form->isSubmitted())
                 $this->addFlash('error',"{$form->getErrors(true)}");

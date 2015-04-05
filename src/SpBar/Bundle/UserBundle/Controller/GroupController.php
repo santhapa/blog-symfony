@@ -2,14 +2,7 @@
 
 namespace SpBar\Bundle\UserBundle\Controller;
 
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FilterGroupResponseEvent;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseGroupEvent;
-use FOS\UserBundle\Event\GroupEvent;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\UserBundle\Controller\GroupController as BaseController;
 
 use SpBar\Bundle\UserBundle\Entity\Group;
@@ -17,6 +10,27 @@ use SpBar\Bundle\UserBundle\Entity\Group;
 
 class GroupController extends BaseController
 {
+
+    public function indexAction()
+    {
+        $groupManager = $this->get('fos_user.group_manager');
+        //for new group
+        $group = $groupManager->createGroup('');
+        $form = $this->createForm('spbar_user_group', $group);
+
+        //list of groups
+        $groups = $this->get('fos_user.group_manager')->findGroups();
+
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addItem("Group");
+
+        return $this->render('SpBarUserBundle:Group:index.html.twig', array(
+            'groups' => $groups,
+            'page_title' => "User Groups",
+            'form' => $form->createView(),
+        ));
+    }
     /**
      * Show all groups
      */
@@ -24,8 +38,14 @@ class GroupController extends BaseController
     {
         $groups = $this->get('fos_user.group_manager')->findGroups();
 
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addRouteItem("Group", "sp_user_group_index");
+        $breadcrumbs->addItem("List");   
+
         return $this->render('SpBarUserBundle:Group:list.html.twig', array(
-            'groups' => $groups
+            'groups' => $groups,
+            'page_title' => "List of User Groups",
         ));
     }
 
@@ -42,10 +62,10 @@ class GroupController extends BaseController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $groupManager = $this->get('fos_user.group_manager');
-		    $group->setSlug(strtolower(str_replace(" ", "-", $form->get('name')->getData())));
             $groupManager->updateGroup($group);
 
-            return $this->redirectToRoute('listGroupPage');
+            $this->addFlash('success', "Group {$group->getName()} has been successfully updated.");   
+            return $this->redirectToRoute('sp_user_group_index');
         }
 
         $breadcrumbs = $this->container->get("white_october_breadcrumbs");
@@ -55,7 +75,8 @@ class GroupController extends BaseController
 
         return $this->render('SpBarUserBundle:Group:edit.html.twig', array(
             'form'      => $form->createview(),
-            'group_name'  => $group->getName(),
+            'page_title' => "Edit Group",
+            'group' => $group,
         ));
     }
 
@@ -95,10 +116,18 @@ class GroupController extends BaseController
     public function deleteAction(Request $request, $slug)
     {
         $group = $this->getDoctrine()->getManager()->getRepository('SpBarUserBundle:Group')->findOneBy(array('slug' => $slug));
-       
-        $this->get('fos_user.group_manager')->deleteGroup($group);
 
-        return $this->redirectToRoute('listGroupPage');
+        if(!$group)
+        {
+            $this->addFlash('error', "Group not found.");
+            return $this->redirectToRoute('sp_user_group_index');
+        }
+        $groupName = $group->getName();
+
+        $this->get('fos_user.group_manager')->deleteGroup($group);
+        $this->addFlash('success', "Group {$groupName} has been deleted.");
+
+        return $this->redirectToRoute('sp_user_group_index');
     }
 
     public function permissionAction($slug)
