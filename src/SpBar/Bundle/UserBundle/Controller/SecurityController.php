@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the FOSUserBundle package.
- *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace SpBar\Bundle\UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +12,11 @@ class SecurityController extends BaseController
 {
     public function loginAction(Request $request)
     {
-        /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
-
         $session = $request->getSession();
 
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirect($this->generateUrl('postPage'));
-        }   
+        // if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        //     // return $this->redirectToRoute('sp_user_index');
+        // }
 
         // get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
@@ -46,8 +35,6 @@ class SecurityController extends BaseController
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
-        //echo $lastUsername; die();
-
         $csrfToken = $this->has('form.csrf_provider')
             ? $this->get('form.csrf_provider')->generateCsrfToken('authenticate')
             : null;
@@ -59,17 +46,9 @@ class SecurityController extends BaseController
         ));
     }
 
-    /**
-     * Renders the login template with the given parameters. Overwrite this function in
-     * an extended controller to provide additional data for the login template.
-     *
-     * @param array $data
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     protected function renderLogin(array $data)
     {
-        return $this->render('BlogUserBundle:Security:login.html.twig', $data);
+        return $this->render('SpBarUserBundle:Security:login.html.twig', $data);
     }
 
     public function checkAction()

@@ -5,3 +5,7 @@ sp_blog_config:
 sp_blog_theme:
     resource: "@SpBarBlogBundle/Resources/config/backend/theme_route.yml"
     prefix:   /theme
+
+sp_blog_post:
+    resource: "@SpBarBlogBundle/Resources/config/backend/post_route.yml"
+    prefix:   /post

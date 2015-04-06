@@ -1,0 +1,19 @@
+sp_blog_post_index:
+    path: /
+    defaults: { _controller: SpBarBlogBundle:Backend/Post:index }
+
+sp_blog_post_list:
+    path: /list/
+    defaults: { _controller: SpBarBlogBundle:Backend/Post:list }
+
+sp_blog_post_new:
+    path: /new/
+    defaults: { _controller: SpBarBlogBundle:Backend/Post:new }
+
+sp_blog_post_edit:
+    path: /{slug}/edit/
+    defaults: { _controller: SpBarBlogBundle:Backend/Post:edit }
+
+sp_blog_post_delete:
+    path: /{slug}/delete/
+    defaults: { _controller: SpBarBlogBundle:Backend/Post:delete }

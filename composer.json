@@ -24,7 +24,8 @@
         "whiteoctober/breadcrumbs-bundle": "dev-master",
         "egeloen/ckeditor-bundle": "3.0.1",
         "knplabs/knp-paginator-bundle": "2.4.1",
-        "gedmo/doctrine-extensions": "~2.3"
+        "gedmo/doctrine-extensions": "~2.3",
+        "helios-ag/fm-elfinder-bundle": "5.0.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

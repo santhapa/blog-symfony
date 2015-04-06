@@ -9,6 +9,11 @@ services:
         tags:
             - { name: form.type, alias: spbar_user_profile }
 
+    spbar.user_edit_form_type:
+        class: SpBar\Bundle\UserBundle\Form\Type\EditFormType
+        tags:
+            - { name: form.type, alias: spbar_user_edit }
+
     spbar.user_change_password_form_type:
         class: SpBar\Bundle\UserBundle\Form\Type\ChangePasswordFormType
         tags:

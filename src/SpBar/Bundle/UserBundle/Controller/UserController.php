@@ -11,9 +11,11 @@ class UserController extends Controller
     public function indexAction()
     {
         //create new user
+        $formFactory = $this->get('fos_user.registration.form.factory');
         $userManager = $this->get('fos_user.user_manager');
         $user = $userManager->createUser();
-        $form = $this->createForm('spbar_user_registration', $user);
+        $form = $formFactory->createForm();
+        $form->setData($user);
 
         //list of users
         $em = $this->getDoctrine()->getManager();
@@ -77,27 +79,49 @@ class UserController extends Controller
         return $this->redirectToRoute('sp_user_index');
     }
 
+    public function disableAction($user)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsername($user);
+
+        if(!$user)
+        {
+            $this->addFlash('error', "User not found.");
+            return $this->redirectToRoute('sp_user_index');
+        }
+
+        if(!$user->isEnabled())
+        {
+            $this->addFlash('info', "User {$user->getUsername()} account is already disabled.");
+            return $this->redirectToRoute('sp_user_index');
+        }
+
+        //enable the user account
+        $user->setEnabled(false);
+        $userManager->updateUser($user);
+
+        $this->addFlash('success', "User '{$user->getUsername()}' account has been disabled.");
+        return $this->redirectToRoute('sp_user_index');
+    }
+
     public function editAction(Request $request, $user)
 	{
 		$userManager = $this->get('fos_user.user_manager');
-		$user = $userManager->findUserByUsername($user);
+		$userObj = $userManager->findUserByUsername($user);
 
-		if(!$user)
+		if(!$userObj)
 		{
 			$this->addFlash('error', "User not found.");
             return $this->redirectToRoute('sp_user_index');
 		}
 
-        $formFactory = $this->get('fos_user.profile.form.factory');
-        $form = $formFactory->createForm();
-        $form->setData($user);
-
+        $form = $this->createForm('spbar_user_edit', $userObj);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $userManager->updateUser($user);
+            $userManager->updateUser($userObj);
 
-            $this->addFash('success', "User '{$user->getUsername()}' has been successfully updated.");
+            $this->addFlash('success', "User '{$userObj->getUsername()}' has been successfully updated.");
             return $this->redirectToRoute('sp_user_index');
         }
 
@@ -109,31 +133,26 @@ class UserController extends Controller
         return $this->render('SpBarUserBundle:User:edit.html.twig', array(
             'form' => $form->createView(),
             'page_title'=>"Edit User",
-            'user'=> $user,
+            'user'=> $userObj,
         ));
 	}
 
-	public function deleteUserAction($slug)
+	public function deleteAction($user)
 	{
-
      	$userManager = $this->get('fos_user.user_manager');
-		$user = $userManager->findUserByUsername($slug);
+		$user = $userManager->findUserByUsername($user);
 
-        if (!$user) 
+        if(!$user)
         {
-            throw $this->createNotFoundException('No user found.');
+            $this->addFlash('error', "User not found.");
+            return $this->redirectToRoute('sp_user_index');
         }
 
-        $deleteId = $user->getId();
-
+        $username = $user->getUsername();
         $userManager->deleteUser($user);
 
-        if($this->getUser()->getId() == $deleteId)
-        {
-            return $this->redirect($this->generateUrl('logout'));
-        }
-
-        return $this->redirect($this->generateUrl('userIndexPage'));
+        $this->addFlash('success', "User {$username} has been deleted.");
+        return $this->redirectToRoute('sp_user_index');
 	}
 
     public function assignToGroupAction($user)

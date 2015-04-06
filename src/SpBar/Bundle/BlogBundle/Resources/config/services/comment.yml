@@ -1,0 +1,9 @@
+services:
+    # spbar.blog_comment_form_type:
+    #     class: SpBar\Bundle\BlogBundle\Form\Type\CommentFormType
+    #     tags:
+    #         - { name: form.type, alias: spbar_blog_comment }
+
+    # spbar.blog_comment_manager:
+    #     class: SpBar\Bundle\BlogBundle\Model\CommentManager
+    #     arguments: ["@doctrine.orm.entity_manager"]

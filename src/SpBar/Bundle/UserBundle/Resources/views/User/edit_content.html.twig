@@ -1,146 +1,162 @@
+{# form_theme form 'bootstrap_3_horizontal_layout.html.twig' #}
+
+{% form_theme form with ['form_errors.html.twig'] %}
+
 <div class="box-body">
-	<form class="form-horizontal" method="POST" action="{{ path('sp_user_edit', {'user': user.username}) }}">
-
-		<div>
-			<!-- Custom Tabs -->
-			<div class="nav-tabs-custom">
-				<ul class="nav nav-tabs">
-					<li class="active"><a aria-expanded="true" href="#personal_tab" data-toggle="tab">Personal</a></li>
-					<li class=""><a aria-expanded="false" href="#social_tab" data-toggle="tab">Social</a></li>
-					<li class=""><a aria-expanded="false" href="#confirm_tab" data-toggle="tab">Confirm</a></li>
-				</ul>
-				<div class="tab-content">
-					<div class="tab-pane active" id="personal_tab">
-						
+	<form class="form-horizontal" method="POST" action="{{ path('sp_user_edit',{'user': user.username }) }}">
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							<strong>Personal Information</strong>
+						</h3>
+					</div><!-- /.box-header -->
+					<div class="box-body">
 						<div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.firstname) }}:</label>
-				            <div class="col-sm-4">
+				            <label class="col-xs-4 control-label">{{ form_label(form.firstname) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.firstname, {"attr" : {"placeholder" : "Firstname", "class": "form-control"}}) }}
+				                {{ form_errors(form.firstname) }}
 				            </div>
+				        </div>
 
-				            <label class="col-sm-2 control-label">{{ form_label(form.lastname) }}:</label>
-				            <div class="col-sm-4">
+				        <div class="form-group">
+				            <label class="col-xs-4 control-label">{{ form_label(form.lastname) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.lastname, {"attr" : {"placeholder" : "Lastname", "class": "form-control"}}) }}
+
+				                {{ form_errors(form.lastname) }}
 				            </div>
 				        </div>
 
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.email) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.email) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.email, {"attr" : {"placeholder" : "Type your valid email", "class": "form-control"}}) }}
+				                {{ form_errors(form.email) }}
 				            </div>
 				        </div>
 
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.dateOfBirth) }}<i>(A.D.)</i>:</label>
-				            <div class="col-sm-8">
-				                {{ form_widget(form.dateOfBirth, {"attr" : {"class": "form-control"}}) }}
-				            </div>
+				            <label class="col-xs-4 control-label">{{ form_label(form.dateOfBirth) }}<i>(A.D.)</i>:</label>
+				            <div class="col-xs-8">
+				                {{ form_widget(form.dateOfBirth, {"attr" : {"class": "form-control", "placeholder": "yyyy-mm-dd"}}) }}
+				                {{ form_errors(form.dateOfBirth) }}
+				            </div>				            
 				        </div>
+
 				        
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.gender) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.gender) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.gender, {"attr" : {"class": "form-control"}}) }}
+				                {{ form_errors(form.gender) }}
 				            </div>
 				        </div>
 				        
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.phoneNumber) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.phoneNumber) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.phoneNumber, {"attr" : {"placeholder" : "Type your home number", "class": "form-control"}}) }}
+				                {{ form_errors(form.phoneNumber) }}
 				            </div>
 				        </div>
 				        
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.mobileNumber) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.mobileNumber) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.mobileNumber, {"attr" : {"placeholder" : "Type your mobile number", "class": "form-control"}}) }}
+				                {{ form_errors(form.mobileNumber) }}
 				            </div>
 				        </div>
 				        
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.address) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.address) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.address, {"attr" : {"placeholder" : "Type your adddress", "class": "form-control"}}) }}
+				                {{ form_errors(form.address) }}
 				            </div>
 				        </div>
 				        
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.biography) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.biography) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.biography, {"attr" : {"class": "form-control"}}) }}
+				                {{ form_errors(form.biography) }}
 				            </div>
 				        </div>
 				        
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.website) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.website) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.website, {"attr" : {"placeholder" : "Type your personal site url", "class": "form-control"}}) }}
+				                {{ form_errors(form.website) }}
 				            </div>
 				        </div>
+					</div>				
+				</div><!-- /.box -->
+			</div><!-- /.col -->
 
-				        <div class="form-group">
-					        <div class="col-sm-offset-10 col-sm-2">
-					        	<a aria-expanded="false" href="#social_tab" data-toggle="tab"><button class="btn btn-info">Next</button></a>
-					        </div>
-					    </div>
-
-					</div><!-- /.tab-pane -->
-					
-					<div class="tab-pane" id="social_tab">
+			<div class="col-xs-6">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							<strong>Social Information</strong>
+						</h3>
+					</div><!-- /.box-header -->
+					<div class="box-body">
 						<div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.facebookId) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.facebookId) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.facebookId, {"attr" : {"placeholder" : "Type your facebook url", "class": "form-control"}}) }}
+				                {{ form_errors(form.facebookId) }}
 				            </div>
 				        </div>
 
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.gplusId) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.gplusId) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.gplusId, {"attr" : {"placeholder" : "Type your gplus url", "class": "form-control"}}) }}
+				                {{ form_errors(form.gplusId) }}
 				            </div>
 				        </div>
 
 				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.twitterId) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.twitterId) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.twitterId, {"attr" : {"placeholder" : "Type your twitter url", "class": "form-control"}}) }}
+				                {{ form_errors(form.twitterId) }}
 				            </div>
 				        </div>
+					</div>				
+				</div><!-- /.box -->
 
-				        <div class="form-group">
-					        <div class="col-sm-offset-10 col-sm-2">
-					        	<a aria-expanded="false" href="#confirm_tab" data-toggle="tab"><button class="btn btn-info">Next</button></a>
-					        </div>
-					    </div>
-					</div><!-- /.tab-pane -->
-
-					<div class="tab-pane" id="confirm_tab">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							<strong>Confirm</strong>
+						</h3>
+					</div><!-- /.box-header -->
+					<div class="box-body">
 						<div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.username) }}:</label>
-				            <div class="col-sm-8">
+				            <label class="col-xs-4 control-label">{{ form_label(form.username) }}:</label>
+				            <div class="col-xs-8">
 				                {{ form_widget(form.username, {"attr" : {"class": "form-control"}}) }}
-				            </div>
-				        </div>
-				        <div class="form-group">
-				            <label class="col-sm-2 control-label">{{ form_label(form.current_password) }}:</label>
-				            <div class="col-sm-8">
-				                {{ form_widget(form.current_password, {"attr" : {"placeholder" : "Type your current password", "class": "form-control"}}) }}
+				                {{ form_errors(form.username) }}
 				            </div>
 				        </div>
 
 				        <div class="form-group">
-				            <div class="col-sm-offset-2 col-sm-8">
+				            <div class="col-xs-offset-4 col-xs-8">
 				                <button type="submit" class="btn btn-info" value="Update">Update</button>
 				            </div>
 				        </div>
-					</div><!-- /.tab-pane -->
-				</div><!-- /.tab-content -->
-			</div><!-- nav-tabs-custom -->
-		</div>
-		{{ form_widget(form) }}
+					</div>				
+				</div><!-- /.box -->
+
+			</div><!-- /.col -->
+		</div><!-- /.row -->
 	</form>
 </div>
 

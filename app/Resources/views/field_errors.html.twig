@@ -1,0 +1,10 @@
+{% block field_errors %}
+    {% spaceless %}
+    {% if errors|length > 0 %}
+        {% for error in errors %}
+            <span style="color: #FF0000;">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
+            {% if not loop.last %} <br> {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endspaceless %}
+{% endblock field_errors %}

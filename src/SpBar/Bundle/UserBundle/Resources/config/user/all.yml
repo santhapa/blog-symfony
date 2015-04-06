@@ -5,3 +5,14 @@ sp_user:
 sp_group:
     resource: "@SpBarUserBundle/Resources/config/user/group.yml"
     prefix:   /group
+
+sp_user_login: 
+    path: /login
+    defaults: { _controller: SpBarUserBundle:Security:login }
+
+sp_user_login_check:
+    path: /login_check
+    defaults: { _controller: SpBarUserBundle:Security:check }
+
+sp_user_logout:
+    path: /logout

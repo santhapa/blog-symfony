@@ -2,6 +2,10 @@ sp_user_index:
     path: /
     defaults: { _controller:SpBarUserBundle:User:index }
 
+sp_user_profile:
+    path: /profile
+    defaults: { _controller:SpBarUserBundle:Profile:edit }
+
 sp_user_list:
     path: /list/
     defaults: { _controller:SpBarUserBundle:User:list }
@@ -22,4 +26,6 @@ sp_user_enable:
     path: /sp-{user}/enable/
     defaults: { _controller:SpBarUserBundle:User:enable }
 
-
+sp_user_disable:
+    path: /sp-{user}/disable/
+    defaults: { _controller:SpBarUserBundle:User:disable }

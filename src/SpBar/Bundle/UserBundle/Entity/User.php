@@ -111,19 +111,19 @@ class User extends BaseUser
 
     /*******************************files to be changed*******************************************/
         /** 
-        *@ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Post", mappedBy="author")
+        *@ORM\OneToMany(targetEntity="SpBar\Bundle\BlogBundle\Entity\Post", mappedBy="author")
         */
-        protected $post_author = null;
+        protected $posts = null;
 
         /**
-        *@ORM\OneToMany(targetEntity="\Blog\PostBundle\Entity\Comment", mappedBy="user")
+        *@ORM\OneToMany(targetEntity="SpBar\Bundle\BlogBundle\Entity\Comment", mappedBy="user")
         */
         protected $comments;
 
         public function __construct()
         {
             parent::__construct();
-            $this->post_author = new ArrayCollection();
+            $this->posts = new ArrayCollection();
             $this->comments = new ArrayCollection();
         }
     /*******************************files to be changed*******************************************/
@@ -145,7 +145,7 @@ class User extends BaseUser
 
     public function setFirstname($fname)
     {
-        $this->fname = ucfirst($fname);
+        $this->firstname = ucfirst($fname);
     }
 
     public function getFirstname()
@@ -274,12 +274,12 @@ class User extends BaseUser
     }
 
     /*******************************files to be changed*******************************************/
-        public function addPostAuthor($post)
+        public function setPosts($post)
         {
-            $this->post_author[] = $post;
+            $this->posts[] = $post;
         }
 
-        public function addComment($comment)
+        public function setComments($comment)
         {
             $this->comments[] = $comment;
         }

@@ -29,5 +29,7 @@ class SpBarBlogExtension extends Extension
         $serviceLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
         $serviceLoader->load('config_services.yml');
         $serviceLoader->load('theme_services.yml');
+        $serviceLoader->load('post.yml');
+        $serviceLoader->load('comment.yml');
     }
 }

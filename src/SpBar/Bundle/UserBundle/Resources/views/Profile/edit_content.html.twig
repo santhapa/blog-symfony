@@ -1,58 +1,170 @@
-{% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form with ['form_errors.html.twig'] %}
 
-<form action="{{ path('editProfilePage') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal">
+<div class="box-body">
+    <form class="form-horizontal" method="POST" action="{{ path('sp_user_profile') }}">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Personal Information</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.firstname) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.firstname, {"attr" : {"placeholder" : "Firstname", "class": "form-control"}}) }}
+                                {{ form_errors(form.firstname) }}
+                            </div>
+                        </div>
 
-    {{ form_errors(form) }}
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.lastname) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.lastname, {"attr" : {"placeholder" : "Lastname", "class": "form-control"}}) }}
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ form_label(form.username) }}</label>
-        <div class="col-sm-8">
-            {{ form_widget(form.username, {"attr" : {"placeholder" : "Username", "class": "form-control"}}) }}
-            {% if form_errors(form.username) %}
-                <span class="alert alert-error">{{ form_errors(form.username) }}</span>
-            {% endif %}
-        </div>
-    </div>
+                                {{ form_errors(form.lastname) }}
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ form_label(form.name) }}</label>
-        <div class="col-sm-8">
-            {{ form_widget(form.name, {"attr" : {"placeholder" : "Suresh Mainali", "class": "form-control"}}) }}
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.email) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.email, {"attr" : {"placeholder" : "Type your valid email", "class": "form-control"}}) }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                        </div>
 
-            {% if form_errors(form.name) %}
-                <span class="alert alert-error">{{ form_errors(form.name) }}</span>
-            {% endif %}
-        </div>
-    </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.dateOfBirth) }}<i>(A.D.)</i>:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.dateOfBirth, {"attr" : {"class": "form-control", "placeholder": "yyyy-mm-dd"}}) }}
+                                {{ form_errors(form.dateOfBirth) }}
+                            </div>                          
+                        </div>
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ form_label(form.email) }}</label>
-        <div class="col-sm-8">
-            {{ form_widget(form.email, {"attr" : {"placeholder" : "Email Address", "class": "form-control"}}) }}
+                        
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.gender) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.gender, {"attr" : {"class": "form-control"}}) }}
+                                {{ form_errors(form.gender) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.phoneNumber) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.phoneNumber, {"attr" : {"placeholder" : "Type your home number", "class": "form-control"}}) }}
+                                {{ form_errors(form.phoneNumber) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.mobileNumber) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.mobileNumber, {"attr" : {"placeholder" : "Type your mobile number", "class": "form-control"}}) }}
+                                {{ form_errors(form.mobileNumber) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.address) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.address, {"attr" : {"placeholder" : "Type your adddress", "class": "form-control"}}) }}
+                                {{ form_errors(form.address) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.biography) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.biography, {"attr" : {"class": "form-control"}}) }}
+                                {{ form_errors(form.biography) }}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.website) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.website, {"attr" : {"placeholder" : "Type your personal site url", "class": "form-control"}}) }}
+                                {{ form_errors(form.website) }}
+                            </div>
+                        </div>
+                    </div>              
+                </div><!-- /.box -->
+            </div><!-- /.col -->
 
-            {% if form_errors(form.email) %}
-                <span class="alert alert-error">{{ form_errors(form.email) }}</span>
-            {% endif %}
-        </div>
-    </div>
+            <div class="col-xs-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Social Information</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.facebookId) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.facebookId, {"attr" : {"placeholder" : "Type your facebook url", "class": "form-control"}}) }}
+                                {{ form_errors(form.facebookId) }}
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ form_label(form.current_password) }}</label>
-        <div class="col-sm-8">
-            {{ form_widget(form.current_password, {"attr" : {"placeholder" : "Confirm Password", "class": "form-control"}}) }}
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.gplusId) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.gplusId, {"attr" : {"placeholder" : "Type your gplus url", "class": "form-control"}}) }}
+                                {{ form_errors(form.gplusId) }}
+                            </div>
+                        </div>
 
-            {% if form_errors(form.current_password) %}
-                <span class="alert alert-error">{{ form_errors(form.current_password) }}</span>
-            {% endif %}
-        </div>
-    </div>
-	
-	{{form_rest(form)}} 
-    
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-8">
-            <button type="submit" class="btn btn-info" value="Update">Update</button>
-        </div>
-    </div>
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.twitterId) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.twitterId, {"attr" : {"placeholder" : "Type your twitter url", "class": "form-control"}}) }}
+                                {{ form_errors(form.twitterId) }}
+                            </div>
+                        </div>
+                    </div>              
+                </div><!-- /.box -->
 
-</form>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Confirm</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.username) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.username, {"attr" : {"class": "form-control"}}) }}
+                                {{ form_errors(form.username) }}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.current_password) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.current_password, {"attr" : {"placeholder" : "Type your current password", "class": "form-control"}}) }}
+                                {{ form_errors(form.current_password) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-offset-4 col-xs-8">
+                                <button type="submit" class="btn btn-info" value="Save">Save</button>
+                            </div>
+                        </div>
+                    </div>              
+                </div><!-- /.box -->
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form>
+</div>
+
+

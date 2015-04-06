@@ -17,13 +17,15 @@ class ProfileFormType extends AbstractType
 
         $builder->add('username','text', array(
                     'label'=>'Username',
-                    'attr'=> array('disabled'=>'disabled'),
+                    'read_only' => true,
                 ));
 
         $builder->add('current_password', 'password', array(
                         'label' => 'Current Password',
                         'mapped' => false,
+                        'invalid_message' => "Wrong password!",
                         'constraints' => new UserPassword(),
+                        'required' => true
                     ));
     }
 
@@ -45,7 +47,13 @@ class ProfileFormType extends AbstractType
                     'label'=>"Last Name",
                     'required'=> true
                 ))
+                ->add('email', 'email',array(
+                    'label' => 'Email Address',
+                    'read_only' => true,
+                ))
                 ->add('dateOfBirth', 'date', array(
+                    'input'  => 'datetime',
+                    'widget' => 'single_text',
                     'label'=>"Date of Birth",
                     'required' => true
                 ))
@@ -64,7 +72,7 @@ class ProfileFormType extends AbstractType
                 ))
                 ->add('address', 'text', array(
                     'label'=>"Address",
-                    'required' => false
+                    'required' => true
                 ))
                 ->add('biography', 'textarea', array(
                     'label'=>"Biography",

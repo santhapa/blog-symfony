@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new FM\ElfinderBundle\FMElfinderBundle(),
 
             //my bundles
             // new Blog\UserBundle\BlogUserBundle(),

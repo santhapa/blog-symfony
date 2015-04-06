@@ -6,8 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
-use SpBar\Bundle\BlogBundle\Form\EventListener\ChangeConfigTextareaSubscriber;
-
 class ThemeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
