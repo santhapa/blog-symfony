@@ -30,15 +30,15 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources: ['bootstrap_3_horizontal_layout.html.twig']
+    # form:
+    #     resources: ['bootstrap_3_horizontal_layout.html.twig']
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     # bundles:        [ 'BlogUserBundle', 'BlogPostBundle', 'BlogPublicBundle']
-    bundles:        [ 'SpBarUserBundle', 'BlogPostBundle', 'BlogPublicBundle']
+    bundles:        [ 'SpBarUserBundle', 'BlogPostBundle', 'BlogPublicBundle', 'FMElfinderBundle']
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -146,6 +146,20 @@ fm_elfinder:
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
                         upload_deny: ['all']
                         upload_max_size: 2M
+        form:
+            locale: %locale% # defaults to current request locale
+            editor: form # other choices are tinymce or simple, and form
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: uploads
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 2M
 
 #Ivory ckeditor Configuration
 ivory_ck_editor:
@@ -154,4 +168,4 @@ ivory_ck_editor:
         default:
             filebrowserBrowseRoute: elfinder
             filebrowserBrowseRouteParameters:
-                instance: ckeditor
+                # instance: ckeditor

@@ -59,6 +59,7 @@ class PostController extends Controller
 
     	if ($form->isValid()) 
     	{
+    		
     		$postManager->updatePost($post);
     		$this->addFlash('success', "Post '{$post->getTitle()}' successfully added.");
 

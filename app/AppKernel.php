@@ -24,6 +24,14 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FM\ElfinderBundle\FMElfinderBundle(),
+            // new JMS\SerializerBundle\JMSSerializerBundle(),
+
+            // new Sonata\CoreBundle\SonataCoreBundle(),
+            // new Sonata\BlockBundle\SonataBlockBundle(),
+            // new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            // new Sonata\AdminBundle\SonataAdminBundle(),
+            // new Sonata\MediaBundle\SonataMediaBundle(),
+            // new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
             //my bundles
             // new Blog\UserBundle\BlogUserBundle(),

@@ -7,6 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
 * @ORM\Entity
@@ -43,7 +44,8 @@ class Post
     protected $postType;
 
     /**
-    *@ORM\Column(type="boolean")
+    * @Assert\Choice(choices={"0", "1", "2"}, message="Invalid status")
+    * @ORM\Column(type="integer")
     **/
     protected $status;
 
@@ -154,6 +156,5 @@ class Post
     public function getComments()
     {
         return $this->comments;
-    }
-        
+    }        
 }

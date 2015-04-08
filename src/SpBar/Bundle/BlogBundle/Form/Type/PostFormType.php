@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
 use SpBar\Bundle\BlogBundle\Model\ThemeManager;
+use SpBar\Bundle\BlogBundle\Model\PostManager;
 
 class PostFormType extends AbstractType
 {   
@@ -28,6 +29,7 @@ class PostFormType extends AbstractType
 
         $builder->add('title', 'text', array(
                         'label' => 'Title of the Post',
+                        'attr' => array('placeholder'=>"Title of the Post"),
                         'required'=>true
                     ))
                 // ->add('content', 'textarea', array(
@@ -52,9 +54,12 @@ class PostFormType extends AbstractType
                         'data' => 'general_post',
                         'required' => true
                     ))
+                // ->add('image', 'file')
+                // ->add('image','elfinder', array('instance'=>'form', 'enable'=>true))
                 ->add('status', 'choice', array(
                         'label' => 'Publish',
-                        'choices' => array('1'=>'Yes', '0'=>'No'),
+                        'choices' => PostManager::$newPostStatus,
+                        'data' => '1',
                         'required' => true
                     ))
         ;

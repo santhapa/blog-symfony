@@ -7,7 +7,15 @@ use SpBar\Bundle\BlogBundle\Entity\Post;
 
 class PostManager
 {
-	protected $em;
+	const POST_STATUS_DRAFT = 0;
+	const POST_STATUS_PUBLISH = 1;
+    const POST_STATUS_TRASH = 2;
+
+	public static $newPostStatus = array(
+		self::POST_STATUS_DRAFT => 'Save to Draft',
+		self::POST_STATUS_PUBLISH	=> 'Publish'
+	);
+
 
 	public function __construct(EntityManager $em)
 	{
