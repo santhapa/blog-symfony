@@ -5,6 +5,11 @@ namespace SpBar\Bundle\BlogBundle\Controller\Backend;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+
 class PostController extends Controller
 {
 	public function indexAction()
@@ -13,7 +18,7 @@ class PostController extends Controller
 
 		//new form for post
 		$post = $postManager->createPost();
-        $form = $this->createForm('spbar_blog_post', $post);
+        $form = $this->createForm('spbar_blog_post_new', $post);
         
         //get list of available posts
 		$posts = $postManager->getPosts();
@@ -27,6 +32,7 @@ class PostController extends Controller
 			'page_title' => 'Blog Posts',
             'form' => $form->createView(),
 			'posts' => $posts,
+			'postStatus'=> $postManager::$postStatus,
 		));
 	}
 
@@ -45,6 +51,7 @@ class PostController extends Controller
 		return $this->render("SpBarBlogBundle::Backend/Post/list.html.twig", array(
 			'page_title' => 'List of Posts',
 			'posts' => $posts,
+			'postStatus'=> $postManager::$postStatus,
 		));
 	}
 
@@ -53,18 +60,36 @@ class PostController extends Controller
 		$postManager = $this->get('spbar.blog_post_manager');
         $post = $postManager->createPost();
 
-        $form = $this->createForm('spbar_blog_post', $post);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $post->setAuthor($user);
+
+        $form = $this->createForm('spbar_blog_post_new', $post);
 
         $form->handleRequest($request);
 
     	if ($form->isValid()) 
     	{
-    		
     		$postManager->updatePost($post);
-    		$this->addFlash('success', "Post '{$post->getTitle()}' successfully added.");
+    		
+    		// creating the ACL
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($post);
+            $acl = $aclProvider->createAcl($objectIdentity);
 
+            // retrieving the security identity of the currently logged-in user
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OPERATOR);
+            $aclProvider->updateAcl($acl);
+
+            $roleIdentity = new RoleSecurityIdentity('BLOG_ADMIN');
+            $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
+
+    		$this->addFlash('success', "Post '{$post->getTitle()}' successfully added.");
 		    return $this->redirectToRoute('sp_blog_post_index');
 		}
+
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
@@ -88,7 +113,7 @@ class PostController extends Controller
 		    return $this->redirectToRoute('sp_blog_post_index');
         }
 
-        $form = $this->createForm('spbar_blog_post', $post);
+        $form = $this->createForm('spbar_blog_post_edit', $post);
 
         $form->handleRequest($request);
 

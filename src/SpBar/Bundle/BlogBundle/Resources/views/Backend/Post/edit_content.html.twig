@@ -1,35 +1,79 @@
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig','form_errors.html.twig'] %}
+
 <div class="box-body">
-	<div>
-		<p><span>Changing values may cause error. Be sure to apply same change on <code><b><i>Layout/..</i></b></code> location.</span></p>
-	</div>
-	<form class="form-horizontal" method="POST" action="{{ path('sp_blog_theme_edit', {'slug': slug}) }}">
+    <form class="form-horizontal" method="POST" action="{{ path('sp_blog_post_edit', {'slug': slug}) }}">
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Post Content</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.title) }}
+                        {{ form_errors(form.title) }}  
+                        <br>
+                        {{ form_widget(form.content) }}
+                        {{ form_errors(form.content) }} 
+                        <br>
+                        {% if app.user and is_granted('ROLE_BLOG_ADMIN') %}
+                        	{{ form_widget(form.author) }}
+                        	{{ form_errors(form.author) }}
+                        {% endif %}
+                    </div>              
+                </div><!-- /.box -->
+            </div><!-- /.col -->
 
-		<div class="form-group">
-			<label class="col-sm-2 control-label">{{ form_label(form.name) }}:</label>
-			<div class="col-sm-8">
-				{{ form_widget(form.name, {"attr" : {"placeholder" : "Type new theme name", "class": "form-control"}}) }}
-			</div>
-		</div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Featured Image</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {# { form_widget(form.image) }}
+                        {{ form_errors(form.image) } #}
+                    </div>              
+                </div><!-- /.box -->
 
-		<div class="form-group">
-			<label class="col-sm-2 control-label">{{ form_label(form.template) }}:</label>
-			<div class="col-sm-8">
-				{{ form_widget(form.template, {"attr" : {"placeholder" : "Type the template name", "class": "form-control"}}) }}
-			</div>
-		</div>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Post Type</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.postType) }}
+                        {{ form_errors(form.postType) }}  
+                    </div>              
+                </div><!-- /.box -->
 
-		<div class="form-group">
-			<label class="col-sm-2 control-label">{{ form_label(form.type) }}:</label>
-			<div class="col-sm-8">
-				{{ form_widget(form.type, {"attr" : {"class": "form-control"}}) }}
-			</div>
-		</div>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Confirm</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.status) }}
+                        {{ form_errors(form.status) }}  
+                        <br>
+                        <div class="form-group">
+					        <div class="col-xs-8">
+					            <button type="submit" class="btn btn-info" value="Update">Update</button>
+					        </div>
+					    </div>
+                    </div>              
+                </div><!-- /.box -->
 
-		<div class="form-group">
-	        <div class="col-sm-offset-4 col-sm-8">
-	            <button type="submit" class="btn btn-info" value="Update">Udate</button>
-	        </div>
-	    </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form>
+</div>
 
-	</form>
-</div><!-- /.box-body -->
+{% block js %}
+    <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+
+{% endblock js %}

@@ -1071,6 +1071,10 @@ background-color:#57a7c6
 margin-bottom:13px
 }
 
+#logo{
+	font-size: 30px;
+}
+
 .slogan {
 display:inline-block;
 width:130px;

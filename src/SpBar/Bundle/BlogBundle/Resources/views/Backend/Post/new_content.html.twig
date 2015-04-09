@@ -15,7 +15,12 @@
                         {{ form_errors(form.title) }}  
                         <br>
                         {{ form_widget(form.content) }}
-                        {{ form_errors(form.content) }}  
+                        {{ form_errors(form.content) }} 
+                        <br>
+                        {% if app.user and is_granted('ROLE_BLOG_ADMIN') %}
+                            {{ form_widget(form.author) }}
+                            {{ form_errors(form.author) }}
+                        {% endif %}
 
                     </div>              
                 </div><!-- /.box -->
@@ -29,6 +34,8 @@
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
+                        {# { form_widget(form.image) }}
+                        {{ form_errors(form.image) } #}
                     </div>              
                 </div><!-- /.box -->
 

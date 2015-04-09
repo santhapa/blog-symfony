@@ -1,41 +1,203 @@
 <div class="box-body">
-	<table id="postList" class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>S.N.</th>
-				<th>Theme Name</th>
-				<th>Theme Type</th>
-				<th>Slug</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for theme in themes %}
-		        <tr>
-					<td>{{ loop.index }}</td>
-					<td>{{ theme.name }} </td>
-					<td>{{ theme.type }}</td>
-					<td> {{ theme.slug }} </td>
-					<td>
-						<a href="{{ path('sp_blog_theme_edit',{'slug': theme.slug}) }}">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
-						</a>
-						<a href="{{ path('sp_blog_theme_delete',{'slug': theme.slug}) }}">
-							<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
-						</a>
-					</td>
-				</tr>
-		    {% endfor %}
-		</tbody>
-		<tfoot>
-			<tr>
-				<th>S.N.</th>
-				<th>Theme Name</th>
-				<th>Theme Type</th>
-				<th>Slug</th>
-				<th>Action</th>
-			</tr>
-		</tfoot>
-	</table>
-	{# knp_pagination_render(posts) #}
+
+	<div class="nav-tabs-post">
+		<ul class="nav nav-tabs">
+			<li class="active"><a aria-expanded="false" href="#active_post" data-toggle="tab">Active</a></li>	
+			<li class=""><a aria-expanded="false" href="#draft_post" data-toggle="tab">Drafts</a></li>		
+			<li class=""><a aria-expanded="false" href="#trash_post" data-toggle="tab">Trash</a></li>			
+			<li class=""><a aria-expanded="true" href="#all_post" data-toggle="tab">All</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="active_post">
+				<table id="postList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
+					        <tr>
+					        	<td>{{ loop.index }}</td>
+								<td> {{ post.title }} </td>
+								<td> {{ post.postType.name }} </td>
+								<td> {{ post.author.username }} </td>
+								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
+								<td>
+									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+									</a>
+									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+									</a>
+								</td>
+							</tr>
+					    {% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Action</th>
+						</tr>
+					</tfoot>
+				</table>
+				{# knp_pagination_render(posts) #}
+			</div><!-- /.tab-pane -->
+			
+			<div class="tab-pane" id="draft_post">
+				<table id="postList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_DRAFT') %}
+					        <tr>
+					        	<td>{{ loop.index }}</td>
+								<td> {{ post.title }} </td>
+								<td> {{ post.postType.name }} </td>
+								<td> {{ post.author.username }} </td>
+								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
+								<td>
+									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+									</a>
+									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+									</a>
+								</td>
+							</tr>
+					    {% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Action</th>
+						</tr>
+					</tfoot>
+				</table>
+				{# knp_pagination_render(posts) #}
+			</div><!-- /.tab-pane -->
+
+			<div class="tab-pane" id="trash_post">
+				<table id="postList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_TRASH') %}
+					        <tr>
+					        	<td>{{ loop.index }}</td>
+								<td> {{ post.title }} </td>
+								<td> {{ post.postType.name }} </td>
+								<td> {{ post.author.username }} </td>
+								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
+								<td>
+									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+									</a>
+									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+									</a>
+								</td>
+							</tr>
+					    {% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Action</th>
+						</tr>
+					</tfoot>
+				</table>
+				{# knp_pagination_render(posts) #}
+			</div><!-- /.tab-pane -->
+
+			<div class="tab-pane" id="all_post">
+				<table id="postList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for post in posts %}
+					        <tr>
+					        	<td>{{ loop.index }}</td>
+								<td> {{ post.title }} </td>
+								<td> {{ post.postType.name }} </td>
+								<td> {{ post.author.username }} </td>
+								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
+								<td>
+									{% for key,status in postStatus %}
+									    {% if key == post.status %}
+									    	{{ status }}
+									    {% endif %}
+									{% endfor %}
+								</td>
+								<td>
+									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+									</a>
+									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+									</a>
+								</td>
+							</tr>
+					    {% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Post Type</th>
+							<th>Author</th>
+							<th>Created At</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</tfoot>
+				</table>
+				{# knp_pagination_render(posts) #}
+			</div><!-- /.tab-pane -->
+		</div><!-- /.tab-content -->
+	</div>
+
 </div><!-- /.box-body -->

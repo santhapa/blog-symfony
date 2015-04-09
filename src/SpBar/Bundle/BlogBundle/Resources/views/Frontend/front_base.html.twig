@@ -1,0 +1,51 @@
+{% set theme = blog_config.get('blog_theme') %}
+{% set postLimit = blog_config.get('post_per_page') %}
+{% set loadIndexTheme = 'SpBarBlogBundle::Layout/index/'~ theme %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title> {% block title %}{% if page_title is defined %} {{ page_title }} {% endif %} {% endblock title %} | SpBar</title>
+	<!-- common css -->
+	{% include 'SpBarBlogBundle::Layout/header_assets.html.twig' %}
+
+	{% block css %}	    
+	{% endblock css %}
+<head>
+
+</head>
+<body>
+
+	{% block body  %}
+
+		<!-- loads header navbar section -->
+		{% block body_header %}
+		    {% include 'SpBarBlogBundle::Layout/navbar.html.twig' %}
+		{% endblock body_header %}
+
+		{% block body_content %}
+			{% include loadIndexTheme %}	    
+		{% endblock body_content %}
+
+		<!-- loads footer and copyright section -->
+		{% block body_footer %}
+			<!-- load footer widget section -->
+		    {% block body_footer_widget %}
+		    	{% include 'SpBarBlogBundle::Layout/footer_widget.html.twig' %}		        
+		    {% endblock body_footer_widget %}
+
+		    <!-- load copyright section -->
+		    {% block body_footer_copyright %}
+		    	{% include 'SpBarBlogBundle::Layout/footer_copyright.html.twig' %}		        
+		    {% endblock body_footer_copyright %}
+		{% endblock body_footer %}
+	    
+	{% endblock body %}
+
+	<!-- common js -->
+	{% include 'SpBarBlogBundle::Layout/footer_assets.html.twig' %}
+	{% block js %}	    
+	{% endblock js %}
+</body>
+</html>

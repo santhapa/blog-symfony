@@ -1,6 +1,6 @@
 <?php
 
-namespace SpBar\Bundle\BlogBundle\Form\Type;
+namespace SpBar\Bundle\BlogBundle\Form\Type\Post;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -9,23 +9,25 @@ use Symfony\Component\Form\AbstractType;
 use SpBar\Bundle\BlogBundle\Model\ThemeManager;
 use SpBar\Bundle\BlogBundle\Model\PostManager;
 
-class PostFormType extends AbstractType
+class NewFormType extends AbstractType
 {   
     protected $tm;
 
-    public function __construct(ThemeManager $tm)
+    protected $authorizer;
+
+    protected $token;
+
+    public function __construct(ThemeManager $tm, $auth=null, $token=null)
     {
         $this->tm = $tm;
+        $this->authorizer = $auth;
+        $this->token = $token;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $singleType = $this->tm->getThemesByType('single');
-
-        $postTypes = array();
-        foreach ($singleType as $theme) {
-            $postTypes[$theme->getSlug()] = $theme->getName();
-        }
+        $generalPost = $this->tm->getThemeBySlug('general_post');
 
         $builder->add('title', 'text', array(
                         'label' => 'Title of the Post',
@@ -45,13 +47,15 @@ class PostFormType extends AbstractType
                         ),
                     ),
                 ))
-                ->add('postType', 'choice', array(
+                ->add('postType', 'entity', array(
                         'label' => 'Post Type',
-                        'choices' => $postTypes,
+                        'class' => 'SpBarBlogBundle:Theme',
+                        'property' => 'name',
+                        'choices' => $singleType,                        
+                        'preferred_choices' => array($generalPost),
+                        'data' => $generalPost,
                         'expanded' => true,
                         'multiple' => false,
-                        'preferred_choices' => array('general_post'),
-                        'data' => 'general_post',
                         'required' => true
                     ))
                 // ->add('image', 'file')
@@ -63,6 +67,17 @@ class PostFormType extends AbstractType
                         'required' => true
                     ))
         ;
+
+        if($this->authorizer->isGranted('ROLE_BLOG_ADMIN'))
+        {
+            $builder->add('author', 'entity', array(
+                    'class' => 'SpBarUserBundle:User',
+                    'property' => 'username',
+                    'placeholder' => 'Select Author',
+                    'data' => $this->token->getToken()->getUser(),
+                    'required' => true
+                ));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -74,6 +89,6 @@ class PostFormType extends AbstractType
 
     public function getName()
     {
-        return 'spbar_blog_post';
+        return 'spbar_blog_post_new';
     }
 }

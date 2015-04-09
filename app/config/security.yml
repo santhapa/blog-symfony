@@ -3,7 +3,8 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_BLOG_ADMIN: [ROLE_BLOG_AUTHOR, ROLE_BLOG_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_BLOG_ADMIN, ROLE_BLOG_AUTHOR]
 
     providers:
         fos_userbundle:
@@ -24,6 +25,7 @@ security:
 
     access_control:    
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/blog/post/new, role: [ROLE_BLOG_AUTHOR] }
         - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/efconnect, role: ROLE_USER }

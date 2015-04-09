@@ -1,0 +1,3 @@
+sp_blog_public:
+    path: /blog
+    defaults: { _controller: SpBarBlogBundle:Frontend/Public:index }

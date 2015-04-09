@@ -4,7 +4,7 @@ blog_admin:
 
 blog_public:
     resource: "@BlogPublicBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /public
 
 blog_post:
     resource: "@BlogPostBundle/Resources/config/routing.yml"
@@ -25,4 +25,4 @@ sp_userbundle:
     resource: "@SpBarUserBundle/Resources/config/routing.yml"
 
 elfinder:
-     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+    resource: "@FMElfinderBundle/Resources/config/routing.yml"

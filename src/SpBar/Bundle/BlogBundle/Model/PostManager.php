@@ -6,14 +6,20 @@ use Doctrine\ORM\EntityManager;
 use SpBar\Bundle\BlogBundle\Entity\Post;
 
 class PostManager
-{
-	const POST_STATUS_DRAFT = 0;
+{	
 	const POST_STATUS_PUBLISH = 1;
-    const POST_STATUS_TRASH = 2;
+	const POST_STATUS_DRAFT = 2;
+    const POST_STATUS_TRASH = 3;
 
 	public static $newPostStatus = array(
 		self::POST_STATUS_DRAFT => 'Save to Draft',
 		self::POST_STATUS_PUBLISH	=> 'Publish'
+	);
+
+	public static $postStatus = array(
+		self::POST_STATUS_DRAFT => 'Draft',
+		self::POST_STATUS_PUBLISH => 'Published',
+		self::POST_STATUS_TRASH => 'Trash'
 	);
 
 
@@ -46,7 +52,7 @@ class PostManager
 
 	public function getPosts()
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Post")->findAll();
+		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array(), array('status'=>'asc'));
 	}
 
 	public function getPostBySlug($slug)

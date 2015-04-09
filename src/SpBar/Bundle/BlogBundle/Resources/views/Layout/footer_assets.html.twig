@@ -1,0 +1,29 @@
+<!-- footer js scripts -->
+<!-- include js files -->
+
+<script src="{{ asset('blog/js/jquery.js') }}"></script>
+<script src="{{ asset('blog/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js') }}"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('blog/vendors/bxslider/jquery.bxslider.min.js') }}"></script>
+<script src="{{ asset('blog/vendors/colorbox/jquery.colorbox-min.js') }}"></script>
+<script src="{{ asset('blog/vendors/animo/Animo.js') }}"></script>
+<script src="{{ asset('blog/vendors/dug/dug.js') }}"></script>
+<script src="{{ asset('blog/vendors/media/mediaelement-and-player.min.js') }}"></script>
+<script src="{{ asset('blog/js/scripts.min.js') }}"></script>
+
+<!--customjs-->
+<script type="text/javascript">
+	$(function() {
+		// this will get the full URL at the address bar
+		var url = window.location.href;
+
+		// passes on every "a" tag
+		$(".main-menu a").each(function() {
+			// checks if its the same on the address bar
+			if (url == (this.href)) {
+				$(this).closest("li").addClass("active");
+				$(this).parents('li').addClass('parent-active');
+			}
+		});
+	});   
+</script>

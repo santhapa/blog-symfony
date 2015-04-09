@@ -39,7 +39,7 @@ class Post
     protected $createdAt;
 
     /**
-    * @ORM\Column(type="string", name="post_type")
+    * @ORM\ManyToOne(targetEntity="Theme")
     */
     protected $postType;
 
@@ -157,4 +157,15 @@ class Post
     {
         return $this->comments;
     }        
+
+    // protected $image;
+
+    // public function getImage()
+    // {
+
+    // }
+    // public function setImage()
+    // {
+        
+    // }
 }
