@@ -1,0 +1,19 @@
+sp_blog_category_index:
+    path: /
+    defaults: { _controller: SpBarBlogBundle:Backend/Category:index }
+
+sp_blog_category_list:
+    path: /list/
+    defaults: { _controller: SpBarBlogBundle:Backend/Category:list }
+
+sp_blog_category_new:
+    path: /new/
+    defaults: { _controller: SpBarBlogBundle:Backend/Category:new }
+
+sp_blog_category_edit:
+    path: /cat-{slug}/edit/
+    defaults: { _controller: SpBarBlogBundle:Backend/Category:edit }
+
+sp_blog_category_delete:
+    path: /cat-{slug}/delete/
+    defaults: { _controller: SpBarBlogBundle:Backend/Category:delete }

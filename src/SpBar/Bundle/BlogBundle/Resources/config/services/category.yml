@@ -1,0 +1,9 @@
+services:
+    spbar.blog_category_form_type:
+        class: SpBar\Bundle\BlogBundle\Form\Type\CategoryFormType
+        tags:
+            - { name: form.type, alias: spbar_blog_category }
+
+    spbar.blog_category_manager:
+        class: SpBar\Bundle\BlogBundle\Model\CategoryManager
+        arguments: ["@doctrine.orm.entity_manager"]

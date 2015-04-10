@@ -1,0 +1,20 @@
+ <div class="beta-author media">
+	<img class="pull-left" src="{{ asset('blog/images/blog/author.jpg') }}" alt="">
+	<div class="media-body">
+		<p>By: <a href="#">{{ author.getName()|trim ? : 'Anonymous Author' }}</a></p>
+		<p class="beta-author-desc">
+			{{ author.biography|trim ? : '' }}
+		</p>
+		<p class="beta-author-social">
+			{% if author.facebookId is not null %}
+				<a href="{{ author.facebookId }}"><i class="fa fa-facebook"></i></a>
+			{% endif %}
+			{% if author.gplusId is not null %}
+				<a href="{{ author.gplusId }}"><i class="fa fa-twitter"></i></a>
+			{% endif %}
+			{% if author.twitterId is not null %}
+				<a href="{{ author.twitterId }}"><i class="fa fa-google-plus"></i></a>
+			{% endif %}
+		</p>
+	</div>
+</div>

@@ -1,3 +1,7 @@
 sp_blog_public:
-    path: /blog
+    path: /blog/
     defaults: { _controller: SpBarBlogBundle:Frontend/Public:index }
+
+sp_blog_public_singlePost:
+    path: /blog/{slug}/
+    defaults: { _controller: SpBarBlogBundle:Frontend/Public:singlePost }

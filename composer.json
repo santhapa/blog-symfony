@@ -25,7 +25,9 @@
         "egeloen/ckeditor-bundle": "3.0.1",
         "knplabs/knp-paginator-bundle": "2.4.1",
         "gedmo/doctrine-extensions": "~2.3",
-        "helios-ag/fm-elfinder-bundle": "5.0.3"
+        "helios-ag/fm-elfinder-bundle": "5.0.3",
+        "hwi/oauth-bundle": "0.4.*@dev",
+        "doctrine/doctrine-fixtures-bundle": "2.2.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

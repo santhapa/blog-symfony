@@ -1,0 +1,25 @@
+<div class="beta-blog beta-blog-e beta-blog-single">
+	<div class="beta-blog-header">
+		<div class="media">
+			<div class="pull-left">
+				<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
+				<span class="beta-blog-date pull-left">
+					<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
+					<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
+				</span>
+				<div class="clearfix"></div>
+			</div>
+			<div class="media-body">
+				<h5 class="beta-blog-title"><a href="#">{{ post.title }}</a></h5>
+				<p>By: <a href="#">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | <a class="color-blg-title" href="#">12 Comments</a> | In <a href="blog_fullwidth_2col.html">Business</a>, <a href="blog_fullwidth_2col.html">Education</a>, <a href="blog_fullwidth_2col.html">Health</a></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="beta-blog-content">
+		<div class="mb20"><a href="#"><img src="{{ asset('blog/images/blog/img_9.jpg') }}" alt=""></a></div>
+		<div class="beta-blog-excerpt">
+			{{ post.content|raw }}
+		</div>
+	</div>
+</div> <!-- .beta-blog item -->

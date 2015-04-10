@@ -1,0 +1,38 @@
+<div class="box-body">
+	<table id="postList" class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>S.N.</th>
+				<th>Category Name</th>
+				<th>Slug</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categorys %}
+		        <tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ category.name }} </td>
+					<td> {{ category.slug }} </td>
+					<td>
+						<a href="{{ path('sp_blog_category_edit',{'slug': category.slug}) }}">
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+						</a>
+						<a href="{{ path('sp_blog_category_delete',{'slug': category.slug}) }}">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+						</a>
+					</td>
+				</tr>
+		    {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<th>S.N.</th>
+				<th>Category Name</th>
+				<th>Slug</th>
+				<th>Action</th>
+			</tr>
+		</tfoot>
+	</table>
+	{# knp_pagination_render(posts) #}
+</div><!-- /.box-body -->

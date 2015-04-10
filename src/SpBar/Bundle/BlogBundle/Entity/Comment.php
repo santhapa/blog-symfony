@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
 * @ORM\Entity
-* @ORM\Table(name="spbar_post_comments")
+* @ORM\Table(name="spbar_blog_post_comments")
 */
 class Comment
 {

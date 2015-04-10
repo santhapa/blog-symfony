@@ -31,5 +31,6 @@ class SpBarBlogExtension extends Extension
         $serviceLoader->load('theme_services.yml');
         $serviceLoader->load('post.yml');
         $serviceLoader->load('comment.yml');
+        $serviceLoader->load('category.yml');
     }
 }

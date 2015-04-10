@@ -1,7 +1,3 @@
-{% set theme = blog_config.get('blog_theme') %}
-{% set postLimit = blog_config.get('post_per_page') %}
-{% set loadIndexTheme = 'SpBarBlogBundle::Layout/index/'~ theme %}
-
 <!DOCTYPE html>
 <html lang="en">
 	<meta charset="UTF-8">
@@ -24,8 +20,7 @@
 		    {% include 'SpBarBlogBundle::Layout/navbar.html.twig' %}
 		{% endblock body_header %}
 
-		{% block body_content %}
-			{% include loadIndexTheme %}	    
+		{% block body_content %}	    
 		{% endblock body_content %}
 
 		<!-- loads footer and copyright section -->

@@ -23,4 +23,14 @@ class PublicController extends Controller
 			'posts'=>$posts,
 		));
 	}
+
+	public function singlePostAction(Request $request, $slug)
+	{
+		$postManager = $this->get('spbar.blog_post_manager');
+		$post = $postManager->getPostBySlug($slug);
+
+		return $this->render("SpBarBlogBundle::Frontend/Public/single_post.html.twig", array(
+			'post'=>$post,
+		));
+	}
 }

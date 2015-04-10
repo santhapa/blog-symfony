@@ -14,7 +14,7 @@
 					</div>
 					<div class="media-body">
 						<h5 class="beta-blog-title"><a href="#">{{ post.title }}</a></h5>
-						<p>By: <a href="#">{{ post.author.getName() ? : 'Anonymous Author' }}</a> | <a href="#">0 Comments</a>
+						<p>By: <a href="#">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | <a href="#">0 Comments</a>
 					</div>
 				</div>
 			</div>
@@ -22,8 +22,11 @@
 			<div class="row beta-blog-content">
 				<div class="col-sm-6"><a href="#"><img src="{{ asset('blog/images/blog/img_9.jpg') }}" alt=""></a></div>
 				<div class="col-sm-6">
-					{{ post.content|raw }}
-					<a href="#" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+					<div>
+						{{ post.content|truncate('1100', true)|raw }}	
+					</div>
+					
+					<a href="{{ path('sp_blog_public_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
 				</div>
 			</div>
 		</div> <!-- .beta-blog item -->

@@ -59,6 +59,14 @@ class EditFormType extends AbstractType
                     ))
                 // ->add('image', 'file')
                 // ->add('image','elfinder', array('instance'=>'form', 'enable'=>true))
+                ->add('category', 'entity', array(
+                        'label' => 'Category',
+                        'class'=> 'SpBarBlogBundle:Category',
+                        'property'=> 'name',
+                        'expanded' => true,
+                        'multiple' => true,
+                        'required' => true
+                    ))
                 ->add('status', 'choice', array(
                         'label' => 'Publish',
                         'choices' => PostManager::$newPostStatus,

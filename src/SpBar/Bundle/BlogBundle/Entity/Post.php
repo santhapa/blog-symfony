@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use SpBar\Bundle\BlogBundle\Entity\Category;
+
 /**
 * @ORM\Entity
 * @ORM\Table(name="spbar_blog_posts")
@@ -67,9 +69,17 @@ class Post
     */
     protected $comments;
 
+    /**
+    * @Assert\NotBlank(message="At least one category is required!")
+    * @ORM\ManyToMany(targetEntity="Category", inversedBy="posts")
+    * @ORM\JoinTable(name="spbar_post_category")
+    **/
+    protected $category;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->category = new ArrayCollection();
     }
 
     public function getId()
@@ -157,6 +167,17 @@ class Post
     {
         return $this->comments;
     }        
+
+    public function addCategory(Category $cat)
+    {
+        $cat->addPosts($this);
+        $this->category[] = $cat;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
 
     // protected $image;
 

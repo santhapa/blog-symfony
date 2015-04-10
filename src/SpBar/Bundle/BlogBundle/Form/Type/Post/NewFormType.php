@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 
 use SpBar\Bundle\BlogBundle\Model\ThemeManager;
 use SpBar\Bundle\BlogBundle\Model\PostManager;
+use SpBar\Bundle\BlogBundle\Model\CategoryManager;
 
 class NewFormType extends AbstractType
 {   
@@ -58,8 +59,17 @@ class NewFormType extends AbstractType
                         'multiple' => false,
                         'required' => true
                     ))
+
                 // ->add('image', 'file')
                 // ->add('image','elfinder', array('instance'=>'form', 'enable'=>true))
+                ->add('category', 'entity', array(
+                        'label' => 'Category',
+                        'class'=> 'SpBarBlogBundle:Category',
+                        'property'=> 'name',
+                        'expanded' => true,
+                        'multiple' => true,
+                        'required' => true
+                    ))
                 ->add('status', 'choice', array(
                         'label' => 'Publish',
                         'choices' => PostManager::$newPostStatus,

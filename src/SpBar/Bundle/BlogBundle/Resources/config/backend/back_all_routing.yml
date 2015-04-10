@@ -9,3 +9,7 @@ sp_blog_theme:
 sp_blog_post:
     resource: "@SpBarBlogBundle/Resources/config/backend/post_route.yml"
     prefix:   /post
+
+sp_blog_category:
+    resource: "@SpBarBlogBundle/Resources/config/backend/category_route.yml"
+    prefix:   /category
