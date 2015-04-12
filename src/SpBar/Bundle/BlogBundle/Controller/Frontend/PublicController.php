@@ -29,8 +29,13 @@ class PublicController extends Controller
 		$postManager = $this->get('spbar.blog_post_manager');
 		$post = $postManager->getPostBySlug($slug);
 
+		$commentManager = $this->get('spbar.blog_comment_manager');
+        $comment = $commentManager->createComment();
+		$form = $this->createForm('spbar_blog_comment', $comment);
+
 		return $this->render("SpBarBlogBundle::Frontend/Public/single_post.html.twig", array(
 			'post'=>$post,
+			'form' => $form->createView(),
 		));
 	}
 }

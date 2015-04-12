@@ -3,13 +3,18 @@
 		<div class="container">
 			<div class="pull-left auto-width-left">
 				<ul class="top-menu menu-beta l-inline">
-					<li><a href="{{ path('sp_blog_public') }}"><i class="fa fa-home"></i> Home</a></li>
+					<li><a href="{{ path('sp_blog_public_index') }}"><i class="fa fa-home"></i> Home</a></li>
 					<li><a href="#"><i class="fa fa-sitemap"></i> Sitemap</a></li>
 				</ul>
 			</div>
 			<div class="pull-right auto-width-right">
 				<ul class="top-details menu-beta l-inline">
-					<li><a href="#"><i class="fa fa-user"></i> Your Account</a></li>
+					{% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+						<li><a href="#"><i class="fa fa-user"></i> Your Account</a></li>
+					{% else %}
+
+					{% endif %}
+					
 				</ul>
 			</div>
 			<div class="clearfix"></div>
@@ -19,7 +24,7 @@
 	<div class="header-body">
 		<div class="container beta-relative">
 			<div class="pull-left">
-				<a href="{{ path('sp_blog_public') }}" id="logo"><b>Sp</b>Bar</a>
+				<a href="{{ path('sp_blog_public_index') }}" id="logo"><strong>Sp</strong>Bar</a>
 				<span class="slogan">a simple Blog Bar</span>
 			</div>
 			<div class="pull-right beta-components space-left ov">
@@ -42,7 +47,7 @@
 			<nav class="main-menu">
 				<ul class="l-inline ov">
 					<li><a href="#">Home</a></li>
-					<li><a href="{{ path('sp_blog_public') }}">Blog</a></li>
+					<li><a href="{{ path('sp_blog_public_index') }}">Blog</a></li>
 					<li><a href="#">Contact</a></li>
 				</ul>
 				<div class="clearfix"></div>

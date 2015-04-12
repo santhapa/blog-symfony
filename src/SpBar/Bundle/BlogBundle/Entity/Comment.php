@@ -32,6 +32,19 @@ class Comment
     */
     protected $commentAt;
 
+/*====================================================================================*/
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
+     **/
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     **/
+    private $parent;
+/*======================================================================================*/
+
 	/**
 	*@ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
 	*@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
@@ -43,6 +56,10 @@ class Comment
 	*@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
 	**/
 	protected $user;
+
+	public function __construct() {
+        $this->children = new ArrayCollection();
+    }
 
 	public function getId()
 	{
@@ -67,6 +84,26 @@ class Comment
     public function getCommentAt()
     {
         return $this->commentAt;
+    }
+
+    public function setParent($id)
+    {
+    	$this->parent = $id;
+    }
+
+    public function getParent()
+    {
+    	return $this->parent;
+    }
+
+    public function setChildren($id)
+    {
+    	$this->children = $id;
+    }
+
+    public function getChildren()
+    {
+    	return $this->children;
     }
 
 	public function setUser($user)

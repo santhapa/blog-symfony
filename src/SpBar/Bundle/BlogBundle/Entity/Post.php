@@ -179,14 +179,14 @@ class Post
         return $this->category;
     }
 
-    // protected $image;
+    protected $image;
 
-    // public function getImage()
-    // {
+    public function getImage()
+    {
 
-    // }
-    // public function setImage()
-    // {
+    }
+    public function setImage()
+    {
         
-    // }
+    }
 }

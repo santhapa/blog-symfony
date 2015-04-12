@@ -1,0 +1,51 @@
+{% form_theme form with ['form_errors.html.twig'] %}
+<div class="box-body">
+    <form class="form-horizontal" method="POST" action="{{ path('sp_user_new') }}">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form_label(form.username) }}:</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.username, {"attr" : {"placeholder" : "Username", "class": "form-control"}}) }}
+                {{ form_errors(form.username) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form_label(form.plainPassword.first) }}:</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.plainPassword.first, {"attr" : {"placeholder" : "Password", "class": "form-control"}}) }}
+                {{ form_errors(form.plainPassword.first) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form_label(form.plainPassword.second) }}:</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.plainPassword.second, {"attr" : {"placeholder" : "Confirm Password", "class": "form-control"}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form_label(form.email) }}:</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.email, {"attr" : {"placeholder" : "Email Address", "class": "form-control"}}) }}
+                {{ form_errors(form.email) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{ form_label(form.groups) }}:</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.groups, {"attr" : {"class" : "form-control" }}) }}
+                {{ form_errors(form.groups) }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <button type="submit" class="btn btn-info" value="Create">Create</button>
+            </div>
+        </div>
+
+    </form>
+</div>

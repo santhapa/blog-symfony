@@ -82,7 +82,7 @@ class PostController extends Controller
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OPERATOR);
             $aclProvider->updateAcl($acl);
 
-            $roleIdentity = new RoleSecurityIdentity('BLOG_ADMIN');
+            $roleIdentity = new RoleSecurityIdentity('ROLE_BLOG_ADMIN');
             $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_OWNER);
             $aclProvider->updateAcl($acl);
 
@@ -153,6 +153,22 @@ class PostController extends Controller
         $this->addFlash('success', "Post '{$title}' has been deleted.");
 
 		return $this->redirectToRoute('sp_blog_post_index');
+	}
+
+	public function moderateAction(Request $request, $slug)
+	{
+		$postManager = $this->get('spbar.blog_post_manager');
+		$post = $postManager->getPostBySlug($slug);
+		if(!$post)
+        {
+        	$this->addFlash('error', "Post not found.");
+		    return $this->redirectToRoute('sp_blog_post_index');
+        }
+
+		return $this->render("SpBarBlogBundle::Backend/Post/moderate.html.twig", array(
+			'page_title'=>'Moderate Comment',
+			'comments' => $post->getComments(),
+		));
 	}
 
 }

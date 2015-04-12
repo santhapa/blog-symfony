@@ -1,9 +1,9 @@
  <div class="beta-author media">
 	<img class="pull-left" src="{{ asset('blog/images/blog/author.jpg') }}" alt="">
 	<div class="media-body">
-		<p>By: <a href="#">{{ author.getName()|trim ? : 'Anonymous Author' }}</a></p>
+		<p>By: <a href="#">{{ author.getName()|trim ? : author.getUsername() }}</a></p>
 		<p class="beta-author-desc">
-			{{ author.biography|trim ? : '' }}
+			{{ author.biography|trim ? : 'Author information has been disclosed.' }}
 		</p>
 		<p class="beta-author-social">
 			{% if author.facebookId is not null %}

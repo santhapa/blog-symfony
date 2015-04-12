@@ -3,6 +3,7 @@
 {% set postType = post.postType.template %}
 {% set loadPostTheme = 'SpBarBlogBundle::Layout/single/'~ postType %}
 {% set authorInfoSection = 'SpBarBlogBundle::Frontend/Includes/author_bio.html.twig' %}
+{% set commentSection = 'SpBarBlogBundle::Frontend/Includes/post_comment.html.twig' %}
 
 {% block body_content %}
 <div class="container">
@@ -10,7 +11,7 @@
 		<div class="row">
 			{% block body_content_container %}
 				<div class="col-sm-9">
-	    			{% include loadPostTheme %}
+	    			{% include loadPostTheme with {'post': post } %}
 
 	    			<hr class="mb40">
 	    			<!-- author bio block -->
@@ -23,62 +24,7 @@
 					
 					<!-- post comments block -->
 					{% block body_content_comment %}
-						<h2>There Are 4 Comments</h2>
-						<div class="space10">&nbsp;</div>
-						<div class="comment depth-1 media">
-							<img src="assets/dest/images/comments/1.jpg" alt="" class="avatar pull-left">
-							<div class="media-body">
-								<p class="font-large">Posted by <a href="#">Andy</a> on September 23, 2013, 11:59 am   | <a href="#">Reply</a></p>
-								<p class="font-large">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-							</div>
-						</div>
-
-						<div class="comment depth-2 media">
-							<img src="assets/dest/images/comments/2.jpg" alt="" class="avatar pull-left">
-							<div class="media-body">
-								<p class="font-large">Posted by <a href="#">Monica</a> on September 23, 2013, 11:59 am   | <a href="#">Reply</a></p>
-								<p class="font-large">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-							</div>
-						</div>
-
-						<div class="comment depth-3 media">
-							<img src="assets/dest/images/comments/1.jpg" alt="" class="avatar pull-left">
-							<div class="media-body">
-								<p class="font-large">Posted by <a href="#">Andy</a> on September 23, 2013, 11:59 am   | <a href="#">Reply</a></p>
-								<p class="font-large">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-							</div>
-						</div>
-
-						<div class="comment depth-4 media">
-							<img src="assets/dest/images/comments/2.jpg" alt="" class="avatar pull-left">
-							<div class="media-body">
-								<p class="font-large">Posted by <a href="#">Monica</a> on September 23, 2013, 11:59 am   | <a href="#">Reply</a></p>
-								<p class="font-large">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-							</div>
-						</div>
-						
-						<div class="space20">&nbsp;</div>
-						<hr class="mb40">
-
-						<h2>Leave a Reply</h2>
-						<div class="space20">&nbsp;</div>
-						<form action="#" method="post" class="contact-form">	
-							<div class="form-block">
-								<input name="your-name" type="text" placeholder="Name*:">
-							</div>
-							<div class="form-block">
-								<input name="your-email" type="email" placeholder="Email (will not be published)*:">
-							</div>
-							<div class="form-block">
-								<input name="your-subject" type="url" placeholder="Website:">
-							</div>
-							<div class="form-block">
-								<textarea name="your-message" placeholder="Comment"></textarea>
-							</div>
-							<div class="form-block">
-								<button type="submit" class="beta-btn primary">Submit Comment <i class="fa fa-chevron-right"></i></button>
-							</div>
-						</form>
+	    			   	{% include commentSection with {'post': post}  %}
 					{% endblock body_content_comment %}
 				</div>
 			{% endblock body_content_container %}

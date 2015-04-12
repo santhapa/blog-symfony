@@ -30,6 +30,9 @@
 								<td> {{ post.author.username }} </td>
 								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
 								<td>
+									<a href="{{ path('sp_blog_post_moderate',{'slug': post.slug}) }}">
+										<span class="glyphicon glyphicon-comment" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Moderate Comments"></span>
+									</a>
 									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
 										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
 									</a>

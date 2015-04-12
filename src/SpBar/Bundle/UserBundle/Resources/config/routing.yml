@@ -1,3 +1,10 @@
-sp_user_bundle:
-    resource: "@SpBarUserBundle/Resources/config/user/all.yml"
+sp_user_backend:
+    resource: "@SpBarUserBundle/Resources/config/backend/back_all.yml"
     prefix:   /admin
+
+sp_user_frontend:
+    resource: "@SpBarUserBundle/Resources/config/frontend/front_all.yml"
+    prefix:   /
+
+sp_user_logout:
+    path: /logout

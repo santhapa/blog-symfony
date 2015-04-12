@@ -1,0 +1,39 @@
+{% extends('SpBarBlogBundle::Backend/back_base.html.twig') %}
+
+{% block body_container %}
+    <!-- Main content -->
+    <section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							<strong>Create new group</strong>
+						</h3>
+					</div><!-- /.box-header -->
+
+					{% include "SpBarUserBundle:Backend/Group:new_content.html.twig" %}
+					
+				</div><!-- /.box -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</section><!-- /.content -->
+	
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							<strong>List of Groups</strong>
+						</h3>
+					</div><!-- /.box-header -->
+
+					{% include "SpBarUserBundle:Backend/Group:list_content.html.twig" %}
+					
+				</div><!-- /.box -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</section><!-- /.content -->
+{% endblock body_container %}
+	

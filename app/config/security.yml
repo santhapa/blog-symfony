@@ -11,20 +11,40 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        main:
-            pattern: ^/
+        admin_login:
+            pattern: ^/admin/login$
+            anonymous: true
+
+        admin_area:
+            pattern: ^/admin
             form_login:
                 provider: fos_userbundle
-                login_path: sp_user_login
-                check_path: sp_user_login_check
+                login_path: sp_user_backend_login
+                check_path: sp_user_backend_login_check
                 csrf_provider: form.csrf_provider
             logout:
                 path: sp_user_logout
-                target: sp_user_login
+                target: sp_user_backend_login
+            context: primary_auth
+            anonymous: false
+
+        public:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                login_path: sp_user_frontend_login
+                check_path: sp_user_frontend_login_check
+                csrf_provider: form.csrf_provider
+            logout:
+                path: sp_user_logout
+                target: sp_blog_public_index
+            context: primary_auth
             anonymous: true
 
-    access_control:    
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/admin/comment/new$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/blog/post/new, role: [ROLE_BLOG_AUTHOR] }
         - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

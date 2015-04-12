@@ -1,0 +1,31 @@
+sp_user_index:
+    path: /
+    defaults: { _controller:SpBarUserBundle:Backend/User:index }
+
+sp_user_profile:
+    path: /profile
+    defaults: { _controller:SpBarUserBundle:Backend/Profile:edit }
+
+sp_user_list:
+    path: /list/
+    defaults: { _controller:SpBarUserBundle:Backend/User:list }
+
+sp_user_new:
+    path: /new/
+    defaults: { _controller:SpBarUserBundle:Backend/Registration:register }
+
+sp_user_edit:
+    path: /sp-{user}/edit/
+    defaults: { _controller:SpBarUserBundle:Backend/User:edit }
+
+sp_user_delete:
+    path: /sp-{user}/delete/
+    defaults: { _controller:SpBarUserBundle:Backend/User:delete }
+
+sp_user_enable:
+    path: /sp-{user}/enable/
+    defaults: { _controller:SpBarUserBundle:Backend/User:enable }
+
+sp_user_disable:
+    path: /sp-{user}/disable/
+    defaults: { _controller:SpBarUserBundle:Backend/User:disable }

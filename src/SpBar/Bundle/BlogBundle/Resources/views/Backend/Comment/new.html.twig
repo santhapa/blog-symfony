@@ -1,0 +1,10 @@
+<h2>Leave a Reply</h2>
+<div class="space20">&nbsp;</div>
+<form action="{{ path('sp_blog_comment_new', {'post': parentPost}) }}" method="post" class="contact-form">
+	<div class="form-block">
+		{{ form_widget(form.content) }}
+	</div>
+	<div class="form-block">
+		<button type="submit" class="beta-btn primary">Submit Comment <i class="fa fa-chevron-right"></i></button>
+	</div>
+</form>

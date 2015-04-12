@@ -1,0 +1,15 @@
+sp_user:
+    resource: "@SpBarUserBundle/Resources/config/backend/user.yml"
+    prefix:   /user
+
+sp_group:
+    resource: "@SpBarUserBundle/Resources/config/backend/group.yml"
+    prefix:   /group
+
+sp_user_backend_login: 
+    path: /login
+    defaults: { _controller: SpBarUserBundle:Backend/Security:login }
+
+sp_user_backend_login_check:
+    path: /login_check
+    defaults: { _controller: SpBarUserBundle:Backend/Security:check }

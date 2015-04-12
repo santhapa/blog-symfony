@@ -5,5 +5,5 @@
 {% set loadIndexTheme = 'SpBarBlogBundle::Layout/index/'~ theme %}
 
 {% block body_content %}
-	{% include loadIndexTheme %}
+	{% include loadIndexTheme with {'posts': posts} %}
 {% endblock body_content %}

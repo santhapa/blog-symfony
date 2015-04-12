@@ -17,3 +17,7 @@ sp_blog_post_edit:
 sp_blog_post_delete:
     path: /{slug}/delete/
     defaults: { _controller: SpBarBlogBundle:Backend/Post:delete }
+
+sp_blog_post_moderate:
+    path: /{slug}/moderate/
+    defaults: { _controller: SpBarBlogBundle:Backend/Post:moderate }

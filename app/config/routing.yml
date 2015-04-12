@@ -14,8 +14,8 @@ blog_post:
 #     resource: "@BlogUserBundle/Resources/config/routing.yml"
 #     prefix:   /
 
-logout:
-    path: /logout
+# logout:
+#     path: /logout
 
 
 sp_blog:
