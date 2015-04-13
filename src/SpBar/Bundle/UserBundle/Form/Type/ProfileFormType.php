@@ -15,6 +15,10 @@ class ProfileFormType extends AbstractType
         $this->buildGeneralForm($builder, $options);
         $this->buildSocialForm($builder, $options);
 
+        // $builder->add('image', 'file', array(
+        //             'label' => "Profile Image"
+        //         ));
+
         $builder->add('username','text', array(
                     'label'=>'Username',
                     'read_only' => true,

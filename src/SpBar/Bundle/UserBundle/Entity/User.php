@@ -13,6 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
 * @ORM\Entity
 * @ORM\Table(name="spbar_users")
+* @ORM\HasLifecycleCallbacks
 */
 class User extends BaseUser
 {
@@ -99,6 +100,20 @@ class User extends BaseUser
     * @ORM\Column(name="twitter_id", type="string",length=100, nullable=true)
     */
     protected $twitterId;
+
+    /**
+    * @ORM\Column(type="string", length=255, nullable=true)
+    */
+    protected $image;
+
+    /**
+    * @Assert\File(maxSize="6000000",
+    * mimeTypes = {"image/jpg", "image/png", "image/jpeg"},
+    * mimeTypesMessage = "Please upload a valid image")
+    */
+    private $tempImage;
+
+    private $temp;
 
     /**
     * @ORM\ManyToMany(targetEntity="SpBar\Bundle\UserBundle\Entity\Group")
@@ -284,5 +299,106 @@ class User extends BaseUser
             $this->comments[] = $comment;
         }
     /*******************************files to be changed*******************************************/
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+
+    public function setTempImage($image = null)
+    {
+        $this->tempImage = $image;
+        // check if we have an old image path
+        if (isset($this->image)) {
+            // store the old name to delete after the update
+            $this->temp = $this->image;
+            $this->image = null;
+        } else {
+            $this->image = 'initial';
+        }
+    }
+
+    public function getTempImage()
+    {
+        return $this->tempImage;
+    }
+
+    /**
+    * @ORM\PrePersist()
+    * @ORM\PreUpdate()
+    */
+    public function preUpload()
+    {
+        if (null !== $this->getTempImage()) {
+            // do whatever you want to generate a unique name
+            $imageName = sha1(uniqid(mt_rand(), true));
+            $this->image = $imageName.'.'.$this->getTempImage()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getTempImage()) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getTempImage()->move($this->getUploadRootDir(), $this->image);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->tempImage = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        $image = $this->getAbsolutePath();
+        if ($image) {
+            unlink($image);
+        }
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadRootDir().'/'.$this->image;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->image
+            ? null
+            : $this->getUploadDir().'/'.$this->image;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/profile';
+    }
 }
 

@@ -41,14 +41,9 @@ class CommentManager
 		return $this->em->getRepository("SpBarBlogBundle:Comment")->findAll();
 	}
 
-	public function getCommentsByType($type)
+	public function getCommentById($id)
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Comment")->findBy(array('type' => $type));
+		return $this->em->getRepository("SpBarBlogBundle:Comment")->findOneBy(array('id' => $id));
 
-	}
-
-	public function getCommentBySlug($slug)
-	{
-		return $this->em->getRepository("SpBarBlogBundle:Comment")->findOneBy(array('slug'=>$slug));
 	}
 }

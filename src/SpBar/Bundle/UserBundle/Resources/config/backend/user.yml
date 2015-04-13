@@ -6,6 +6,10 @@ sp_user_profile:
     path: /profile
     defaults: { _controller:SpBarUserBundle:Backend/Profile:edit }
 
+sp_user_profile_image:
+    path: /profile/change_image/
+    defaults: { _controller:SpBarUserBundle:Backend/Profile:changeImage }
+
 sp_user_list:
     path: /list/
     defaults: { _controller:SpBarUserBundle:Backend/User:list }

@@ -1,3 +1,4 @@
+{% set comments = post.comments %}
 <div class="box-body">
     <!-- DIRECT CHAT PRIMARY -->
     <div class="box box-primary direct-chat direct-chat-primary">
@@ -10,9 +11,9 @@
                     <div class="direct-chat-msg">
                         <div class="direct-chat-info clearfix">
                             <span class="direct-chat-name pull-left">{{ comment.user.getName()|trim ? : comment.user.getUsername() }}</span>
-                            <span class="direct-chat-timestamp pull-right">{{ comment.commentAt|date('d M, Y | h:i A')  }}</span>
+                            <span class="direct-chat-timestamp pull-right">{{ comment.commentAt|date('d M, Y | h:i A')  }}|Edit|<a href="{{ path('sp_blog_comment_delete', {'id': comment.id}) }}">Delete</a>|Reply</span>
                         </div><!-- /.direct-chat-info -->
-                        <img class="direct-chat-img" src="{{ asset('dist/img/user1-128x128.jpg') }}" alt="message user image"><!-- /.direct-chat-img -->
+                        <img class="direct-chat-img" src="{{ asset(userImage(comment.user)) }}" alt="user image"><!-- /.direct-chat-img -->
                         <div class="direct-chat-text">
                             {{ comment.content }}
                         </div><!-- /.direct-chat-text -->
@@ -22,23 +23,24 @@
                         <div class="direct-chat-msg right">
                             <div class="direct-chat-info clearfix">
                                 <span class="direct-chat-name pull-right">{{ child.user.getName()|trim ? : child.user.getUsername() }}</span>
-                                <span class="direct-chat-timestamp pull-left">{{ child.commentAt|date('d M, Y | h:i A')  }}</span>
+                                <span class="direct-chat-timestamp pull-left">{{ child.commentAt|date('d M, Y | h:i A')  }}|Edit|<a href="{{ path('sp_blog_comment_delete', {'id': child.id}) }}">Delete</a>|Reply</span>
                             </div><!-- /.direct-chat-info -->
-                            <img class="direct-chat-img" src="{{ asset('dist/img/user3-128x128.jpg') }}" alt="message user image"><!-- /.direct-chat-img -->
+                            <img class="direct-chat-img" src="{{ asset(userImage(child.user)) }}" alt="user image"><!-- /.direct-chat-img -->
                             <div class="direct-chat-text">
                                 {{ child.content }}
                             </div><!-- /.direct-chat-text -->
                         </div><!-- /.direct-chat-msg -->
                     {% endfor %}
                 {% endfor %}
+                {% if comments|length <= 0 %} <span>No comments yet!</span> {% endif %}
             </div><!--/.direct-chat-messages-->
         </div><!-- /.box-body -->
         <div class="box-footer">
-            <form action="#" method="post">
+            <form action="{{ path('sp_blog_comment_new', {'post': post.slug}) }}" method="post">
                 <div class="input-group">
-                    <input name="message" placeholder="Type Message ..." class="form-control" type="text">
+                    <input name="content" placeholder="Type message ..." class="form-control" type="text">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary btn-flat">Send</button>
+                        <button type="submit" class="btn btn-primary btn-flat">Reply</button>
                     </span>
                 </div>
             </form>

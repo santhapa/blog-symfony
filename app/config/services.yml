@@ -11,3 +11,9 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
+
+    spbar.user.twig_extension:
+        class: SpBar\Bundle\UserBundle\Twig\UserExtension
+        public: true
+        tags:
+            - { name: twig.extension }

@@ -167,7 +167,7 @@ class PostController extends Controller
 
 		return $this->render("SpBarBlogBundle::Backend/Post/moderate.html.twig", array(
 			'page_title'=>'Moderate Comment',
-			'comments' => $post->getComments(),
+			'post' => $post,
 		));
 	}
 

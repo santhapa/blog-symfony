@@ -1,11 +1,10 @@
 <?php
-namespace Acme\HelloBundle\DataFixtures\ORM;
+namespace SpBar\Bundle\BlogBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Acme\HelloBundle\Entity\User;
 
 class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
 {

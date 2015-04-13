@@ -122,7 +122,7 @@ class CommentController extends Controller
         ));
 	}
 
-	public function editAction(Request $request, $slug)
+	public function editAction(Request $request, $id)
 	{
 		$commentManager = $this->get('spbar.blog_comment_manager');
         $comment = $commentManager->getCommentBySlug($slug);
@@ -158,20 +158,22 @@ class CommentController extends Controller
 		));
 	}
 
-	public function deleteAction($slug)
+	public function deleteAction(Request $request)
 	{
 		$commentManager = $this->get('spbar.blog_comment_manager');
-        $comment = $commentManager->getCommentBySlug($slug);
+		$id = $request->query->get('id');
+        $comment = $commentManager->getCommentById($id);
+        $postSlug = $comment->getPost()->getSlug();
         if(!$comment)
         {
         	$this->addFlash('error', "Comment not found.");
-		    return $this->redirectToRoute('sp_blog_comment_index');
+		    return $this->redirectToRoute('sp_blog_post_index');
         }
-        $title = $comment->getTitle();
+        $user = trim($comment->getUser()->getName()) ? : $comment->getUser()->getUsername();
         $commentManager->removeComment($comment);
-        $this->addFlash('success', "Comment '{$title}' has been deleted.");
+        $this->addFlash('success', "Comment 'by {$user}' has been deleted.");
 
-		return $this->redirectToRoute('sp_blog_comment_index');
+		return $this->redirectToRoute('sp_blog_post_moderate', array('slug'=> $postSlug));
 	}
 
 }

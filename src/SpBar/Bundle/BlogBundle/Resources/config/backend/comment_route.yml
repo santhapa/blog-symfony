@@ -14,6 +14,6 @@ sp_blog_comment_new:
 #     path: /{slug}/edit/
 #     defaults: { _controller: SpBarBlogBundle:Backend/Post:edit }
 
-# sp_blog_post_delete:
-#     path: /{slug}/delete/
-#     defaults: { _controller: SpBarBlogBundle:Backend/Post:delete }
+sp_blog_comment_delete:
+    path: /delete
+    defaults: { _controller: SpBarBlogBundle:Backend/Comment:delete }

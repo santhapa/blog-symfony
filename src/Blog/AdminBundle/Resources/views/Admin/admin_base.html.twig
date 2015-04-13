@@ -15,6 +15,7 @@
     <!-- Theme style -->
     <link href="{{ asset('dist/css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('dist/css/skins/skin-blue.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css" />
 
     {% block css %}
     {% endblock css %}
@@ -25,9 +26,8 @@
 
         <!-- Main Header -->
         <header class="main-header">
-
             <!-- Logo -->
-            <a href="{{ path('publicHomepage') }}" class="logo"><b>Blog</b> </a>
+            <a href="{{ path('sp_blog_public_index') }}" class="logo"><b>Blog</b> </a>
 
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
@@ -46,14 +46,24 @@
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="{{ asset('dist/img/avatar04.png') }}" class="user-image" alt="User Image"/>
+                                <img src="{{ asset(userImage(app.user)) }}" class="user-image" alt="profile picture"/>
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">{# app.user.username #}</span>
+                                <span class="hidden-xs">{{ app.user.getName()|trim ? : app.user.username }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="{{ asset('dist/img/avatar04.png') }}" class="img-circle" alt="User Image" />
+                                    <img src="{{ asset(userImage(app.user)) }}" class="img-circle" alt="profile picture" />
+                                    <span>
+                                        <a href="{{ path('sp_user_profile_image') }}" style="color: #ffffff; ">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Change Image"></span>
+                                        </a>
+                                    </span>
+
+                                    <p>
+                                        {{ app.user.getName()|trim ? : app.user.username }}
+                                        <small>Member since {{ app.user.createdAt|date('M. Y') }}</small>
+                                    </p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">

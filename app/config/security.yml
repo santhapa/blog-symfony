@@ -45,6 +45,7 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/admin/comment/new$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/user/profile, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin/blog/post/new, role: [ROLE_BLOG_AUTHOR] }
         - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }

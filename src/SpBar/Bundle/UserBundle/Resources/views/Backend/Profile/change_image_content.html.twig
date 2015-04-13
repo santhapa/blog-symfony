@@ -1,0 +1,51 @@
+{% form_theme form with ['form_errors.html.twig'] %}
+
+<div class="box-body">
+    <form class="form-horizontal" method="POST" action="{{ path('sp_user_profile_image') }}" enctype="multipart/form-data">        
+        <div class="row">
+            <div class="col-sm-6 col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Change</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label">{{ form_label(form.tempImage) }}:</label>
+                            <div class="col-xs-8">
+                                {{ form_widget(form.tempImage) }}
+                                {{ form_errors(form.tempImage) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-offset-4 col-xs-8">
+                                <button type="submit" class="btn btn-info" value="Update">Change</button>
+                            </div>
+                        </div>
+                    </div>              
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+
+            <div class="col-sm-6 col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Existing Image</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {% if app.user.image %}
+                            <img src="{{ asset(profileImage) }}" class="change-profile-image">
+                        {% else %}
+                            <p><strong><em>Profile picture has not been set yet!</em></strong></p>
+                        {% endif %}
+                        
+                    </div>              
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </form>
+</div>
+
+

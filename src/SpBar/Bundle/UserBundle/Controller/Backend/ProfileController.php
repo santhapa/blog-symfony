@@ -41,4 +41,32 @@ class ProfileController extends BaseController
             'page_title' => "Edit Profile"
         ));
     }
+
+    public function changeImageAction(Request $request)
+    {
+        $user = $this->getUser();
+
+        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        $form = $this->createFormBuilder($user, array('csrf_protection' => false))
+                    ->add('tempImage', 'file', array('label'=> 'Upload Image'))
+                    ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+
+            $this->addFlash('success', "Your profile picture has been updated.");
+            return $this->redirectToRoute('sp_user_profile_image');
+        }
+
+        return $this->render('SpBarUserBundle:Backend/Profile:change_image.html.twig', array(
+            'form' => $form->createView(),
+            'page_title' => "Change Image"
+        ));
+    }
 }

@@ -1,5 +1,5 @@
  <div class="beta-author media">
-	<img class="pull-left" src="{{ asset('blog/images/blog/author.jpg') }}" alt="">
+	<img class="avatar pull-left img-circle" src="{{ asset(userImage(author)) }}" alt="author image">
 	<div class="media-body">
 		<p>By: <a href="#">{{ author.getName()|trim ? : author.getUsername() }}</a></p>
 		<p class="beta-author-desc">

@@ -13,8 +13,8 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="media-body">
-						<h5 class="beta-blog-title"><a href="#">{{ post.title }}</a></h5>
-						<p>By: <a href="#">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | <a href="{{ path('sp_blog_public_singlePost', {'slug': post.slug }) }}#commentSection">{{ post.comments|length > 0 ? : 'No' }} Comments</a>
+						<h5 class="beta-blog-title"><a href="{{ path('sp_blog_public_singlePost', {'slug': post.slug }) }}">{{ post.title }}</a></h5>
+						<p>By: <a href="#">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | <a href="{{ path('sp_blog_public_singlePost', {'slug': post.slug }) }}#commentSection">{{ post.comments|length > 0 ? post.comments|length : 'No' }} Comments</a>
 					</div>
 				</div>
 			</div>

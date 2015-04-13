@@ -11,7 +11,7 @@
 			</div>
 			<div class="media-body">
 				<h5 class="beta-blog-title"><a href="#">{{ post.title }}</a></h5>
-				<p>By: <a href="#">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | <a class="color-blg-title" href="#commentSection">{{ post.comments|length > 0 ? :'No' }} Comments</a> | In <a href="blog_fullwidth_2col.html">Business</a>, <a href="blog_fullwidth_2col.html">Education</a>, <a href="blog_fullwidth_2col.html">Health</a></p>
+				<p>By: <a href="#">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | <a class="color-blg-title" href="#commentSection">{{ post.comments|length > 0 ? post.comments|length :'No' }} Comments</a> | In <a href="blog_fullwidth_2col.html">Business</a>, <a href="blog_fullwidth_2col.html">Education</a>, <a href="blog_fullwidth_2col.html">Health</a></p>
 			</div>
 		</div>
 	</div>

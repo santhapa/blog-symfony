@@ -6,7 +6,7 @@
 
 {% for comment in comments if comment.parent == null %}
 		<div class="comment depth-1 media">
-			<img src="{{ asset('blog/images/comments/1.jpg') }}" alt="" class="avatar pull-left">
+			<img src="{{ asset(userImage(comment.user)) }}" alt="user image" class="avatar pull-left">
 			<div class="media-body">
 				<p class="font-large">Commented by <a href="#">{{ comment.user.getName()|trim ? : comment.user.getUsername() }} </a> on {{ comment.commentAt|date('F d, y, h:i A')  }} | <a href="#">Reply</a></p>
 				<p class="font-large">{{ comment.content }}</p>
@@ -14,7 +14,7 @@
 		</div>
 		{% for child in comment.children %}
 		    <div class="comment depth-2 media">
-				<img src="{{ asset('blog/images/comments/2.jpg') }}" alt="" class="avatar pull-left">
+				<img src="{{ asset(userImage(child.user)) }}" alt="user image" class="avatar pull-left">
 				<div class="media-body">
 					<p class="font-large">Commented by <a href="#">{{ child.user.getName()|trim ? : child.user.getUsername() }} </a> on {{ child.commentAt|date('F d, y, h:i A')  }} | <a href="#">Reply</a></p>
 					<p class="font-large">{{ child.content }}</p>
