@@ -86,9 +86,9 @@ class Comment
         return $this->commentAt;
     }
 
-    public function setParent($id)
+    public function setParent(Comment $cmt)
     {
-    	$this->parent = $id;
+    	$this->parent = $cmt;
     }
 
     public function getParent()

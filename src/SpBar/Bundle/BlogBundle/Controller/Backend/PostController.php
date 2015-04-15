@@ -220,6 +220,7 @@ class PostController extends Controller
 			'page_title'=>'Moderate Comment',
 			'post' => $post,
 			'form' => $form->createView(),
+			'parentId' => null,
 		));
 	}
 

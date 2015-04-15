@@ -1,8 +1,8 @@
-<form action="{{ path('sp_blog_comment_reply', {'post': post.slug, 'parentId': parentId }) }}" method="post">
+<form action="{{ path('sp_blog_comment_edit', {'id': comment.id}) }}" method="post">
     <div class="input-group">
         {{ form_widget(form.content, {'attr':{'placeholder': 'Type message...', 'class': 'form-control'}}) }}
         <span class="input-group-btn">
-            <button type="submit" class="btn btn-primary btn-flat">Reply</button>
+            <button type="submit" class="btn btn-primary btn-flat">Update</button>
         </span>
     </div>
 </form>

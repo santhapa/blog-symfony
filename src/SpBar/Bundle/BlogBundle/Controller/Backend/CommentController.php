@@ -12,49 +12,6 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class CommentController extends Controller
 {
-	// public function indexAction()
-	// {
-	// 	$commentManager = $this->get('spbar.blog_comment_manager');
-
-	// 	//new form for comment
-	// 	$comment = $commentManager->createComment();
- //        $form = $this->createForm('spbar_blog_comment_new', $comment);
-        
- //        //get list of available comments
-	// 	$comments = $commentManager->getComments();
-
-	// 	$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	//     $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
-	//     $breadcrumbs->addItem("Blog");
-	//     $breadcrumbs->addItem("Comment");
-
-	// 	return $this->render("SpBarBlogBundle::Backend/Comment/index.html.twig", array(
-	// 		'page_title' => 'Blog Comments',
- //            'form' => $form->createView(),
-	// 		'comments' => $comments,
-	// 		'commentStatus'=> $commentManager::$commentStatus,
-	// 	));
-	// }
-
-	// public function listAction()
-	// {
-	// 	$commentManager = $this->get('spbar.blog_comment_manager');
-
-	// 	$comments = $commentManager->getComments();
-
-	// 	$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	//     $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
-	//     $breadcrumbs->addItem("Blog");
-	//     $breadcrumbs->addRouteItem("Comment", "sp_blog_comment_index");
-	// 	$breadcrumbs->addItem('List');
-
-	// 	return $this->render("SpBarBlogBundle::Backend/Comment/list.html.twig", array(
-	// 		'page_title' => 'List of Comments',
-	// 		'comments' => $comments,
-	// 		'commentStatus'=> $commentManager::$commentStatus,
-	// 	));
-	// }
-
 	/*
 	* $post variable here is the slug value of the parent post
 	*/
@@ -122,39 +79,33 @@ class CommentController extends Controller
         ));
 	}
 
-	public function editAction(Request $request, $id)
+	public function editAction(Request $request)
 	{
+		$id = $request->query->get('id');
 		$commentManager = $this->get('spbar.blog_comment_manager');
-        $comment = $commentManager->getCommentBySlug($slug);
+        $comment = $commentManager->getCommentById($id);
         if(!$comment)
         {
         	$this->addFlash('error', "Comment not found.");
-		    return $this->redirectToRoute('sp_blog_comment_index');
+		    return $this->redirectToRoute('sp_blog_post_index');
         }
 
-        $form = $this->createForm('spbar_blog_comment_edit', $comment);
-
+        $form = $this->createForm('spbar_blog_comment', $comment);
         $form->handleRequest($request);
 
     	if ($form->isValid()) 
     	{
     		$commentManager->updateComment($comment);
 
-    		$this->addFlash('success', "Comment '{$comment->getTitle()}' successfully updated.");
-
-		    return $this->redirectToRoute('sp_blog_comment_index');
+    		$user = trim($comment->getUser()->getName()) ? $comment->getUser()->getName() : $comment->getUser()->getUsername();
+    		$this->addFlash('success', "Comment 'by {$user}' has been updated.");
+		    return $this->redirectToRoute('sp_blog_post_moderate', array('slug'=> $comment->getPost()->getSlug()));
 		}
 
-		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
-	    $breadcrumbs->addItem("Blog");
-	    $breadcrumbs->addRouteItem("Comment", "sp_blog_comment_index");
-		$breadcrumbs->addItem('Edit');
-
 		return $this->render("SpBarBlogBundle::Backend/Comment/edit.html.twig", array(
-			'page_title'=>'Edit Blog Comment', 
+			'page_title'=>'Edit Comment', 
 			'form' => $form->createView(),
-			'slug' => $slug,
+			'comment' => $comment,
 		));
 	}
 
@@ -177,28 +128,33 @@ class CommentController extends Controller
 	}
 
 	/*
-	* Section for post moderate section for admin or author to reply on comments
+	* Section for post moderate section for admin or author to create new comments
 	*/
 	public function replyAction(Request $request)
 	{
 		$post = $this->get('spbar.blog_post_manager')->getPostBySlug($request->query->get('post'));
 		if(!$post)
 		{
-			throw $this->createNotFoundException('Post not found');
+			$this->addFlash('error', "Post not found.");
+		    return $this->redirectToRoute('sp_blog_post_index');
 		}
-
-		$authorizationChecker = $this->get('security.authorization_checker');
-        // check for delete access
-        if (!$authorizationChecker->isGranted("EDIT", $post)) {
-            $this->addFlash('error', "You are not allowed to access that post!");
-            return $this->redirectToRoute('sp_blog_post_index');
-        }
+		if(!$this->get('security.authorization_checker')->isGranted('OPERATOR', $post))
+		{
+			$this->addFlash('error', "Access Denied!");
+			return $this->redirectToRoute('sp_blog_post_index');
+		}
 
         //get instance of currently logged in user
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
 		$commentManager = $this->get('spbar.blog_comment_manager');
         $comment = $commentManager->createComment();
+
+        $parentId = null;
+        if($request->query->get('parentId'))
+        {
+        	$parentId = $request->query->get('parentId');
+        }
 
         $form = $this->createForm('spbar_blog_comment', $comment);
 
@@ -209,6 +165,10 @@ class CommentController extends Controller
 	        //Set post Id and user id
 	        $comment->setPost($post);
 	        $comment->setUser($user);
+	        if($parentId)
+	        {
+	        	$comment->setParent($commentManager->getCommentById($parentId));
+	        }
     		$commentManager->updateComment($comment);
     		
     		// creating the ACL
@@ -242,6 +202,7 @@ class CommentController extends Controller
 		return $this->render("SpBarBlogBundle::Backend/Comment/reply.html.twig", array(
             'form' => $form->createView(),
             'post' => $post,
+            'parentId' => $parentId,
         ));
 	}
 
