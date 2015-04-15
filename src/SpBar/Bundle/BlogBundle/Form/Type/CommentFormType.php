@@ -10,7 +10,7 @@ class CommentFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('content', 'textarea', array(
+        $builder->add('content', 'text', array(
                         'required'=>true
                     ));
     }

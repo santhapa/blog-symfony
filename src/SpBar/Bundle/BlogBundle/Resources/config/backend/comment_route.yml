@@ -10,6 +10,10 @@ sp_blog_comment_new:
     path: /new/
     defaults: { _controller: SpBarBlogBundle:Backend/Comment:new }
 
+sp_blog_comment_reply:
+    path: /reply/
+    defaults: { _controller: SpBarBlogBundle:Backend/Comment:reply }
+
 # sp_blog_post_edit:
 #     path: /{slug}/edit/
 #     defaults: { _controller: SpBarBlogBundle:Backend/Post:edit }

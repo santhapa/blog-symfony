@@ -10,7 +10,7 @@
                 {% for comment in comments if comment.parent == null %}
                     <div class="direct-chat-msg">
                         <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-left">{{ comment.user.getName()|trim ? : comment.user.getUsername() }}</span>
+                            <span class="direct-chat-name pull-left">{{ app.user == comment.user ? "You" : comment.user.getName()|trim ? : comment.user.getUsername() }}</span>
                             <span class="direct-chat-timestamp pull-right">{{ comment.commentAt|date('d M, Y | h:i A')  }}|Edit|<a href="{{ path('sp_blog_comment_delete', {'id': comment.id}) }}">Delete</a>|Reply</span>
                         </div><!-- /.direct-chat-info -->
                         <img class="direct-chat-img" src="{{ asset(userImage(comment.user)) }}" alt="user image"><!-- /.direct-chat-img -->
@@ -36,14 +36,7 @@
             </div><!--/.direct-chat-messages-->
         </div><!-- /.box-body -->
         <div class="box-footer">
-            <form action="{{ path('sp_blog_comment_new', {'post': post.slug}) }}" method="post">
-                <div class="input-group">
-                    <input name="content" placeholder="Type message ..." class="form-control" type="text">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-flat">Reply</button>
-                    </span>
-                </div>
-            </form>
+            {% include 'SpBarBlogBundle:Backend/Comment:reply.html.twig' %}
         </div><!-- /.box-footer-->
     </div><!--/.direct-chat -->
 </div>

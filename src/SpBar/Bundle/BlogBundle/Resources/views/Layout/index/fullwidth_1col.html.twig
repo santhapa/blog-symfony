@@ -1,6 +1,6 @@
 <div class="container">
 	<div id="content">
-		{% for post in posts %}
+		{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
 		<div class="beta-blog beta-blog-a">
 			<div class="beta-blog-header">
 				<div class="media">

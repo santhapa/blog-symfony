@@ -32,7 +32,7 @@ class PostController extends Controller
 			'page_title' => 'Blog Posts',
             'form' => $form->createView(),
 			'posts' => $posts,
-			'postStatus'=> $postManager::$postStatus,
+			'staticStatus'=> $postManager::$postStatus,
 		));
 	}
 
@@ -51,7 +51,7 @@ class PostController extends Controller
 		return $this->render("SpBarBlogBundle::Backend/Post/list.html.twig", array(
 			'page_title' => 'List of Posts',
 			'posts' => $posts,
-			'postStatus'=> $postManager::$postStatus,
+			'staticStatus'=> $postManager::$postStatus,
 		));
 	}
 
@@ -77,7 +77,7 @@ class PostController extends Controller
             $acl = $aclProvider->createAcl($objectIdentity);
 
             // retrieving the security identity of the currently logged-in user
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+            $securityIdentity = UserSecurityIdentity::fromAccount($post->getAuthor());
 
             $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OPERATOR);
             $aclProvider->updateAcl($acl);
@@ -113,6 +113,13 @@ class PostController extends Controller
 		    return $this->redirectToRoute('sp_blog_post_index');
         }
 
+        $authorizationChecker = $this->get('security.authorization_checker');
+        // check for edit access
+        if (!$authorizationChecker->isGranted("EDIT", $post)) {
+            $this->addFlash('error', "Access Denied!");
+            return $this->redirectToRoute('sp_blog_post_index');
+        }
+
         $form = $this->createForm('spbar_blog_post_edit', $post);
 
         $form->handleRequest($request);
@@ -139,6 +146,30 @@ class PostController extends Controller
 		));
 	}
 
+	public function trashAction($slug)
+	{
+		$postManager = $this->get('spbar.blog_post_manager');
+        $post = $postManager->getPostBySlug($slug);
+        if(!$post)
+        {
+        	$this->addFlash('error', "Post not found.");
+		    return $this->redirectToRoute('sp_blog_post_index');
+        }
+
+        $authorizationChecker = $this->get('security.authorization_checker');
+        // check for edit access
+        if (!$authorizationChecker->isGranted("UNDELETE", $post)) {
+            $this->addFlash('error', "Access Denied!");
+            return $this->redirectToRoute('sp_blog_post_index');
+        }
+
+        $post->setStatus($postManager::POST_STATUS_TRASH);
+        $postManager->updatePost($post);
+        $this->addFlash('success', "Post '{$post->getTitle()}' has been moved to trash.");
+
+		return $this->redirectToRoute('sp_blog_post_index');
+	}
+
 	public function deleteAction($slug)
 	{
 		$postManager = $this->get('spbar.blog_post_manager');
@@ -148,6 +179,14 @@ class PostController extends Controller
         	$this->addFlash('error', "Post not found.");
 		    return $this->redirectToRoute('sp_blog_post_index');
         }
+
+        $authorizationChecker = $this->get('security.authorization_checker');
+        // check for edit access
+        if (!$authorizationChecker->isGranted("DELETE", $post)) {
+            $this->addFlash('error', "Access Denied!");
+            return $this->redirectToRoute('sp_blog_post_index');
+        }
+
         $title = $post->getTitle();
         $postManager->removePost($post);
         $this->addFlash('success', "Post '{$title}' has been deleted.");
@@ -165,9 +204,22 @@ class PostController extends Controller
 		    return $this->redirectToRoute('sp_blog_post_index');
         }
 
+        $authorizationChecker = $this->get('security.authorization_checker');
+        // check for edit access
+        if (!$authorizationChecker->isGranted("OPERATOR", $post)) {
+            $this->addFlash('error', "Access Denied!");
+            return $this->redirectToRoute('sp_blog_post_index');
+        }
+
+        $commentManager = $this->get('spbar.blog_comment_manager');
+        $comment = $commentManager->createComment();
+
+        $form = $this->createForm('spbar_blog_comment', $comment);
+
 		return $this->render("SpBarBlogBundle::Backend/Post/moderate.html.twig", array(
 			'page_title'=>'Moderate Comment',
 			'post' => $post,
+			'form' => $form->createView(),
 		));
 	}
 

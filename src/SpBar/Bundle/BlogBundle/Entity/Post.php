@@ -46,7 +46,6 @@ class Post
     protected $postType;
 
     /**
-    * @Assert\Choice(choices={"0", "1", "2"}, message="Invalid status")
     * @ORM\Column(type="integer")
     **/
     protected $status;

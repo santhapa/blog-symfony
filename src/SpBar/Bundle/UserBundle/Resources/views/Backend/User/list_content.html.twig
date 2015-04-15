@@ -25,21 +25,25 @@
 						{% endfor %}  
 					</td>
 					<td>
-						{% if inactive is defined and inactive == true %}
-						<a href="{{ path('sp_user_enable',{'user': user.username}) }}">
-							<i class="fa fa-unlock" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Enable User"></i>
-						</a>
+						{% if app.user == user %}
+							<strong><em>This is you!</em></strong>
 						{% else %}
-						<a href="{{ path('sp_user_edit',{'user': user.username}) }}">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
-						</a>
-						<a href="{{ path('sp_user_disable',{'user': user.username}) }}">
-							<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Disable User"></i>
-						</a>						
+							{% if inactive is defined and inactive == true %}
+							<a href="{{ path('sp_user_enable',{'user': user.username}) }}">
+								<i class="fa fa-unlock" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Enable User"></i>
+							</a>
+							{% else %}
+							<a href="{{ path('sp_user_edit',{'user': user.username}) }}">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+							</a>
+							<a href="{{ path('sp_user_disable',{'user': user.username}) }}">
+								<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Disable User"></i>
+							</a>						
+							{% endif %}
+							<a href="{{ path('sp_user_delete',{'user': user.username}) }}">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+							</a>
 						{% endif %}
-						<a href="{{ path('sp_user_delete',{'user': user.username}) }}">
-							<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
-						</a>
 					</td>
 				</tr>
 		    {% endfor %}

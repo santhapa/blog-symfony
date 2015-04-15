@@ -1,3 +1,7 @@
+{% set trash = constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_TRASH') %}
+{% set publish = constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
+{% set draft = constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_DRAFT') %}
+
 <div class="box-body">
 
 	<div class="nav-tabs-post">
@@ -10,141 +14,15 @@
 
 		<div class="tab-content">
 			<div class="tab-pane active" id="active_post">
-				<table id="postList" class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>S.N.</th>
-							<th>Title</th>
-							<th>Post Type</th>
-							<th>Author</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
-					        <tr>
-					        	<td>{{ loop.index }}</td>
-								<td> {{ post.title }} </td>
-								<td> {{ post.postType.name }} </td>
-								<td> {{ post.author.username }} </td>
-								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
-								<td>
-									<a href="{{ path('sp_blog_post_moderate',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-comment" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Moderate Comments"></span>
-									</a>
-									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
-									</a>
-									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
-									</a>
-								</td>
-							</tr>
-					    {% endfor %}
-					</tbody>
-					<tfoot>
-						<tr>
-							<th>S.N.</th>
-							<th>Title</th>
-							<th>Post Type</th>
-							<th>Author</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</tfoot>
-				</table>
-				{# knp_pagination_render(posts) #}
+				{% include 'SpBarBlogBundle:Backend/Post:list_content_table.html.twig' with {'status' : publish} %}
 			</div><!-- /.tab-pane -->
 			
 			<div class="tab-pane" id="draft_post">
-				<table id="postList" class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>S.N.</th>
-							<th>Title</th>
-							<th>Post Type</th>
-							<th>Author</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_DRAFT') %}
-					        <tr>
-					        	<td>{{ loop.index }}</td>
-								<td> {{ post.title }} </td>
-								<td> {{ post.postType.name }} </td>
-								<td> {{ post.author.username }} </td>
-								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
-								<td>
-									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
-									</a>
-									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
-									</a>
-								</td>
-							</tr>
-					    {% endfor %}
-					</tbody>
-					<tfoot>
-						<tr>
-							<th>S.N.</th>
-							<th>Title</th>
-							<th>Post Type</th>
-							<th>Author</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</tfoot>
-				</table>
-				{# knp_pagination_render(posts) #}
+				{% include 'SpBarBlogBundle:Backend/Post:list_content_table.html.twig' with {'status' : draft } %}
 			</div><!-- /.tab-pane -->
 
 			<div class="tab-pane" id="trash_post">
-				<table id="postList" class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>S.N.</th>
-							<th>Title</th>
-							<th>Post Type</th>
-							<th>Author</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_TRASH') %}
-					        <tr>
-					        	<td>{{ loop.index }}</td>
-								<td> {{ post.title }} </td>
-								<td> {{ post.postType.name }} </td>
-								<td> {{ post.author.username }} </td>
-								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
-								<td>
-									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
-									</a>
-									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
-									</a>
-								</td>
-							</tr>
-					    {% endfor %}
-					</tbody>
-					<tfoot>
-						<tr>
-							<th>S.N.</th>
-							<th>Title</th>
-							<th>Post Type</th>
-							<th>Author</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</tfoot>
-				</table>
-				{# knp_pagination_render(posts) #}
+				{% include 'SpBarBlogBundle:Backend/Post:list_content_table.html.twig' with {'status' : trash } %}
 			</div><!-- /.tab-pane -->
 
 			<div class="tab-pane" id="all_post">
@@ -161,27 +39,39 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for post in posts %}
+						{% for post in posts if app.user and is_granted('OPERATOR', post) %}
 					        <tr>
 					        	<td>{{ loop.index }}</td>
 								<td> {{ post.title }} </td>
 								<td> {{ post.postType.name }} </td>
-								<td> {{ post.author.username }} </td>
+								<td> {{ app.user == post.author ? "You" : post.author.username }} </td>
 								<td>{{ post.createdAt|date('F d, Y h:i:s A') }}</td>
-								<td>
-									{% for key,status in postStatus %}
+								<td> 
+									{% for key,status in staticStatus %}
 									    {% if key == post.status %}
 									    	{{ status }}
 									    {% endif %}
-									{% endfor %}
+									{% endfor %} 
 								</td>
 								<td>
-									<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
-									</a>
-									<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
-									</a>
+									{% if post.status == publish or post.status == trash  %}
+										<a href="{{ path('sp_blog_post_moderate',{'slug': post.slug}) }}">
+											<span class="glyphicon glyphicon-comment" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Moderate Comments"></span>
+										</a>
+									{% endif %}
+										<a href="{{ path('sp_blog_post_edit',{'slug': post.slug}) }}">
+											<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+										</a>
+									{% if post.status == publish %}
+										<a href="{{ path('sp_blog_post_trash',{'slug': post.slug}) }}">
+											<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Move to Trash"></span>
+										</a>
+									{% endif %}
+									{% if post.status == draft or post.status == trash  %}
+										<a href="{{ path('sp_blog_post_delete',{'slug': post.slug}) }}">
+											<span class="glyphicon glyphicon-ban-circle" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete Permanently"></span>
+										</a>
+									{% endif %}
 								</td>
 							</tr>
 					    {% endfor %}

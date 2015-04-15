@@ -176,4 +176,73 @@ class CommentController extends Controller
 		return $this->redirectToRoute('sp_blog_post_moderate', array('slug'=> $postSlug));
 	}
 
+	/*
+	* Section for post moderate section for admin or author to reply on comments
+	*/
+	public function replyAction(Request $request)
+	{
+		$post = $this->get('spbar.blog_post_manager')->getPostBySlug($request->query->get('post'));
+		if(!$post)
+		{
+			throw $this->createNotFoundException('Post not found');
+		}
+
+		$authorizationChecker = $this->get('security.authorization_checker');
+        // check for delete access
+        if (!$authorizationChecker->isGranted("EDIT", $post)) {
+            $this->addFlash('error', "You are not allowed to access that post!");
+            return $this->redirectToRoute('sp_blog_post_index');
+        }
+
+        //get instance of currently logged in user
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+		$commentManager = $this->get('spbar.blog_comment_manager');
+        $comment = $commentManager->createComment();
+
+        $form = $this->createForm('spbar_blog_comment', $comment);
+
+        $form->handleRequest($request);
+
+    	if ($form->isValid()) 
+    	{
+	        //Set post Id and user id
+	        $comment->setPost($post);
+	        $comment->setUser($user);
+    		$commentManager->updateComment($comment);
+    		
+    		// creating the ACL
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($comment);
+            $acl = $aclProvider->createAcl($objectIdentity);
+
+			//grant edit, view and delete permission
+			$builder = new MaskBuilder();
+			$builder
+			    ->add('view')
+			    ->add('edit')
+			    ->add('delete');
+			$mask = $builder->get();
+            // assign to user commenting(currently looged in user)
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+            $acl->insertObjectAce($securityIdentity, $mask);
+            $aclProvider->updateAcl($acl);
+
+            $securityIdentity = UserSecurityIdentity::fromAccount($post->getAuthor());
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OPERATOR);
+            $aclProvider->updateAcl($acl);
+
+            $roleIdentity = new RoleSecurityIdentity('ROLE_BLOG_ADMIN');
+            $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_MASTER);
+            $aclProvider->updateAcl($acl);
+
+		    return $this->redirectToRoute('sp_blog_post_moderate', array('slug'=> $post->getSlug()));
+		}
+
+		return $this->render("SpBarBlogBundle::Backend/Comment/reply.html.twig", array(
+            'form' => $form->createView(),
+            'post' => $post,
+        ));
+	}
+
 }
