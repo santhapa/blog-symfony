@@ -5,44 +5,56 @@
 <div class="space10">&nbsp;</div>
 
 {% for comment in comments if comment.parent == null %}
-		<div class="comment depth-1 media">
-			<img src="{{ asset(userImage(comment.user)) }}" alt="user image" class="avatar pull-left">
+	<div class="comment depth-1 media">
+		<img src="{{ asset(userImage(comment.user)) }}" alt="user image" class="avatar pull-left">
+		<div class="media-body">
+			<p class="font-large">Commented by <a href="#">{{ comment.user.getName()|trim ? : comment.user.getUsername() }} </a> on {{ comment.commentAt|date('F d, y, h:i A')  }} | <a href="#">Reply</a></p>
+			<p class="font-large">{{ comment.content }}</p>
+		</div>
+	</div>
+	{% for child in comment.children %}
+	    <div class="comment depth-2 media">
+			<img src="{{ asset(userImage(child.user)) }}" alt="user image" class="avatar pull-left">
 			<div class="media-body">
-				<p class="font-large">Commented by <a href="#">{{ comment.user.getName()|trim ? : comment.user.getUsername() }} </a> on {{ comment.commentAt|date('F d, y, h:i A')  }} | <a href="#">Reply</a></p>
-				<p class="font-large">{{ comment.content }}</p>
+				<p class="font-large">Commented by <a href="#">{{ child.user.getName()|trim ? : child.user.getUsername() }} </a> on {{ child.commentAt|date('F d, y, h:i A')  }} | <a href="#">Reply</a></p>
+				<p class="font-large">{{ child.content }}</p>
 			</div>
 		</div>
-		{% for child in comment.children %}
-		    <div class="comment depth-2 media">
-				<img src="{{ asset(userImage(child.user)) }}" alt="user image" class="avatar pull-left">
-				<div class="media-body">
-					<p class="font-large">Commented by <a href="#">{{ child.user.getName()|trim ? : child.user.getUsername() }} </a> on {{ child.commentAt|date('F d, y, h:i A')  }} | <a href="#">Reply</a></p>
-					<p class="font-large">{{ child.content }}</p>
-				</div>
-			</div>
-		{% endfor %}		
+	{% endfor %}		
 {% endfor %}
-
-
-<!-- <div class="comment depth-3 media">
-	<img src="assets/dest/images/comments/1.jpg" alt="" class="avatar pull-left">
-	<div class="media-body">
-		<p class="font-large">Posted by <a href="#">Andy</a> on September 23, 2013, 11:59 am   | <a href="#">Reply</a></p>
-		<p class="font-large">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-	</div>
-</div>
-
-<div class="comment depth-4 media">
-	<img src="assets/dest/images/comments/2.jpg" alt="" class="avatar pull-left">
-	<div class="media-body">
-		<p class="font-large">Posted by <a href="#">Monica</a> on September 23, 2013, 11:59 am   | <a href="#">Reply</a></p>
-		<p class="font-large">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut </p>
-	</div>
-</div> -->
 
 <div class="space20">&nbsp;</div>
 <hr class="mb40">
+{% if not (app.user and is_granted("IS_AUTHENTICATED_FULLY")) %}
+	<h3>Please login first to comment <a href="{{ path('sp_user_frontend_login') }}" class="beta-btn primary beta-btn-small" data-toggle="modal" data-target="#login">Login<i class="fa fa-chevron-right"></i></a></h3>
+	<hr class="mb40">
+{% endif %}
 
-{# {{ render(controller('SpBarBlogBundle:Backend/Comment:new', {'post': post.slug } )) }}  #}
+<h2>Leave a Reply</h2>
+<div class="space20">&nbsp;</div>
+<form action="{{ path('sp_blog_publiccomment_new', {'post': post.slug}) }}" method="post" class="contact-form">
+	<div class="form-block">
+		<textarea name="content" placeholder="Type message here..."></textarea>
+	</div>
+	<div class="form-block">
+		<button type="submit" class="beta-btn primary">Submit Comment <i class="fa fa-chevron-right"></i></button>
+	</div>
+</form>
 
-{% include 'SpBarBlogBundle::Backend/Comment/new.html.twig' with {'form': form, 'parentPost': post.slug } %}
+
+
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- conten loads from ajax for reply on comment-->
+        </div>
+    </div>
+</div>
+
+{% block js %}
+    <script type="text/javascript">
+        $('#login').on('hide.bs.modal', function(e) {
+            $(this).removeData('bs.modal');
+        });
+    </script>
+{% endblock js %}

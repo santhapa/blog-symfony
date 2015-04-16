@@ -61,7 +61,7 @@ class NewFormType extends AbstractType
                     ))
 
                 // ->add('image', 'file')
-                ->add('image','elfinder', array('instance'=>'form', 'enable'=>true))
+                ->add('featuredImage','elfinder', array('instance'=>'form', 'enable'=>true, 'required'=> false))
                 ->add('category', 'entity', array(
                         'label' => 'Category',
                         'class'=> 'SpBarBlogBundle:Category',

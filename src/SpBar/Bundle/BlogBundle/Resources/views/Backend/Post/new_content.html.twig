@@ -34,8 +34,8 @@
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        {{ form_widget(form.image) }}
-                        {{ form_errors(form.image) }}
+                        {{ form_widget(form.featuredImage) }}
+                        {{ form_errors(form.featuredImage) }}
                     </div>              
                 </div><!-- /.box -->
 
@@ -88,5 +88,4 @@
 
 {% block js %}
     <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
-
 {% endblock js %}

@@ -1,0 +1,3 @@
+sp_blog_publiccomment_new:
+    path: /new
+    defaults: { _controller: SpBarBlogBundle:Frontend/PublicComment:new }

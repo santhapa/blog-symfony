@@ -3,7 +3,9 @@
 namespace SpBar\Bundle\BlogBundle\Model;
 
 use Doctrine\ORM\EntityManager;
+
 use SpBar\Bundle\BlogBundle\Entity\Post;
+use SpBar\Bundle\UserBundle\Entity\User;
 
 class PostManager
 {	
@@ -58,5 +60,10 @@ class PostManager
 	public function getPostBySlug($slug)
 	{
 		return $this->em->getRepository("SpBarBlogBundle:Post")->findOneBy(array('slug'=>$slug));
+	}
+
+	public function getPostsByAuthor(User $user)
+	{
+		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array('author'=>$user));
 	}
 }

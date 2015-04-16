@@ -10,14 +10,20 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="media-body">
-				<h5 class="beta-blog-title"><a href="#">{{ post.title }}</a></h5>
-				<p>By: <a href="#">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | <a class="color-blg-title" href="#commentSection">{{ post.comments|length > 0 ? post.comments|length :'No' }} Comments</a> | In <a href="blog_fullwidth_2col.html">Business</a>, <a href="blog_fullwidth_2col.html">Education</a>, <a href="blog_fullwidth_2col.html">Health</a></p>
+				<h5 class="beta-blog-title">
+					<a href="{{ path('sp_blog_publicpost_singlePost', {'slug': post.slug }) }}">{{ post.title }}</a>
+				</h5>
+				<p>By: 
+					<a href="{{ path('sp_blog_publicpost_authorPost', {'user': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | 
+					<a class="color-blg-title" href="#commentSection">{{ post.comments|length > 0 ? post.comments|length :'No' }} Comments</a>|
+					Posted In {% for cat in post.category %} <a href="#">{{ cat.name }} </a> {% if not loop.last %},{% endif %} {% endfor %}
+				</p>
 			</div>
 		</div>
 	</div>
 
 	<div class="beta-blog-content">
-		<div class="mb20"><a href="#"><img src="{{ asset('blog/images/blog/img_9.jpg') }}" alt=""></a></div>
+		{# <div class="mb20"><a href="{{ path('sp_blog_publicpost_singlePost', {'slug': post.slug }) }}"><img src="{{ post.featuredImage ? post.featuredImage : asset('blog/images/blog/img_9.jpg') }}" alt="featured image"></a></div> #}
 		<div class="beta-blog-excerpt">
 			{{ post.content|raw }}
 		</div>

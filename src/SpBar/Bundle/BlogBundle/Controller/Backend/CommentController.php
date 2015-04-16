@@ -27,7 +27,7 @@ class CommentController extends Controller
         if(!$user)
         {
         	$this->addFlash('commentError', "Please login first to comment!");
-        	return $this->redirectToRoute('sp_blog_public_singlePost', array('slug'=> $post->getSlug()));
+        	return $this->redirectToRoute('sp_blog_publicpost_singlePost', array('slug'=> $post->getSlug()));
         }
 
 		$commentManager = $this->get('spbar.blog_comment_manager');
@@ -70,7 +70,7 @@ class CommentController extends Controller
             $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_MASTER);
             $aclProvider->updateAcl($acl);
 
-		    return $this->redirectToRoute('sp_blog_public_singlePost', array('slug'=> $post->getSlug()));
+		    return $this->redirectToRoute('sp_blog_publicpost_singlePost', array('slug'=> $post->getSlug()));
 		}
 
 		return $this->render("SpBarBlogBundle::Backend/Comment/new.html.twig", array(
@@ -89,6 +89,12 @@ class CommentController extends Controller
         	$this->addFlash('error', "Comment not found.");
 		    return $this->redirectToRoute('sp_blog_post_index');
         }
+
+        if(!$this->get('security.authorization_checker')->isGranted('OPERATOR', $comment->getPost()))
+		{
+			$this->addFlash('error', "Access Denied!");
+			return $this->redirectToRoute('sp_blog_post_index');
+		}
 
         $form = $this->createForm('spbar_blog_comment', $comment);
         $form->handleRequest($request);
@@ -114,12 +120,20 @@ class CommentController extends Controller
 		$commentManager = $this->get('spbar.blog_comment_manager');
 		$id = $request->query->get('id');
         $comment = $commentManager->getCommentById($id);
-        $postSlug = $comment->getPost()->getSlug();
+
         if(!$comment)
         {
         	$this->addFlash('error', "Comment not found.");
 		    return $this->redirectToRoute('sp_blog_post_index');
         }
+
+        if(!$this->get('security.authorization_checker')->isGranted('OPERATOR', $comment->getPost()))
+		{
+			$this->addFlash('error', "Access Denied!");
+			return $this->redirectToRoute('sp_blog_post_index');
+		}
+		
+        $postSlug = $comment->getPost()->getSlug();
         $user = trim($comment->getUser()->getName()) ? : $comment->getUser()->getUsername();
         $commentManager->removeComment($comment);
         $this->addFlash('success', "Comment 'by {$user}' has been deleted.");

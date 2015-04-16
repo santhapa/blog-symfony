@@ -37,7 +37,7 @@ security:
                 csrf_provider: form.csrf_provider
             logout:
                 path: sp_user_logout
-                target: sp_blog_public_index
+                target: sp_blog_publicpost_index
             context: primary_auth
             anonymous: true
 

@@ -47,7 +47,7 @@ class Comment
 
 	/**
 	*@ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-	*@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+	*@ORM\JoinColumn(nullable=true, onDelete="CASCADE")
 	**/
 	protected $post;
 

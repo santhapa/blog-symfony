@@ -58,6 +58,11 @@ class Post
     protected $slug;
 
     /**
+    * @ORM\Column(type="string", length=255, name="featured_image")
+    */
+    protected $featuredImage;
+
+    /**
     *@ORM\ManyToOne(targetEntity="SpBar\Bundle\UserBundle\Entity\User", inversedBy="posts")
     *@ORM\JoinColumn(nullable=true, onDelete="SET NULL")
     */
@@ -178,14 +183,12 @@ class Post
         return $this->category;
     }
 
-    protected $image;
-
-    public function getImage()
+    public function getFeaturedImage()
     {
-
+        return $this->featuredImage;
     }
-    public function setImage()
+    public function setFeaturedImage($path)
     {
-        
+        $this->featuredImage = $path;
     }
 }

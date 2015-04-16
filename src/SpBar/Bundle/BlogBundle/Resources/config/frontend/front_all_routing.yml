@@ -1,7 +1,7 @@
-sp_blog_public_index:
-    path: /blog/
-    defaults: { _controller: SpBarBlogBundle:Frontend/Public:index }
+sp_blog_publiccomment:
+    resource: "@SpBarBlogBundle/Resources/config/frontend/public_comment.yml"
+    prefix:   /comment
 
-sp_blog_public_singlePost:
-    path: /blog/{slug}/
-    defaults: { _controller: SpBarBlogBundle:Frontend/Public:singlePost }
+sp_blog_publicpost:
+    resource: "@SpBarBlogBundle/Resources/config/frontend/public_post.yml"
+    prefix:   /

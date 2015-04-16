@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="pull-left auto-width-left">
 				<ul class="top-menu menu-beta l-inline">
-					<li><a href="{{ path('sp_blog_public_index') }}"><i class="fa fa-home"></i> Home</a></li>
+					<li><a href="{{ path('sp_blog_publicpost_index') }}"><i class="fa fa-home"></i> Home</a></li>
 					<li><a href="#"><i class="fa fa-sitemap"></i> Sitemap</a></li>
 				</ul>
 			</div>
@@ -24,7 +24,7 @@
 	<div class="header-body">
 		<div class="container beta-relative">
 			<div class="pull-left">
-				<a href="{{ path('sp_blog_public_index') }}" id="logo"><strong>Sp</strong>Bar</a>
+				<a href="{{ path('sp_blog_publicpost_index') }}" id="logo"><strong>Sp</strong>Bar</a>
 				<span class="slogan">a simple Blog Bar</span>
 			</div>
 			<div class="pull-right beta-components space-left ov">
@@ -47,7 +47,7 @@
 			<nav class="main-menu">
 				<ul class="l-inline ov">
 					<li><a href="#">Home</a></li>
-					<li><a href="{{ path('sp_blog_public_index') }}">Blog</a></li>
+					<li><a href="{{ path('sp_blog_publicpost_index') }}">Blog</a></li>
 					<li><a href="#">Contact</a></li>
 				</ul>
 				<div class="clearfix"></div>
@@ -59,11 +59,11 @@
 <div class="inner-header">
 	<div class="container">
 		<div class="pull-left">
-			<h6 class="inner-title">Blog</h6>
+			<h6 class="inner-title"> {% if page_title is defined %} {{ page_title }} {% endif %} </h6>
 		</div>
 		<div class="pull-right">
 			<div class="beta-breadcrumb font-large">
-				<a href="#">Home</a> / <span>Blog</span>
+				{{ wo_render_breadcrumbs({ viewTemplate: "front_breadcrumb.html.twig" }) }}
 			</div>
 		</div>
 		<div class="clearfix"></div>

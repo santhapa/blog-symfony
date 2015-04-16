@@ -5,7 +5,7 @@
 
         <div class="box-body">
             <!-- Conversations are loaded here -->
-            <div class="direct-chat-messages">
+            <div class="direct-chat-messages custom-chat-messages">
                 <!-- Message. Default to the left -->
                 {% for comment in comments if comment.parent == null %}
                     <div class="direct-chat-msg">
@@ -15,9 +15,9 @@
                             </span>
                             <span class="direct-chat-timestamp pull-right">
                                 {{ comment.commentAt|date('d M, Y | h:i A')  }}|
-                                <a href="{{ path('sp_blog_comment_edit', {'id': comment.id}) }}" data-toggle="modal" data-target="#edit-comment">Edit</a>|
+                                <a href="{{ path('sp_blog_comment_edit', {'id': comment.id}) }}" data-toggle="modal" data-target="#comment-action">Edit</a>|
                                 <a href="{{ path('sp_blog_comment_delete', {'id': comment.id}) }}">Delete</a>|
-                                <a href="{{ path('sp_blog_comment_reply', {'post': post.slug, 'parentId': comment.id }) }}" data-toggle="modal" data-target="#reply-comment" >Reply</a>
+                                <a href="{{ path('sp_blog_comment_reply', {'post': post.slug, 'parentId': comment.id }) }}" data-toggle="modal" data-target="#comment-action" >Reply</a>
                             </span>
                         </div><!-- /.direct-chat-info -->
                         <img class="direct-chat-img" src="{{ asset(userImage(comment.user)) }}" alt="user image"><!-- /.direct-chat-img -->
@@ -34,9 +34,9 @@
                                 </span>
                                 <span class="direct-chat-timestamp pull-left">
                                     {{ child.commentAt|date('d M, Y | h:i A')  }}|
-                                    <a href="{{ path('sp_blog_comment_edit', {'id': child.id}) }}" data-toggle="modal" data-target="#edit-comment" class="edit-link">Edit</a>|
+                                    <a href="{{ path('sp_blog_comment_edit', {'id': child.id}) }}" data-toggle="modal" data-target="#comment-action" class="edit-link">Edit</a>|
                                     <a href="{{ path('sp_blog_comment_delete', {'id': child.id}) }}">Delete</a>|
-                                    <a href="{{ path('sp_blog_comment_reply', {'post': post.slug, 'parentId': comment.id }) }}" data-toggle="modal" data-target="#reply-comment" >Reply</a>
+                                    <a href="{{ path('sp_blog_comment_reply', {'post': post.slug, 'parentId': comment.id }) }}" data-toggle="modal" data-target="#comment-action">Reply</a>
                                 </span>
                             </div><!-- /.direct-chat-info -->
                             <img class="direct-chat-img" src="{{ asset(userImage(child.user)) }}" alt="user image"><!-- /.direct-chat-img -->
@@ -50,36 +50,21 @@
             </div><!--/.direct-chat-messages-->
         </div><!-- /.box-body -->
         <div class="box-footer">
-            {% include 'SpBarBlogBundle:Backend/Comment:reply.html.twig' %}
+            <form action="{{ path('sp_blog_comment_reply', {'post': post.slug, 'parentId': parentId }) }}" method="post">
+                <div class="input-group">
+                    {{ form_widget(form.content, {'attr':{'placeholder': 'Type message...', 'class': 'form-control'}}) }}
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-flat">Submit Comment</button>
+                    </span>
+                </div>
+            </form>
         </div><!-- /.box-footer-->
     </div><!--/.direct-chat -->
 </div>
 
-
-
+<!-- Comment modal for both reply and edit ajax -->
 <!-- Modal -->
-<div class="modal fade" id="edit-comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- conten loads from ajax for edit comment-->
-
-            <!-- <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Edit Comment</h4>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> -->
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="reply-comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="comment-action" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- conten loads from ajax for reply on comment-->
@@ -89,11 +74,7 @@
 
 {% block js %}
     <script type="text/javascript">
-        $('#edit-comment').on('hide.bs.modal', function(e) {
-            $(this).removeData('bs.modal');
-        });
-
-        $('#reply-comment').on('hide.bs.modal', function(e) {
+        $('#comment-action').on('hide.bs.modal', function(e) {
             $(this).removeData('bs.modal');
         });
     </script>
