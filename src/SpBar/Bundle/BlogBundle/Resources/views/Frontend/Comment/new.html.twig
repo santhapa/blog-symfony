@@ -1,0 +1,12 @@
+<div style="padding:10px">
+	<h2>Leave a Reply</h2>
+	<div class="space20">&nbsp;</div>
+	<form action="{{ path('sp_blog_front_comment_new', {'post': postSlug, 'parent': parentId }) }}" method="post" >
+		<div class="form-block">
+			<textarea name="content" placeholder="Type message here..."></textarea>
+		</div>
+		<div class="form-block">
+			<button type="submit" class="beta-btn primary">Reply <i class="fa fa-chevron-right"></i></button>
+		</div>
+	</form>
+</div>

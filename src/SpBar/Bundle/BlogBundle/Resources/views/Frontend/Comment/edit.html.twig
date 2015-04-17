@@ -1,0 +1,12 @@
+<div style="padding:10px">
+	<h2>Edit your comment</h2>
+	<div class="space20">&nbsp;</div>
+	<form action="{{ path('sp_blog_front_comment_edit', {'id': comment.id }) }}" method="post">
+		<div class="form-block">
+			<textarea name="content" placeholder="Type message here...">{{ comment.content|trim }}</textarea>
+		</div>
+		<div class="form-block">
+			<button type="submit" class="beta-btn primary">Update <i class="fa fa-chevron-right"></i></button>
+		</div>
+	</form>
+</div>

@@ -8,14 +8,14 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 use FOS\UserBundle\Controller\SecurityController as BaseController;
 
-class PublicSecurityController extends BaseController
+class SecurityController extends BaseController
 {
     public function loginAction(Request $request)
     {
         $session = $request->getSession();
 
         // if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-        //     // return $this->redirectToRoute('sp_user_index');
+        //      return $this->redirect();
         // }
 
         // get the error if any (works with forward and redirect -- see below)
@@ -43,12 +43,13 @@ class PublicSecurityController extends BaseController
             'last_username' => $lastUsername,
             'error'         => $error,
             'csrf_token' => $csrfToken,
+            // 'redirectUrl' => $redirectUrl,
         ));
     }
 
     protected function renderLogin(array $data)
     {
-        return $this->render('SpBarUserBundle:Frontend/PublicSecurity:login.html.twig', $data);
+        return $this->render('SpBarUserBundle:Frontend/Security:login.html.twig', $data);
     }
 
     public function checkAction()

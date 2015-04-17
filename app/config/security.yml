@@ -35,9 +35,10 @@ security:
                 login_path: sp_user_frontend_login
                 check_path: sp_user_frontend_login_check
                 csrf_provider: form.csrf_provider
+                use_referer: true
             logout:
                 path: sp_user_logout
-                target: sp_blog_publicpost_index
+                target: sp_blog_front_post_index
             context: primary_auth
             anonymous: true
 

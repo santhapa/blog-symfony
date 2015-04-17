@@ -1,7 +1,7 @@
 sp_user_frontend_login: 
     path: /login
-    defaults: { _controller: SpBarUserBundle:Frontend/PublicSecurity:login }
+    defaults: { _controller: SpBarUserBundle:Frontend/Security:login }
 
 sp_user_frontend_login_check:
     path: /login_check
-    defaults: { _controller: SpBarUserBundle:Frontend/PublicSecurity:check }
+    defaults: { _controller: SpBarUserBundle:Frontend/Security:check }

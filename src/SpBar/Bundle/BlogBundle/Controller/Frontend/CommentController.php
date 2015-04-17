@@ -13,7 +13,7 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 /*
 * This class is mostly for commenting on post for public
 */ 
-class PublicCommentController extends Controller
+class CommentController extends Controller
 {
 	public function newAction(Request $request)
 	{
@@ -28,12 +28,25 @@ class PublicCommentController extends Controller
 		{
 			throw $this->createNotFoundException('Post not found');
 		}
+
 		$user = $this->get('security.token_storage')->getToken()->getUser();
 
+		$parentId = null;
+        if($request->query->get('parent'))
+        {
+        	$parentId = $request->query->get('parent');
+        }
+        
     	if ($request->isMethod('POST')) 
     	{
     		$commentManager = $this->get("spbar.blog_comment_manager");
     		$comment = $commentManager->createComment();
+
+    		if($parentId)
+	        {
+	        	$comment->setParent($commentManager->getCommentById($parentId));
+	        }
+
 	        //Set post Id and user id
 	        $comment->setPost($post);
 	        $comment->setUser($user);
@@ -66,17 +79,60 @@ class PublicCommentController extends Controller
             $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_MASTER);
             $aclProvider->updateAcl($acl);
 
-		    return $this->redirectToRoute('sp_blog_publicpost_singlePost', array('slug'=> $post->getSlug()));
+		    return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $post->getSlug()));
 		}
+		return $this->render("SpBarBlogBundle::Frontend/Comment/new.html.twig", array(
+            'postSlug' => $post->getSlug(),
+            'parentId' => $parentId,
+        ));
 	}
 
-	public function editAction()
+	public function editAction(Request $request)
 	{
-		return $this->render("SpBarBlogBundle::Frontend/PublicComment/new.html.twig");
+		$id = $request->query->get('id');
+		$commentManager = $this->get('spbar.blog_comment_manager');
+        $comment = $commentManager->getCommentById($id);
+        if(!$comment)
+        {
+		    throw $this->createNotFoundException('Comment not found');
+        }
+
+        if(!$this->get('security.authorization_checker')->isGranted('EDIT', $comment))
+		{
+			throw $this->createAccessDeniedException('Access Denied');
+		}
+
+    	if ($request->isMethod('POST')) 
+    	{
+    		$comment->setContent($request->request->get('content'));
+    		$commentManager->updateComment($comment);
+
+		    return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $comment->getPost()->getSlug()));
+		}
+		return $this->render("SpBarBlogBundle::Frontend/Comment/edit.html.twig", array(
+			'comment' => $comment,
+		));
 	}
 
-	public function deleteAction()
+	public function deleteAction(Request $request)
 	{
-		return $this->render("SpBarBlogBundle::Frontend/PublicComment/new.html.twig");
+		$commentManager = $this->get('spbar.blog_comment_manager');
+		$id = $request->query->get('id');
+        $comment = $commentManager->getCommentById($id);
+
+        if(!$comment)
+        {
+        	throw $this->createNotFoundException('Comment not found');
+        }
+
+        if(!$this->get('security.authorization_checker')->isGranted('DELETE', $comment))
+		{
+			throw $this->createAccessDeniedException('Access Denied');
+		}
+		
+        $postSlug = $comment->getPost()->getSlug();
+        $commentManager->removeComment($comment);
+
+		return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $postSlug));
 	}
 }

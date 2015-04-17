@@ -4,7 +4,7 @@ sp_user_backend:
 
 sp_user_frontend:
     resource: "@SpBarUserBundle/Resources/config/frontend/front_all.yml"
-    prefix:   /user
+    prefix:   /
 
 sp_user_logout:
     path: /logout

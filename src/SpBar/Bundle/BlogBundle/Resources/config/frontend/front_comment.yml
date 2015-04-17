@@ -1,0 +1,11 @@
+sp_blog_front_comment_new:
+    path: /new
+    defaults: { _controller: SpBarBlogBundle:Frontend/Comment:new }
+
+sp_blog_front_comment_edit:
+    path: /edit
+    defaults: { _controller: SpBarBlogBundle:Frontend/Comment:edit }
+
+sp_blog_front_comment_delete:
+    path: /delete
+    defaults: { _controller: SpBarBlogBundle:Frontend/Comment:delete }
