@@ -147,7 +147,7 @@ fm_elfinder:
                         show_hidden: false # defaults to false
                         driver: LocalFileSystem
                         path: uploads/elfinder/media
-                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 6M
         form:
@@ -162,7 +162,7 @@ fm_elfinder:
                     uploads:
                         driver: LocalFileSystem
                         path: uploads/elfinder/featured
-                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 4M
 

@@ -54,7 +54,7 @@ class PostManager
 
 	public function getPosts()
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array(), array('status'=>'asc'));
+		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array(), array('status'=>'asc', 'createdAt'=>'desc'));
 	}
 
 	public function getPostBySlug($slug)
@@ -64,6 +64,6 @@ class PostManager
 
 	public function getPostsByAuthor(User $user)
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array('author'=>$user));
+		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array('author'=>$user), array('createdAt'=>'desc'));
 	}
 }
