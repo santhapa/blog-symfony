@@ -131,6 +131,7 @@ white_october_breadcrumbs:
 
 #Elfinder Configuration
 fm_elfinder:
+    assets_path: /blog/web/assets
     instances:
         default:
             locale: %locale% # defaults to current request locale
