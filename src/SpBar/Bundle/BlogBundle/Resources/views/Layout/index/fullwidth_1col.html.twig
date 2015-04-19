@@ -2,8 +2,9 @@
 	<div id="content">
 		{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
 		<div class="beta-blog beta-blog-a">
-			{% include 'SpBarBlogBundle:Layout/index:post_content.html.twig' with {'post': post, 'length': '1100'} %}
+			{% include 'SpBarBlogBundle:Frontend/Divs:post_content.html.twig' with {'post': post, 'length': '1100'} %}
 		</div> <!-- .beta-blog item -->
+		<hr class="mb50">
 		{% endfor %}
 		{{ knp_pagination_render(posts, 'beta_pagination.html.twig') }}
 	</div> <!-- #content -->

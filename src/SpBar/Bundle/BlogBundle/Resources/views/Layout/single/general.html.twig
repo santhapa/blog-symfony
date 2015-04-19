@@ -25,7 +25,9 @@
 	<div class="beta-blog-content">
 		{# <div class="mb20"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ post.featuredImage ? post.featuredImage : asset('blog/images/blog/img_9.jpg') }}" alt="featured image"></a></div> #}
 		<div class="beta-blog-excerpt">
-			{{ post.content|raw }}
+			<p>
+				{{ post.content|raw }}
+			</p>
 		</div>
 	</div>
 </div> <!-- .beta-blog item -->

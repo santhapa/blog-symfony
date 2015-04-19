@@ -1,0 +1,41 @@
+{% extends('SpBarBlogBundle::Frontend/front_base.html.twig') %}
+
+{% set postType = post.postType.template %}
+{% set loadPostTheme = 'SpBarBlogBundle::Layout/single/'~ postType %}
+{% set authorInfoSection = 'SpBarBlogBundle::Frontend/Divs/author_bio.html.twig' %}
+{% set commentSection = 'SpBarBlogBundle::Frontend/Divs/post_comment.html.twig' %}
+
+{% block body_content %}
+<div class="container">
+	<div id="content">
+		<div class="row">
+			{% block body_content_container %}
+				<div class="col-sm-9">
+	    			{% include loadPostTheme with {'post': post } %}
+
+	    			<hr class="mb40">
+	    			<!-- author bio block -->
+	    			{% block body_content_authorBio %}
+	    			   	{% include authorInfoSection with {'author': post.author}  %}
+	    			{% endblock body_content_authorBio %}
+
+	    			<hr class="mt40">
+					<div class="space20">&nbsp;</div>
+					
+					<!-- post comments block -->
+					{% block body_content_comment %}
+	    			   	{% include commentSection with {'post': post}  %}
+					{% endblock body_content_comment %}
+				</div>
+			{% endblock body_content_container %}
+
+			{% block body_content_sidebar %}
+				<div class="col-sm-3 aside-main">
+					{% include 'SpBarBlogBundle::Layout/divs/sidebar_widget.html.twig' %}
+				</div>  
+			{% endblock body_content_sidebar %}
+		</div>
+	</div> <!-- #content -->
+</div> <!-- .container -->
+	
+{% endblock body_content %}

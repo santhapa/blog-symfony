@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> {% block title %}{% if page_title is defined %} {{ page_title }} {% endif %} {% endblock title %} | SpBar</title>
 	<!-- common css -->
-	{% include 'SpBarBlogBundle::Layout/header_assets.html.twig' %}
+	{% include 'SpBarBlogBundle::Layout/divs/header_assets.html.twig' %}
 
 	{% block css %}	    
 	{% endblock css %}
@@ -17,7 +17,7 @@
 
 		<!-- loads header navbar section -->
 		{% block body_header %}
-		    {% include 'SpBarBlogBundle::Layout/navbar.html.twig' %}
+		    {% include 'SpBarBlogBundle::Layout/divs/navbar.html.twig' %}
 		{% endblock body_header %}
 
 		{% block body_content %}	    
@@ -27,19 +27,19 @@
 		{% block body_footer %}
 			<!-- load footer widget section -->
 		    {% block body_footer_widget %}
-		    	{% include 'SpBarBlogBundle::Layout/footer_widget.html.twig' %}		        
+		    	{% include 'SpBarBlogBundle::Layout/divs/footer_widget.html.twig' %}		        
 		    {% endblock body_footer_widget %}
 
 		    <!-- load copyright section -->
 		    {% block body_footer_copyright %}
-		    	{% include 'SpBarBlogBundle::Layout/footer_copyright.html.twig' %}		        
+		    	{% include 'SpBarBlogBundle::Layout/divs/footer_copyright.html.twig' %}		        
 		    {% endblock body_footer_copyright %}
 		{% endblock body_footer %}
 	    
 	{% endblock body %}
 
 	<!-- common js -->
-	{% include 'SpBarBlogBundle::Layout/footer_assets.html.twig' %}
+	{% include 'SpBarBlogBundle::Layout/divs/footer_assets.html.twig' %}
 	{% block js %}	    
 	{% endblock js %}
 </body>

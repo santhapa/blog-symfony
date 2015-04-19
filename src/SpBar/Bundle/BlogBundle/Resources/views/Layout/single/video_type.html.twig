@@ -1,0 +1,37 @@
+<div class="beta-blog beta-blog-e beta-blog-single">
+	<div class="beta-blog-header">
+		<div class="media">
+			<div class="pull-left">
+				<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
+				<span class="beta-blog-date pull-left">
+					<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
+					<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
+				</span>
+				<div class="clearfix"></div>
+			</div>
+			<div class="media-body">
+				<h5 class="beta-blog-title">
+					<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}">{{ post.title }}</a>
+				</h5>
+				<p>By: 
+					<a href="{{ path('sp_blog_front_post_index', {'author': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : 'Anonymous Author' }}</a> | 
+					<a class="color-blg-title" href="#commentSection">{{ post.comments|length > 0 ? post.comments|length :'No' }} Comments</a>|
+					Posted In {% for cat in post.category %} <a href="#">{{ cat.name }} </a> {% if not loop.last %},{% endif %} {% endfor %}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="beta-blog-content">
+		<div class="mb20">
+			<div class="video-elastic">
+				<iframe src="http://player.vimeo.com/video/41499247?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff"></iframe>
+			</div>
+		</div>
+		<div class="beta-blog-excerpt">
+			<p>
+				{{ post.content|raw }}
+			</p>
+		</div>
+	</div>
+</div> <!-- .beta-blog item -->

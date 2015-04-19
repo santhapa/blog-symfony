@@ -54,7 +54,7 @@ class PostManager
 
 	public function getPosts()
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array(), array('status'=>'asc', 'createdAt'=>'desc'));
+		return $this->em->getRepository("SpBarBlogBundle:Post")->findBy(array(), array('createdAt'=>'desc', 'status'=>'asc'));
 	}
 
 	public function getPostBySlug($slug)

@@ -58,7 +58,7 @@ class PostController extends Controller
 	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_post_index");
 	    $breadcrumbs->addRouteItem("Blog", "sp_blog_front_post_index");
 
-		return $this->render("SpBarBlogBundle::Frontend/Post/single_post.html.twig", array(
+		return $this->render("SpBarBlogBundle::Frontend/Post/single.html.twig", array(
 			'post'=>$post,
 			'form' => $form->createView(),
 			'page_title'=> $post->getTitle(),

@@ -12,6 +12,7 @@
 		</div>
 		<div class="media-body">
 			<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}">{{ post.title }}</a></h5>
+			{#<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ post.title }}">{{ post.title|length >= 40 ? excerpt(post.title, 40) ~"..." : post.title }}</a></h5>#}
 			<p>By: 
 				<a href="{{ path('sp_blog_front_post_index', {'author': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | 
 				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}#commentSection">{{ post.comments|length > 0 ? post.comments|length : 'No' }} Comments</a>|
@@ -24,9 +25,9 @@
 <div class="row beta-blog-content">
 	<div class="col-sm-6"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ post.featuredImage ? post.featuredImage : asset('blog/images/blog/img_9.jpg') }}" alt="featured image"></a></div>
 	<div class="col-sm-6">
-		<div>
+		<p>
 			{{ excerpt(post.content, excerptLength)|raw }}	
-		</div>
+		</p>
 		
 		<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
 	</div>
