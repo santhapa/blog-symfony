@@ -1,0 +1,14 @@
+services:
+    spbar.blog_post_meta_manager:
+        class: SpBar\Bundle\BlogBundle\Model\PostMetaManager
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    spbar.blog_post_meta_transformer:
+        class: SpBar\Bundle\BlogBundle\Form\DataTransformer\blog_post_meta_transformer
+        arguments: ["@spbar.blog_post_meta_manager"]
+
+    spbar.blog_post_meta_form_type:
+        class: SpBar\Bundle\BlogBundle\Form\Type\PostMetaFormType
+        tags:
+            - { name: form.type, alias: spbar_blog_post_meta }
+        arguments: ["@spbar.blog_post_meta_manager"]

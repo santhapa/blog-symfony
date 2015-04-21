@@ -10,17 +10,22 @@ use SpBar\Bundle\BlogBundle\Model\ThemeManager;
 use SpBar\Bundle\BlogBundle\Model\PostManager;
 use SpBar\Bundle\BlogBundle\Model\CategoryManager;
 
+use SpBar\Bundle\BlogBundle\Form\EventListener\DefaultCategorySubscriber;
+
 class NewFormType extends AbstractType
 {   
     protected $tm;
+
+    protected $cm;
 
     protected $authorizer;
 
     protected $token;
 
-    public function __construct(ThemeManager $tm, $auth=null, $token=null)
+    public function __construct(ThemeManager $tm, CategoryManager $cm, $auth=null, $token=null)
     {
         $this->tm = $tm;
+        $this->cm = $cm;
         $this->authorizer = $auth;
         $this->token = $token;
     }
@@ -61,14 +66,21 @@ class NewFormType extends AbstractType
                     ))
 
                 // ->add('image', 'file')
-                ->add('featuredImage','elfinder', array('instance'=>'form', 'enable'=>true, 'required'=> false))
+                // ->add('meta','elfinder', array('instance'=>'form', 'enable'=>true, 'required'=> false))
+                ->add('metas', 'spbar_blog_post_meta', array(
+                        'required'=> false
+                    ))
                 ->add('category', 'entity', array(
                         'label' => 'Category',
                         'class'=> 'SpBarBlogBundle:Category',
                         'property'=> 'name',
+                        'empty_data'=> 'Uncategorized',
                         'expanded' => true,
                         'multiple' => true,
                         'required' => true
+                    ))                
+                ->add('tags', 'spbar_blog_post_tag', array(
+                        'required'=>false
                     ))
                 ->add('status', 'choice', array(
                         'label' => 'Publish',
@@ -88,6 +100,9 @@ class NewFormType extends AbstractType
                     'required' => true
                 ));
         }
+
+        $builder->addEventSubscriber(new DefaultCategorySubscriber($this->cm));
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

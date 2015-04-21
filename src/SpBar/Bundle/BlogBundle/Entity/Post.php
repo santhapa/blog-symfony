@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use SpBar\Bundle\BlogBundle\Entity\Category;
+use SpBar\Bundle\BlogBundle\Entity\PostMeta;
+use SpBar\Bundle\BlogBundle\Entity\Tag;
 
 /**
 * @ORM\Entity
@@ -25,11 +27,13 @@ class Post
 	protected $id;
 
 	/**
+    * @Assert\NotBlank()
 	* @ORM\Column(type="string")
 	*/
     protected $title;
 
     /**
+    * @Assert\NotBlank()
 	* @ORM\Column(type="text")
 	*/
     protected $content;
@@ -57,10 +61,10 @@ class Post
     */
     protected $slug;
 
-    /**
-    * @ORM\Column(type="string", length=255, name="featured_image")
-    */
-    protected $featuredImage;
+    // *
+    // * @ORM\Column(type="string", length=255, name="featured_image")
+    
+    // protected $featuredImage;
 
     /**
     *@ORM\ManyToOne(targetEntity="SpBar\Bundle\UserBundle\Entity\User", inversedBy="posts")
@@ -74,16 +78,33 @@ class Post
     protected $comments;
 
     /**
-    * @Assert\NotBlank(message="At least one category is required!")
     * @ORM\ManyToMany(targetEntity="Category", inversedBy="posts")
     * @ORM\JoinTable(name="spbar_post_category")
     **/
     protected $category;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="PostMeta", inversedBy="post")
+    * @ORM\JoinTable(name="spbar_posts_meta")
+    **/
+    protected $meta;
+
+    protected $metas;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="Tag", inversedBy="post")
+    * @ORM\JoinTable(name="spbar_posts_tag")
+    **/
+    protected $tag;
+
+    protected $tags;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->category = new ArrayCollection();
+        $this->meta = new ArrayCollection();
+        $this->tag = new ArrayCollection();
     }
 
     public function getId()
@@ -183,12 +204,88 @@ class Post
         return $this->category;
     }
 
-    public function getFeaturedImage()
+    public function setMetas($metas)
     {
-        return $this->featuredImage;
+        if(!$metas)
+        {
+            return;
+        }
+
+        $this->addMeta($metas);
+        // foreach ($metas as $meta) {
+        //     $this->addMeta($meta);
+        // }
     }
-    public function setFeaturedImage($path)
+
+    public function getMetas()
     {
-        $this->featuredImage = $path;
+        return $this->meta ?: $this->meta = new ArrayCollection();
     }
+
+    public function addMeta(PostMeta $meta)
+    {
+        if(!$this->getMetas()->contains($meta))
+        {
+            $meta->addPost($this);
+            $this->meta[] = $meta;
+        }
+        return $this;        
+    }
+
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    public function setTags($tags)
+    {
+        if(!$tags)
+            return;
+
+        foreach ($this->tag as $tag) {
+            $this->removeTag($tag);
+        }
+        
+        foreach ($tags as $tag) {
+            $this->addTag($tag);
+        }
+    }
+
+    public function getTags()
+    {
+        return $this->tag ?: $this->tag = new ArrayCollection();
+        // return $this->tags;
+    }
+
+    public function addTag(Tag $tag)
+    {
+        if(!$this->getTags()->contains($tag))
+        {
+            $tag->addPost($this);
+            $this->tag[] = $tag;
+        }
+        return $this;
+    }
+
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    public function removeTag(Tag $tag)
+    {
+        if ($this->getTags()->contains($tag)) {
+            $this->getTags()->removeElement($tag);
+        }
+        return $this;
+    }
+
+    // public function getFeaturedImage()
+    // {
+    //     return $this->featuredImage;
+    // }
+    // public function setFeaturedImage($path)
+    // {
+    //     $this->featuredImage = $path;
+    // }
 }

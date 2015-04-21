@@ -1,0 +1,14 @@
+services:
+    spbar.blog_post_tag_manager:
+        class: SpBar\Bundle\BlogBundle\Model\TagManager
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    spbar.blog_post_tag_transformer:
+        class: SpBar\Bundle\BlogBundle\Form\DataTransformer\blog_post_tag_transformer
+        arguments: ["@spbar.blog_post_tag_manager"]
+
+    spbar.blog_post_tag_form_type:
+        class: SpBar\Bundle\BlogBundle\Form\Type\TagFormType
+        tags:
+            - { name: form.type, alias: spbar_blog_post_tag }
+        arguments: ["@spbar.blog_post_tag_manager"]

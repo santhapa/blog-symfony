@@ -7,3 +7,7 @@ services:
     spbar.blog_category_manager:
         class: SpBar\Bundle\BlogBundle\Model\CategoryManager
         arguments: ["@doctrine.orm.entity_manager"]
+
+    spbar.blog_category_event_subscriber:
+        class : SpBar\Bundle\BlogBundle\Form\EventListener\DefaultCategorySubscriber
+        arguments: ["@spbar.blog_category_manager"]

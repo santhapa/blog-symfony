@@ -126,7 +126,7 @@ class User extends BaseUser
 
     /*******************************files to be changed*******************************************/
         /** 
-        *@ORM\OneToMany(targetEntity="SpBar\Bundle\BlogBundle\Entity\Post", mappedBy="author")
+        *@ORM\OneToMany(targetEntity="SpBar\Bundle\BlogBundle\Entity\Post", mappedBy="author", cascade={"persist"})
         */
         protected $posts = null;
 
