@@ -9,6 +9,8 @@ class BlogExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('excerpt', array($this, 'truncateContent')),
+            new \Twig_SimpleFunction('minifyTitle', array($this, 'getMinifiedTitle')), 
+            // new \Twig_SimpleFunction('featuredImage', array($this, 'showFeaturedImage')),
         );
     }
 
@@ -18,6 +20,32 @@ class BlogExtension extends \Twig_Extension
 
         return $output;
     }
+
+    public function getMinifiedTitle($title, $length=null, $minify = true)
+    {
+        if($minify==false)
+        {
+            return $title;
+        }
+        if(strlen($title) >= $length)
+        {
+            return substr($title, 0, $length)."...";
+        }else{
+            return $title;
+        }
+    }
+
+    // public function showFeaturedImage($path)
+    // {
+    //     if(!$path || $path==null)
+    //     {
+    //         return 'blog/images/featured/default.jpg';
+    //     }else{
+    //         return 'uploads/elfinder/featured/'.
+    //     }
+    // }
+
+
 
     public function getName()
     {

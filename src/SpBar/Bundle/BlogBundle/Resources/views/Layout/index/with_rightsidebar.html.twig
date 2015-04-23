@@ -7,7 +7,7 @@
 			<div class="col-sm-9">
 				{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
 					<div class="beta-blog beta-blog-a">
-						{% include 'SpBarBlogBundle:Frontend/Divs:post_content.html.twig' with {'post': post, 'length': '500'} %}
+						{% include 'SpBarBlogBundle:Frontend/Divs:post_content.html.twig' with {'post': post, 'length': '500', 'col': '1'} %}
 					</div> <!-- .beta-blog item -->
 				{% endfor %}
 				{{ knp_pagination_render(posts, 'beta_pagination.html.twig') }}

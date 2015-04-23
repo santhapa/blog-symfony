@@ -108,13 +108,28 @@
 {% block js %}
     <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript">
-        $(".tag-input").tagsManager({
-            CapitalizeFirstLetter: false,
-            hiddenTagListName: 'spbar_blog_post_new[tags]',
-            deleteTagsOnBackspace: true,
-            tagsContainer: null,
-            tagCloseIcon: '×',
-            tagClass: 'tag-input'
+        $(function(){
+            var tags = "{{ form.tags.vars.value|escape('js') }}";
+            var preSet = Array();
+            preSet = tags.split(',');
+        
+            $(".tag-input").tagsManager({
+                prefilled: preSet,
+                CapitalizeFirstLetter: false,
+                hiddenTagListName: 'spbar_blog_post_new[tags]',
+                deleteTagsOnBackspace: true,
+                tagsContainer: null,
+                tagCloseIcon: '×',
+                tagClass: 'tag-input'
+            });
         });
+        // $(".tag-input").tagsManager({
+        //     CapitalizeFirstLetter: false,
+        //     hiddenTagListName: 'spbar_blog_post_new[tags]',
+        //     deleteTagsOnBackspace: true,
+        //     tagsContainer: null,
+        //     tagCloseIcon: '×',
+        //     tagClass: 'tag-input'
+        // });
     </script>
 {% endblock js %}

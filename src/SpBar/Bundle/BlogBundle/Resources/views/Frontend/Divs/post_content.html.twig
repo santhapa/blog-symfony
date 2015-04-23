@@ -1,8 +1,90 @@
 {% set excerptLength = length %}
 
-<div class="beta-blog-header">
-	<div class="media">
-		<div class="pull-left">
+<!-- get meta information for post -->
+{% set featuredMeta = "" %}
+
+{% for meta in post.meta %}
+	{% set featuredMeta = meta.source %}
+{% endfor %}
+
+{% if col == 1 or col == 2 or col == 3 %}
+	<div class="beta-blog-header">
+		<div class="media">
+			<!-- show this only for col 1 and 2 -->
+			{% if col == 1 or col == 2 %}
+			<div class="pull-left">
+				<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
+				<span class="beta-blog-date pull-left">
+					<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
+					<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
+				</span>
+				<div class="clearfix"></div>
+			</div>
+			{% endif %}
+			
+			<div class="media-body">
+				<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ post.title }}">
+					{% if col == 1 %}
+						{{ minifyTitle(post.title, 0, false) }}
+					{% endif %}
+					{% if col == 2 %}
+						{{ minifyTitle(post.title, 40, true) }}
+					{% endif %}
+					{% if col == 3 %}
+						{{ minifyTitle(post.title, 30, true) }}
+					{% endif %}
+				</a></h5>
+				<p>By: 
+					<a href="{{ path('sp_blog_front_post_index', {'author': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | 
+					<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}#commentSection">{{ post.comments|length > 0 ? post.comments|length : 'No' }} Comments</a>|
+					Posted In {% for cat in post.category %} <a href="#">{{ cat.name }} </a> {% if not loop.last %},{% endif %} {% endfor %}
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- content display area for col 1 and 2 -->
+	{% if col == 1 or col == 2 %}
+		<div class="row beta-blog-content">
+			<div class="col-sm-6">
+				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}">
+					<img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image">
+				</a>
+			</div>
+			<div class="col-sm-6">
+				<p>
+					{{ excerpt(post.content, excerptLength)|raw }}	
+				</p>		
+				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+			</div>
+		</div>
+	{% endif %}
+
+	<!-- content display area for col 3 -->
+	{% if col == 3 %}
+		<div class="beta-blog-content">
+			<div class="beta-blog-content-preview">
+				<div class="pull-left beta-blog-content-details">
+					<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
+					<span class="beta-blog-date pull-left">
+						<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
+						<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
+					</span>
+					<div class="clearfix"></div>
+				</div>
+				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image"></a>
+			</div>
+			<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+			<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+		</div>
+	{% endif %}
+{% endif %}
+
+
+<!-- content area for col 4 only -->
+{% if col == 4 %}
+	<div class="beta-blog-content-preview">
+		<div class="pull-left beta-blog-content-details">
 			<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
 			<span class="beta-blog-date pull-left">
 				<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
@@ -10,25 +92,10 @@
 			</span>
 			<div class="clearfix"></div>
 		</div>
-		<div class="media-body">
-			<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}">{{ post.title }}</a></h5>
-			{#<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ post.title }}">{{ post.title|length >= 40 ? excerpt(post.title, 40) ~"..." : post.title }}</a></h5>#}
-			<p>By: 
-				<a href="{{ path('sp_blog_front_post_index', {'author': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | 
-				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}#commentSection">{{ post.comments|length > 0 ? post.comments|length : 'No' }} Comments</a>|
-				Posted In {% for cat in post.category %} <a href="#">{{ cat.name }} </a> {% if not loop.last %},{% endif %} {% endfor %}
-			</p>
-		</div>
+		<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image"></a>
 	</div>
-</div>
+	<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ post.title }}">{{ minifyTitle(post.title, 20, true) }}</a></h5>
 
-<div class="row beta-blog-content">
-	<div class="col-sm-6"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ post.featuredImage ? post.featuredImage : asset('blog/images/blog/img_9.jpg') }}" alt="featured image"></a></div>
-	<div class="col-sm-6">
-		<p>
-			{{ excerpt(post.content, excerptLength)|raw }}	
-		</p>
-		
-		<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
-	</div>
-</div>
+	<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+	<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+{% endif %}

@@ -27,13 +27,13 @@ class Post
 	protected $id;
 
 	/**
-    * @Assert\NotBlank()
+    * @Assert\NotBlank(message="Title cannot be empty")
 	* @ORM\Column(type="string")
 	*/
     protected $title;
 
     /**
-    * @Assert\NotBlank()
+    * @Assert\NotBlank(message="Content cannot be empty")
 	* @ORM\Column(type="text")
 	*/
     protected $content;
