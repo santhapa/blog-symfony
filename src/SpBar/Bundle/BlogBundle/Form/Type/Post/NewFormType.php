@@ -12,6 +12,10 @@ use SpBar\Bundle\BlogBundle\Model\CategoryManager;
 
 use SpBar\Bundle\BlogBundle\Form\EventListener\DefaultCategorySubscriber;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+
 class NewFormType extends AbstractType
 {   
     protected $tm;
@@ -101,9 +105,55 @@ class NewFormType extends AbstractType
                 ));
         }
 
+        // $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+        // $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+
         $builder->addEventSubscriber(new DefaultCategorySubscriber($this->cm));
 
     }
+
+    // protected function addElements(FormInterface $form, $postType = null) {
+
+    //     if($postType->getSlug() == 'audio_post') {
+    //         // Fetch the cities from specified province
+    //         $label = "Select Audio File";
+    //     }elseif ($postType->getSlug() == 'video_post') {
+    //         $label = "Upload video file";
+    //     }else{
+    //         $label = "Set Featured Image";
+    //     }
+
+    //     // Add the city element
+    //     $form->add('metas', 'spbar_blog_post_meta', array(
+    //                     'label'=> $label,
+    //                     'required'=> false
+    //                 ));
+    // }
+
+
+    // function onPreSubmit(FormEvent $event) {
+    //     $form = $event->getForm();
+    //     $data = $event->getData();
+
+    //     // Note that the data is not yet hydrated into the entity.
+    //     // $province = $this->em->getRepository('NoxLogicDemoBundle:Province')->find($data['province']);
+    //     // $this->addElements($form, $province);
+
+    //     $postType = $this->tm->getThemeById($data['postType']);
+    //     $this->addElements($form, $postType);
+    // }
+
+
+    // function onPreSetData(FormEvent $event) {
+    //     $post = $event->getData();
+    //     $form = $event->getForm();
+
+    //     // We might have an empty account (when we insert a new account, for instance)
+    //     // $province = $account->getCity() ? $account->getCity()->getProvince() : null;
+    //     // $this->addElements($form, $province);
+    //     $postType = $post->getPostType() ? $post->getPostType() : $this->tm->getThemeBySlug('general_post');
+    //     $this->addElements($form, $postType);
+    // }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
