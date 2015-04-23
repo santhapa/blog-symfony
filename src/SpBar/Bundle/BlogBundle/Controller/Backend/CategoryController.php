@@ -19,7 +19,7 @@ class CategoryController extends Controller
 		$categorys = $categoryManager->getCategorys();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addItem("Category");
 
@@ -37,7 +37,7 @@ class CategoryController extends Controller
 		$categorys = $categoryManager->getCategorys();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Category", "sp_blog_category_index");
 		$breadcrumbs->addItem('List');
@@ -66,7 +66,7 @@ class CategoryController extends Controller
 		}
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Category", "sp_blog_category_index");
 		$breadcrumbs->addItem('New');
@@ -101,7 +101,7 @@ class CategoryController extends Controller
 		}
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Category", "sp_blog_category_index");
 		$breadcrumbs->addItem('Edit');

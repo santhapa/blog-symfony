@@ -24,7 +24,7 @@ class PostController extends Controller
 		$posts = $postManager->getPosts();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addItem("Post");
 
@@ -43,7 +43,7 @@ class PostController extends Controller
 		$posts = $postManager->getPosts();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Post", "sp_blog_post_index");
 		$breadcrumbs->addItem('List');
@@ -92,7 +92,7 @@ class PostController extends Controller
 
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Post", "sp_blog_post_index");
 		$breadcrumbs->addItem('New');
@@ -134,7 +134,7 @@ class PostController extends Controller
 		}
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Post", "sp_blog_post_index");
 		$breadcrumbs->addItem('Edit');

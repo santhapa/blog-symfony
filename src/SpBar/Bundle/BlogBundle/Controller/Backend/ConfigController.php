@@ -23,7 +23,7 @@ class ConfigController extends Controller
 		$themes = $this->get('spbar.blog_theme_manager')->getThemesByType('index');
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addItem("Config");
 
@@ -41,7 +41,7 @@ class ConfigController extends Controller
 		$configs = $configManager->getConfigs();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Config", "sp_blog_config_index");
 		$breadcrumbs->addItem('List');
@@ -73,7 +73,7 @@ class ConfigController extends Controller
 		$themes = $this->get('spbar.blog_theme_manager')->getThemesByType('index');
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Config", "sp_blog_config_index");
 		$breadcrumbs->addItem('Default');
@@ -103,7 +103,7 @@ class ConfigController extends Controller
 		}
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Config", "sp_blog_config_index");
 		$breadcrumbs->addItem('New');
@@ -132,7 +132,7 @@ class ConfigController extends Controller
 		}
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Config", "sp_blog_config_index");
 		$breadcrumbs->addItem('Edit');

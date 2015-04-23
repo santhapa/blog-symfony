@@ -35,9 +35,9 @@ class AppKernel extends Kernel
 
             //my bundles
             // new Blog\UserBundle\BlogUserBundle(),
-            new Blog\PublicBundle\BlogPublicBundle(),
-            new Blog\PostBundle\BlogPostBundle(),
-            new Blog\AdminBundle\BlogAdminBundle(),
+            // new Blog\PublicBundle\BlogPublicBundle(),
+            // new Blog\PostBundle\BlogPostBundle(),
+            // new Blog\AdminBundle\BlogAdminBundle(),
 
             new SpBar\Bundle\BlogBundle\SpBarBlogBundle(),
             new SpBar\Bundle\UserBundle\SpBarUserBundle(),

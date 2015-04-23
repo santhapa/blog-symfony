@@ -40,7 +40,7 @@ assetic:
     debug:          "%kernel.debug%"
     use_controller: false
     # bundles:        [ 'BlogUserBundle', 'BlogPostBundle', 'BlogPublicBundle']
-    bundles:        [ 'SpBarUserBundle', 'BlogPostBundle', 'BlogPublicBundle', 'FMElfinderBundle']
+    bundles:        [ 'SpBarUserBundle', 'FMElfinderBundle']
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

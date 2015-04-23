@@ -19,7 +19,7 @@ class ThemeController extends Controller
 		$themes = $themeManager->getThemes();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addItem("Theme");
 
@@ -37,7 +37,7 @@ class ThemeController extends Controller
 		$themes = $themeManager->getThemes();
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	    $breadcrumbs->addItem("Dashboard");
 	    $breadcrumbs->addItem("Blog");
 	    $breadcrumbs->addRouteItem("Theme", "sp_blog_theme_index");
 		$breadcrumbs->addItem('List');
@@ -69,7 +69,7 @@ class ThemeController extends Controller
 		// }
 
 		// $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	 //    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	 //    $breadcrumbs->addItem("Dashboard");
 	 //    $breadcrumbs->addItem("Blog");
 	 //    $breadcrumbs->addRouteItem("Theme", "sp_blog_theme_index");
 		// $breadcrumbs->addItem('New');
@@ -104,7 +104,7 @@ class ThemeController extends Controller
 		// }
 
 		// $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	 //    $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+	 //    $breadcrumbs->addItem("Dashboard");
 	 //    $breadcrumbs->addItem("Blog");
 	 //    $breadcrumbs->addRouteItem("Theme", "sp_blog_theme_index");
 		// $breadcrumbs->addItem('Edit');
