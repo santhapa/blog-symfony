@@ -23,7 +23,7 @@ class UserController extends Controller
         $inactiveUser = $em->getRepository('SpBarUserBundle:User')->findBy(array('enabled'=> false), array('username'=>'asc'));
 
         $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addItem("Dashboard");
         $breadcrumbs->addItem("User");
 
         return $this->render('SpBarUserBundle:Backend/User:index.html.twig', array(
@@ -43,7 +43,7 @@ class UserController extends Controller
         $inactiveUser = $em->getRepository('SpBarUserBundle:User')->findBy(array('enabled'=> false), array('username'=>'asc'));
 
         $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addItem("Dashboard");
         $breadcrumbs->addRouteItem("User", "sp_user_index");
         $breadcrumbs->addItem("List");
 
@@ -126,7 +126,7 @@ class UserController extends Controller
         }
 
         $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addItem("Dashboard");
         $breadcrumbs->addRouteItem("User", "sp_user_index");
         $breadcrumbs->addItem("Edit");
 
