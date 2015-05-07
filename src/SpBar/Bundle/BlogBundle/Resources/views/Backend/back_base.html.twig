@@ -89,9 +89,9 @@
 
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-
+                {{ knp_menu_render('SpBarBlogBundle:MenuBuilder:mainMenu', { 'currentClass': 'active', 'template': 'SpBarBlogBundle:Backend/Menu:menu.html.twig', 'currentAsLink': true }) }}
                 <!-- Sidebar Menu -->
-                <ul class="sidebar-menu">
+                {# <ul class="sidebar-menu">
                     <li>&nbsp; </li>
 
                     <li>
@@ -103,8 +103,8 @@
                     <li class="treeview">
                         <a href="#"><i class="fa  fa-folder"></i>Blog <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
-                            <li>
-                                <a href="">
+                            <li class="treeview">
+                                <a href="#">
                                     <i class="fa fa-gears"></i>Configuration
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
@@ -124,8 +124,8 @@
                         </ul>
 
                         <ul class="treeview-menu">
-                            <li>
-                                <a href="">
+                            <li class="treeview">
+                                <a href="#">
                                     <i class="fa fa-edit"></i>Posts
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
@@ -145,8 +145,8 @@
                         </ul>
 
                         <ul class="treeview-menu">
-                            <li>
-                                <a href="">
+                            <li class="treeview">
+                                <a href="#">
                                     <i class="fa fa-user"></i>Users
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
@@ -165,7 +165,7 @@
                             </li>
                         </ul>
                     </li>
-                </ul><!-- /.sidebar-menu -->
+                </ul><!-- /.sidebar-menu --> #}
             </section>
             <!-- /.sidebar -->
         </aside>
