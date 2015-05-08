@@ -1,4 +1,8 @@
 services:
-#    sp_bar_blog.example:
-#        class: SpBar\Bundle\BlogBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    #twig extension service for blog
+    spbar.blog.twig_extension:
+        class: SpBar\Bundle\BlogBundle\Twig\BlogExtension
+        public: true
+        arguments: ['@spbar.blog_theme_manager']
+        tags:
+            - { name: twig.extension }

@@ -2,3 +2,10 @@ services:
     spbar.user_access:
         class: SpBar\Bundle\UserBundle\Utility\Permission
         arguments: [@service_container]
+
+    #twig extension for userbundle
+    spbar.user.twig_extension:
+        class: SpBar\Bundle\UserBundle\Twig\UserExtension
+        public: true
+        tags:
+            - { name: twig.extension }

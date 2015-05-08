@@ -12,14 +12,14 @@ services:
         tags:
             - { name: twig.extension }
 
-    spbar.user.twig_extension:
-        class: SpBar\Bundle\UserBundle\Twig\UserExtension
-        public: true
-        tags:
-            - { name: twig.extension }
+    # spbar.user.twig_extension:
+    #     class: SpBar\Bundle\UserBundle\Twig\UserExtension
+    #     public: true
+    #     tags:
+    #         - { name: twig.extension }
 
-    spbar.blog.twig_extension:
-        class: SpBar\Bundle\BlogBundle\Twig\BlogExtension
-        public: true
-        tags:
-            - { name: twig.extension }
+    # spbar.blog.twig_extension:
+    #     class: SpBar\Bundle\BlogBundle\Twig\BlogExtension
+    #     public: true
+    #     tags:
+    #         - { name: twig.extension }
