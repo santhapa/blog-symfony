@@ -3,27 +3,32 @@
 namespace SpBar\Bundle\BlogBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 class MenuBuilder extends ContainerAware
 {
-    public function mainMenu(FactoryInterface $factory, array $options)
+    private $factory;
+
+    public function __construct(FactoryInterface $factory)
     {
-        $menu = $factory->createItem('root');
+        $this->factory = $factory;
+    }
+
+    public function backendMainMenu(Request $request)
+    {
+        $menu = $this->factory->createItem('root');
         $menu->setChildrenAttribute('class', 'sidebar-menu');
 
         $menu->addChild('Dashboard', array('uri' => '#'))
             ->setChildrenAttribute('icon', 'fa-dashboard');
 
-        $menu->addChild('Blog', array('uri'=>'#'))
-            ->setChildrenAttribute('icon', 'fa-folder')
-            ->setAttribute('class', 'treeview');
-            $this->addSubMenuBlog($menu['Blog']);
+        $this->addBlogItems($menu);
  
         return $menu;
     }
 
-    public function addSubMenuBlog($blog)
+    public function addBlogItems($blog)
     {
         $blog->addChild('Configuration', array('uri'=> '#'))
             ->setChildrenAttribute('icon', 'fa-gears')

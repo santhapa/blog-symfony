@@ -89,7 +89,7 @@
 
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-                {{ knp_menu_render('SpBarBlogBundle:MenuBuilder:mainMenu', { 'currentClass': 'active', 'template': 'SpBarBlogBundle:Backend/Menu:menu.html.twig', 'currentAsLink': true }) }}
+                {{ knp_menu_render('backendMainMenu', {'template': 'SpBarBlogBundle:Backend/Menu:menu.html.twig', 'currentClass': 'active', 'ancestorClass':'active' }) }}
                 <!-- Sidebar Menu -->
                 {# <ul class="sidebar-menu">
                     <li>&nbsp; </li>

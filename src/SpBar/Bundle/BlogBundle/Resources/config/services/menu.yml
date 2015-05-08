@@ -1,0 +1,13 @@
+services:
+    spbar.blog_menu_builder:
+        class: SpBar\Bundle\BlogBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+
+    spbar.blog_backend_mainMenu:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: spbar.blog_menu_builder
+        factory_method: backendMainMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: backendMainMenu }
