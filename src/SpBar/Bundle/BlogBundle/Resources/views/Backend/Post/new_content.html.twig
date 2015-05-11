@@ -49,15 +49,15 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong><!-- Featured Image --> {{ form_label(form.metas) }} </strong>
+                            <strong id="meta-title">Featured Image</strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         {{ form_widget(form.metas) }}
                         {{ form_errors(form.metas) }}
-                    </div>              
+                    </div>
+                    <div id="preview-img"></div>
                 </div><!-- /.box -->
-
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
@@ -66,7 +66,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         {{ form_widget(form.postType) }}
-                        {{ form_errors(form.postType) }}  
+                        {{ form_errors(form.postType) }}
                     </div>              
                 </div><!-- /.box -->
 
@@ -78,7 +78,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         {{ form_widget(form.category) }}
-                        {{ form_errors(form.category) }}  
+                        {{ form_errors(form.category) }}
                     </div>              
                 </div><!-- /.box -->
 
@@ -102,6 +102,7 @@
 
             </div><!-- /.col -->
         </div><!-- /.row -->
+
     </form>
 </div>
 
@@ -123,5 +124,110 @@
                 tagClass: 'tag-input'
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            var postType;
+            var text;
+            var meta;
+            var prevImgSrc = '';
+            var prevAudioSrc = '';
+            var prevVideoSrc = '';
+            var self = this;
+            setType = function(str){
+                text = self.text;
+                meta = self.meta;
+                switch(str)
+                {
+                    case "General Post":
+                        text = 'Featured Image';
+                        meta = 'general';
+                        break;
+                    case "Audio Post":
+                        text = 'Select Audio';
+                        meta = 'audio';
+                        break;
+                    case "Video Post":
+                        text = 'Select Video';
+                        meta = 'video';
+                        break;
+                    case "Gallery Post":
+                        text = 'Create Gallery';
+                        meta = 'gallery';
+                        break;
+                    // case "Quote Post":
+                    //     text = 'Add Quote';
+                    //     meta = 'quote';
+                    //     break;
+                    // case "Slideshow Post":
+                    //     text = 'Select Slideshow Photos';
+                    //     meta = 'slideshow';
+                    //     break;
+                }
+                $('#meta-title').html(text);
+                // $('#meta-btn').html(text);
+            }
+
+            postType = $("input[type='radio']:checked").parent().text();
+            setType(postType);
+
+            $("input[type='radio']").change(function(){
+                self.postType = $(this).parent().text();
+                setType(self.postType);
+
+                var src;
+                $('#preview-img').hide();
+                if(meta == 'general')
+                {
+                    src = self.prevImgSrc;
+                    $('#preview-img').show();
+                }else if(meta == 'audio')
+                {
+                    src = self.prevAudioSrc;
+                }else if(meta == 'video')
+                {
+                    src = self.prevVideoSrc;
+                }else{
+                    src = '';
+                }
+
+                $('[data-type="elfinder-input-field"]').val(src);
+            });
+
+
+            //elfinder form url 
+            $('[data-type="elfinder-input-field"][id="spbar_blog_post_new_metas"]').on("click",function() {
+                var mt = meta;
+                if(mt == 'gallery' || mt == 'general')
+                {
+                    mt = 'image';
+                }
+                var childWin = window.open("/blog/web/app_dev.php/elfinder/"+mt+"_form?id=spbar_blog_post_new_metas", "popupWindow", "height=450, width=900");
+                
+                $(this).on('change', function(){
+                    if(meta=='general')
+                    {
+                        self.prevImgSrc = $(this).val();
+                        if(self.prevImgSrc)
+                        {
+                            $('#preview-img').html('<img class="img-responsive img-rounded" src="'+self.prevImgSrc+'">');
+                        }
+                    }
+                    if(meta == 'audio')
+                    {
+                        self.prevAudioSrc = $(this).val();
+                    }                    
+                    if(meta == 'video')
+                    {
+                        self.prevVideoSrc = $(this).val();
+                    }                    
+                });
+               
+            });
+            function setValue(value, element_id) {
+                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="'+ element_id +'"]': '')).val(value).change();
+            }
+        });       
     </script>
 {% endblock js %}

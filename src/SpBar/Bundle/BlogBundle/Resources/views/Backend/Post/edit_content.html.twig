@@ -53,6 +53,12 @@
                     <div class="box-body">
                         {{ form_widget(form.metas) }}
                         {{ form_errors(form.metas) }}
+                        <br><br>
+                        {% if form.metas.vars.value %}
+                            <img class="img-responsive img-rounded" src="{{ form.metas.vars.value }}">
+                        {% else %}
+                            <span>No Featured Image added yet!</span>
+                        {% endif %}
                     </div>              
                 </div><!-- /.box -->
 

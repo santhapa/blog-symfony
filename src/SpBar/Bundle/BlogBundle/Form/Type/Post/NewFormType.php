@@ -72,6 +72,7 @@ class NewFormType extends AbstractType
                 // ->add('image', 'file')
                 // ->add('meta','elfinder', array('instance'=>'form', 'enable'=>true, 'required'=> false))
                 ->add('metas', 'spbar_blog_post_meta', array(
+                        'attr' => array('class'=>'form-control'),
                         'required'=> false
                     ))
                 ->add('category', 'entity', array(

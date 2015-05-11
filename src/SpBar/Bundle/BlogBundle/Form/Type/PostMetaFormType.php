@@ -27,7 +27,7 @@ class PostMetaFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'instance'=>'form', 
+            'instance'=>'image_form', 
             'enable'=>true,
             'invalid_message' => 'The selected meta does not exist',
              // 'data_class' => 'SpBar\Bundle\BlogBundle\Entity\PostMeta',

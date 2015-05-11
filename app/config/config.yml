@@ -146,11 +146,11 @@ fm_elfinder:
                     uploads:
                         show_hidden: false # defaults to false
                         driver: LocalFileSystem
-                        path: uploads/elfinder/media
+                        path: uploads/posts
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 6M
-        form:
+        image_form:
             locale: %locale% # defaults to current request locale
             editor: form # other choices are tinymce or simple, and form
             fullscreen: true # defaults true, applies to simple and ckeditor editors
@@ -161,10 +161,43 @@ fm_elfinder:
                 roots:       # at least one root must be defined
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads/elfinder/featured
+                        path: uploads/elfinder/image
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 4M
+
+        audio_form:
+            locale: %locale% # defaults to current request locale
+            editor: form # other choices are tinymce or simple, and form
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            relative_path: false
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: uploads/elfinder/audio
+                        upload_allow: ['audio/mpeg']
+                        upload_deny: ['all']
+                        upload_max_size: 20M
+
+        video_form:
+            locale: %locale% # defaults to current request locale
+            editor: form # other choices are tinymce or simple, and form
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            relative_path: false
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: uploads/elfinder/video
+                        upload_allow: ['video/mp4']
+                        upload_deny: ['all']
+                        upload_max_size: 250M
+
 
 #Ivory ckeditor Configuration
 ivory_ck_editor:

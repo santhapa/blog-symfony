@@ -26,7 +26,11 @@
 		<div class="mb20">
 			<div class="beta-audio">
 				<audio controls="controls">
-				 	<source src="{{ asset('blog/audio/jaspertine_-_Guitar_Drone_in_Amaj.mp3')}}" type="audio/mp3">
+					{% set audioSource = '' %}
+					{% for meta in post.meta %}
+					    {% set audioSource = meta.source %}
+					{% endfor %}
+				 	<source src="{{ audioSource }}" type="audio/mpeg">
 				</audio>
 			</div>
 		</div>

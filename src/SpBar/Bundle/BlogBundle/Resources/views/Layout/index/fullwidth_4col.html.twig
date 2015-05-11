@@ -1,7 +1,7 @@
 <div class="container">
 	<div id="content">
 		<div class="row">
-		{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}			
+		{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') and post.postType.slug == 'general_post' %}			
 			<div class="col-sm-3">
 				<div class="beta-blog beta-blog-a beta-blog-4cols">
 					<div class="beta-blog-content">

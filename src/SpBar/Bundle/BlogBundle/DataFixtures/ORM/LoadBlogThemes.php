@@ -36,12 +36,12 @@ class LoadBlogThemes extends AbstractFixture implements OrderedFixtureInterface,
                 array('name'=>'Fullwidth Four Column' ,'template'=> 'fullwidth_4col.html.twig' , 'type'=> 'index'),
                 array('name'=>'With Left Sidebar' ,'template'=> 'with_leftsidebar.html.twig' , 'type'=> 'index'),
                 array('name'=>'With Right Sidebar' ,'template'=> 'with_rightsidebar.html.twig' , 'type'=> 'index'),
-                array('name'=>'Audio Post' ,'template'=> 'audio_type.html.twig' , 'type'=> 'single'),
-                array('name'=>'Gallery Post' ,'template'=> 'gallery_type.html.twig' , 'type'=> 'single'),
-                array('name'=>'Quote Post' ,'template'=> 'quote_type.html.twig' , 'type'=> 'single'),
-                array('name'=>'Slideshow Post' ,'template'=> 'slideshow_type.html.twig' , 'type'=> 'single'),
-                array('name'=>'Video Post' ,'template'=> 'video_type.html.twig' , 'type'=> 'single'),
                 array('name'=>'General Post' ,'template'=> 'general.html.twig' , 'type'=> 'single'),
+                array('name'=>'Audio Post' ,'template'=> 'audio_type.html.twig' , 'type'=> 'single'),
+                array('name'=>'Video Post' ,'template'=> 'video_type.html.twig' , 'type'=> 'single'),
+                array('name'=>'Gallery Post' ,'template'=> 'gallery_type.html.twig' , 'type'=> 'single'),
+                // array('name'=>'Quote Post' ,'template'=> 'quote_type.html.twig' , 'type'=> 'single'),
+                // array('name'=>'Slideshow Post' ,'template'=> 'slideshow_type.html.twig' , 'type'=> 'single'),
             );
 
         foreach ($themes as $themeArr) {

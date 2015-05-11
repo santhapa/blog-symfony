@@ -7,6 +7,65 @@
 	{% set featuredMeta = meta.source %}
 {% endfor %}
 
+{# ###################### Contents based on Post type as twig variable ###################### #}
+<!-- content for general post -->
+{% set general_content %}
+	<!-- content display area for col 1 and 2 -->
+	{% if col == 1 or col == 2 %}
+		<div class="row beta-blog-content">
+			<div class="col-sm-6">
+				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}">
+					<img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image">
+				</a>
+			</div>
+			<div class="col-sm-6">
+				<p>
+					{{ excerpt(post.content, excerptLength)|raw }}	
+				</p>		
+				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+			</div>
+		</div>
+	{% endif %}
+
+	<!-- content display area for col 3 -->
+	{% if col == 3 %}
+		<div class="beta-blog-content">
+			<div class="beta-blog-content-preview">
+				<div class="pull-left beta-blog-content-details">
+					<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
+					<span class="beta-blog-date pull-left">
+						<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
+						<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
+					</span>
+					<div class="clearfix"></div>
+				</div>
+				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image"></a>
+			</div>
+			<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+			<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+		</div>
+	{% endif %}
+{% endset %}
+
+<!-- content for audio posts -->
+{% set audio_content %}
+	{% set audioSrc = '' %}
+	{% for meta in post.metas %}
+	    {% set audioSrc = meta.source %}
+	{% endfor %}
+	<div class="beta-blog-content">
+		<div class="beta-audio">
+			<audio controls="controls">
+			 	<source src="{{ audioSrc }}" type="audio/mpeg">
+			</audio>
+		</div>
+		<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+		<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+	</div>
+{% endset %}
+{# ###################### Contents based on Post type as twig variable ############################### #}
+
+
 {% if col == 1 or col == 2 or col == 3 %}
 	<div class="beta-blog-header">
 		<div class="media">
@@ -43,40 +102,14 @@
 		</div>
 	</div>
 
-	<!-- content display area for col 1 and 2 -->
-	{% if col == 1 or col == 2 %}
-		<div class="row beta-blog-content">
-			<div class="col-sm-6">
-				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}">
-					<img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image">
-				</a>
-			</div>
-			<div class="col-sm-6">
-				<p>
-					{{ excerpt(post.content, excerptLength)|raw }}	
-				</p>		
-				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
-			</div>
-		</div>
-	{% endif %}
-
-	<!-- content display area for col 3 -->
-	{% if col == 3 %}
-		<div class="beta-blog-content">
-			<div class="beta-blog-content-preview">
-				<div class="pull-left beta-blog-content-details">
-					<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
-					<span class="beta-blog-date pull-left">
-						<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
-						<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
-					</span>
-					<div class="clearfix"></div>
-				</div>
-				<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image"></a>
-			</div>
-			<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
-			<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
-		</div>
+	<!-- set content based on post types -->
+	{% set postType = post.postType.slug %}
+	{% if postType == 'audio_post' %}
+		{{ audio_content }}
+	{% elseif postType == 'video_post' %}
+		{{ video_content }}
+	{% else %}
+	    {{ general_content }}
 	{% endif %}
 {% endif %}
 
