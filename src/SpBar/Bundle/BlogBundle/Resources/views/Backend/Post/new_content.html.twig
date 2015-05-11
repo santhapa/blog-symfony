@@ -53,10 +53,15 @@
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        {{ form_widget(form.metas) }}
-                        {{ form_errors(form.metas) }}
+                        <div id="meta-form">
+                            {{ form_widget(form.metas) }}
+                            {{ form_errors(form.metas) }}
+                        </div>                        
+                        <br>
+                        <a href="" style="color:#000000;"><button id="elfinder_browse">Browse Server</button></a>
+                        <br>
+                        <div id="preview-img"></div>
                     </div>
-                    <div id="preview-img"></div>
                 </div><!-- /.box -->
                 <div class="box">
                     <div class="box-header">
@@ -138,11 +143,13 @@
             setType = function(str){
                 text = self.text;
                 meta = self.meta;
+                type = 'text';
                 switch(str)
                 {
                     case "General Post":
                         text = 'Featured Image';
                         meta = 'general';
+
                         break;
                     case "Audio Post":
                         text = 'Select Audio';
@@ -155,6 +162,7 @@
                     case "Gallery Post":
                         text = 'Create Gallery';
                         meta = 'gallery';
+                        type='hidden';
                         break;
                     // case "Quote Post":
                     //     text = 'Add Quote';
@@ -165,6 +173,7 @@
                     //     meta = 'slideshow';
                     //     break;
                 }
+                $('#meta-form input').attr('type', type);
                 $('#meta-title').html(text);
                 // $('#meta-btn').html(text);
             }
@@ -197,7 +206,7 @@
 
 
             //elfinder form url 
-            $('[data-type="elfinder-input-field"][id="spbar_blog_post_new_metas"]').on("click",function() {
+            $('[data-type="elfinder-input-field"][id="spbar_blog_post_new_metas"], #elfinder_browse').on("click",function() {
                 var mt = meta;
                 if(mt == 'gallery' || mt == 'general')
                 {
@@ -205,7 +214,7 @@
                 }
                 var childWin = window.open("/blog/web/app_dev.php/elfinder/"+mt+"_form?id=spbar_blog_post_new_metas", "popupWindow", "height=450, width=900");
                 
-                $(this).on('change', function(){
+                $('[data-type="elfinder-input-field"][id="spbar_blog_post_new_metas"]').on('change', function(){
                     if(meta=='general')
                     {
                         self.prevImgSrc = $(this).val();
@@ -223,11 +232,13 @@
                         self.prevVideoSrc = $(this).val();
                     }                    
                 });
+                return false;
                
             });
             function setValue(value, element_id) {
                 $('[data-type="elfinder-input-field"]' + (element_id ? '[id="'+ element_id +'"]': '')).val(value).change();
             }
+
         });       
     </script>
 {% endblock js %}
