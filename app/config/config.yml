@@ -198,7 +198,6 @@ fm_elfinder:
                         upload_deny: ['all']
                         upload_max_size: 250M
 
-
 #Ivory ckeditor Configuration
 ivory_ck_editor:
     default_config: default
