@@ -10,11 +10,11 @@
 			<div class="pull-right auto-width-right">
 				<ul class="top-details menu-beta l-inline">
 					{% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
-						<li><a href="#"><i class="fa fa-user"></i> Your Account</a></li>
+						<li><a href="#"><i class="fa fa-user"></i>Hello! {{ app.user.username }}</a></li>
+						<li><a href="{{ path('sp_user_logout') }}">Logout</a></li>
 					{% else %}
-
+						<li><a href="{{ path('sp_user_frontend_login') }}">Login</a></li>
 					{% endif %}
-					
 				</ul>
 			</div>
 			<div class="clearfix"></div>
