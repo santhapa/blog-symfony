@@ -8,6 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RegistrationFormType extends AbstractType
 {
+    protected $authorizer;
+
+    public function __construct($auth=null)
+    {
+        $this->authorizer = $auth;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // add your custom field
@@ -27,12 +34,14 @@ class RegistrationFormType extends AbstractType
             ->add('email', 'email', array(
                     'label' => 'Email Address',
                     'required'=>true
-                ))
-            ->add('groups', 'entity', array(
-                    'class'=> 'SpBar\Bundle\UserBundle\Entity\Group',
-                    'property' => 'name'
-                ))
-        ;
+                ));
+        if($this->authorizer->isGranted('ROLE_BLOG_ADMIN'))
+        {
+            $builder->add('groups', 'entity', array(
+                'class'=> 'SpBar\Bundle\UserBundle\Entity\Group',
+                'property' => 'name'
+            ));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

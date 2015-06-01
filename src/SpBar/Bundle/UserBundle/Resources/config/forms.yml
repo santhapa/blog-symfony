@@ -3,6 +3,7 @@ services:
         class: SpBar\Bundle\UserBundle\Form\Type\RegistrationFormType
         tags:
             - { name: form.type, alias: spbar_user_registration }
+        arguments: ["@security.authorization_checker"]
 
     spbar.user_profile_form_type:
         class: SpBar\Bundle\UserBundle\Form\Type\ProfileFormType

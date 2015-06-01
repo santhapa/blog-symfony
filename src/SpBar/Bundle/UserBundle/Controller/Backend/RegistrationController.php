@@ -31,7 +31,7 @@ class RegistrationController extends BaseController
         }
 
         $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-        $breadcrumbs->addRouteItem("Dashboard", "adminIndexPage");
+        $breadcrumbs->addItem("Dashboard", "");
         $breadcrumbs->addRouteItem("User", "sp_user_index");
         $breadcrumbs->addItem("New");
 
