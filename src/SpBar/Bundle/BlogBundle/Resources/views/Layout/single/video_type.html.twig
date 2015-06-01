@@ -25,7 +25,13 @@
 	<div class="beta-blog-content">
 		<div class="mb20">
 			<div class="video-elastic">
-				<iframe src="http://player.vimeo.com/video/41499247?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff"></iframe>
+				{% set videoSrc = '' %}
+				{% for meta in post.metas %}
+				    {% set videoSrc = meta.source %}
+				{% endfor %}
+				<video width="320" height="240" controls>
+  					<source src="{{ videoSrc }}" type="video/mp4">
+  				</video>
 			</div>
 		</div>
 		<div class="beta-blog-excerpt">

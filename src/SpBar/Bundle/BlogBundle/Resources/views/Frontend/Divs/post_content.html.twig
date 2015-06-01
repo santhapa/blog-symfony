@@ -63,6 +63,28 @@
 		<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
 	</div>
 {% endset %}
+
+{% set video_content %}
+	{% set videoSrc = '' %}
+	{% for meta in post.metas %}
+	    {% set videoSrc = meta.source %}
+	{% endfor %}
+	<div class="row beta-blog-content">
+		<div class="col-sm-6">
+			<div class="video-elastic">
+				<video width="320" height="240" controls>
+  					<source src="{{ videoSrc }}" type="video/mp4">
+  				</video> 
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+			<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+		</div>
+	</div>	
+{% endset %}
+
+
 {# ###################### Contents based on Post type as twig variable ############################### #}
 
 
