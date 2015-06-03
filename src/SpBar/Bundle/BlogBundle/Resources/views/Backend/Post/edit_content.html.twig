@@ -235,10 +235,7 @@
             //elfinder form url 
             $('#elfinder_browse').on("click",function() {
                 var mt = meta;
-                if(mt == 'gallery' || mt == 'general')
-                {
-                    mt = 'image';
-                }
+                
                 var childWin = window.open("/blog/web/app_dev.php/elfinder/"+mt+"_form?id=spbar-meta", "popupWindow", "height=450, width=900");
                 
                 $('input.spbar-meta').on('change', function(){
