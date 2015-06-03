@@ -33,7 +33,7 @@ class LoadBlogTemplates extends AbstractFixture implements OrderedFixtureInterfa
                 array('name'=>'Fullwidth Single Column' ,'templateFile'=> 'fullwidth_1col.html.twig' , 'type'=> 'index'),
                 array('name'=>'Fullwidth Two Column' ,'templateFile'=> 'fullwidth_2col.html.twig' , 'type'=> 'index'),
                 array('name'=>'Fullwidth Three Column' ,'templateFile'=> 'fullwidth_3col.html.twig' , 'type'=> 'index'),
-                array('name'=>'Fullwidth Four Column' ,'templateFile'=> 'fullwidth_4col.html.twig' , 'type'=> 'index'),
+                // array('name'=>'Fullwidth Four Column' ,'templateFile'=> 'fullwidth_4col.html.twig' , 'type'=> 'index'),
                 array('name'=>'With Left Sidebar' ,'templateFile'=> 'with_leftsidebar.html.twig' , 'type'=> 'index'),
                 array('name'=>'With Right Sidebar' ,'templateFile'=> 'with_rightsidebar.html.twig' , 'type'=> 'index'),
                 array('name'=>'General' ,'templateFile'=> 'general.html.twig' , 'type'=> 'postType'),
