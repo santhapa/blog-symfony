@@ -1,7 +1,7 @@
 {% extends('SpBarBlogBundle::Frontend/front_base.html.twig') %}
 
-{% set postType = post.postType.template %}
-{% set loadPostTheme = 'SpBarBlogBundle::Layout/single/'~ postType %}
+{% set postType = post.postType.templateFile %}
+{% set loadPostTemplate = 'SpBarBlogBundle::Templates/post-type/'~ postType %}
 {% set authorInfoSection = 'SpBarBlogBundle::Frontend/Divs/author_bio.html.twig' %}
 {% set commentSection = 'SpBarBlogBundle::Frontend/Divs/post_comment.html.twig' %}
 
@@ -11,7 +11,7 @@
 		<div class="row">
 			{% block body_content_container %}
 				<div class="col-sm-9">
-	    			{% include loadPostTheme with {'post': post } %}
+	    			{% include loadPostTemplate with {'post': post } %}
 
 	    			<hr class="mb40">
 	    			<!-- author bio block -->
@@ -31,7 +31,7 @@
 
 			{% block body_content_sidebar %}
 				<div class="col-sm-3 aside-main">
-					{% include 'SpBarBlogBundle::Layout/divs/sidebar_widget.html.twig' %}
+					{% include 'SpBarBlogBundle::Templates/parts/sidebar_widget.html.twig' %}
 				</div>  
 			{% endblock body_content_sidebar %}
 		</div>

@@ -1,20 +1,20 @@
 <div class="box-body">
 	<div>
-		<p><span>Changing values may cause error. Be sure to apply same change on <code><b><i>Layout/..</i></b></code> location.</span></p>
+		<p><span>Changing values may cause error. Be sure to apply same change on <code><b><i>Templates/..</i></b></code> location.</span></p>
 	</div>
-	<form class="form-horizontal" method="POST" action="{{ path('sp_blog_theme_edit', {'slug': slug}) }}">
+	<form class="form-horizontal" method="POST" action="{{ path('sp_blog_template_edit', {'slug': slug}) }}">
 
 		<div class="form-group">
 			<label class="col-sm-2 control-label">{{ form_label(form.name) }}:</label>
 			<div class="col-sm-8">
-				{{ form_widget(form.name, {"attr" : {"placeholder" : "Type new theme name", "class": "form-control"}}) }}
+				{{ form_widget(form.name, {"attr" : {"placeholder" : "Type template name", "class": "form-control"}}) }}
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label class="col-sm-2 control-label">{{ form_label(form.template) }}:</label>
+			<label class="col-sm-2 control-label">{{ form_label(form.templateFile) }}:</label>
 			<div class="col-sm-8">
-				{{ form_widget(form.template, {"attr" : {"placeholder" : "Type the template name", "class": "form-control"}}) }}
+				{{ form_widget(form.templateFile, {"attr" : {"placeholder" : "Type template file name", "class": "form-control"}}) }}
 			</div>
 		</div>
 

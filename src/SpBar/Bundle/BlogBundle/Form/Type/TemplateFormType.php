@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
-class ThemeFormType extends AbstractType
+class TemplateFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -14,13 +14,13 @@ class ThemeFormType extends AbstractType
                         'label' => 'Name',
                         'required'=>true
                     ))
-                ->add('template', 'text', array(
+                ->add('templateFile', 'text', array(
                         'label' => 'Template File Name',
                         'required'=>true
                     ))
                 ->add('type', 'choice', array(
-                        'label' => 'Slecte Theme Type',
-                        'choices' => array('single'=>'Single Post', 'index'=>'Index Post'),
+                        'label' => 'Select Template Type',
+                        'choices' => array('postType'=>'Post Type Template', 'index'=>'Index Template'),
                         'placeholder' => "Choose any option",
                         'required' => true
                     ))
@@ -36,6 +36,6 @@ class ThemeFormType extends AbstractType
 
     public function getName()
     {
-        return 'spbar_blog_theme';
+        return 'spbar_blog_template';
     }
 }

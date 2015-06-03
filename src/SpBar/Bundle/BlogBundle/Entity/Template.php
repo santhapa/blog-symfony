@@ -8,12 +8,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
-* Enables selection of theme for blog
-* @ORM\Table(name="spbar_blog_theme")
+* Enables selection of template files for blog
+* @ORM\Table(name="spbar_blog_template")
 * @ORM\Entity
 * @UniqueEntity("slug")
 */
-class Theme
+class Template
 {
     /**
     * @ORM\Column(name="id", type="integer")
@@ -28,9 +28,9 @@ class Theme
     protected $name;
 
     /**
-    * @ORM\Column(name="template", type="text")
+    * @ORM\Column(name="template_file", type="text")
     */
-    protected $template;
+    protected $templateFile;
 
     /**
     * @ORM\Column(name="type", type="text")
@@ -60,14 +60,14 @@ class Theme
     	return $this->name;
     }
 
-    public function setTemplate($temp)
+    public function setTemplateFile($temp)
     {
-    	$this->template = $temp;
+    	$this->templateFile = $temp;
     }
 
-    public function getTemplate()
+    public function getTemplateFile()
     {
-    	return $this->template;
+    	return $this->templateFile;
     }
 
     public function setType($tt)

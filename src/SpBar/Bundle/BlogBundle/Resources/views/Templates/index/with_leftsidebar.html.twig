@@ -2,7 +2,7 @@
 	<div id="content">
 		<div class="row">
 			<div class="col-sm-3 aside-main">
-				{% include 'SpBarBlogBundle::Layout/divs/sidebar_widget.html.twig' %}
+				{% include 'SpBarBlogBundle::Templates/parts/sidebar_widget.html.twig' %}
 			</div>
 			<div class="col-sm-9">
 				{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}

@@ -20,7 +20,7 @@ class ConfigController extends Controller
 
 		//list of default configs
 		$defalutConfigs = $configManager->getConfigs(true);
-		$themes = $this->get('spbar.blog_theme_manager')->getThemesByType('index');
+		$templates = $this->get('spbar.blog_template_manager')->getTemplatesByType('index');
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addItem("Dashboard");
@@ -31,7 +31,7 @@ class ConfigController extends Controller
 			'page_title' => 'Blog Configurations',
 			'form' => $form->createView(),
 			'configs' => $configs,
-			'defaults' => $defalutConfigs, 'themes' => $themes,
+			'defaults' => $defalutConfigs, 'templates' => $templates,
 		));
 	}
 
@@ -70,7 +70,7 @@ class ConfigController extends Controller
 
 		$defalutConfigs = $configManager->getConfigs(true);
 
-		$themes = $this->get('spbar.blog_theme_manager')->getThemesByType('index');
+		$templates = $this->get('spbar.blog_template_manager')->getTemplatesByType('index');
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addItem("Dashboard");
@@ -81,7 +81,7 @@ class ConfigController extends Controller
 		return $this->render("SpBarBlogBundle::Backend/Config/default.html.twig", array(
             'page_title' =>"Default Configuration",
             'defaults' => $defalutConfigs,
-            'themes' => $themes,
+            'templates' => $templates,
         ));
 	}
 

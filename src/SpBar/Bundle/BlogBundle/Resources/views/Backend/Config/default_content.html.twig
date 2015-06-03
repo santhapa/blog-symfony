@@ -4,7 +4,7 @@
     {% if config.slug == 'post_per_page' %}
     	{% set postPerPage = {'slug':config.slug, 'value':config.content} %}
     {% endif %}
-    {% if config.slug == 'blog_theme' %}
+    {% if config.slug == 'blog_index_template' %}
     	{% set blogTheme = {'slug':config.slug, 'value':config.content} %}
     {% endif %}
 {% endfor %}
@@ -21,11 +21,11 @@
 		</div>
 
 		<div class="form-group">
-			<label class="col-sm-2 control-label">Blog Posts theme:</label>
+			<label class="col-sm-2 control-label">Blog Posts template:</label>
 			<div class="col-sm-8">
 				<select name="{{ blogTheme.slug }}" class="form-control" >
-					{% for theme in themes %}
-					    <option value="{{ theme.template }}" {% if theme.template == blogTheme.value %} selected="selected" {% endif %}>{{ theme.name }}</option>
+					{% for template in templates %}
+					    <option value="{{ template.templateFile }}" {% if template.templateFile == blogTheme.value %} selected="selected" {% endif %}>{{ template.name }}</option>
 					{% endfor %}					
 				</select>
 				<p><i>(access key: <b>{{ blogTheme.slug }}</b>)</i></p>

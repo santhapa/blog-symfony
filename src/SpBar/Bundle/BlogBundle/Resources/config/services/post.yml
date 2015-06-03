@@ -3,13 +3,13 @@ services:
         class: SpBar\Bundle\BlogBundle\Form\Type\Post\NewFormType
         tags:
             - { name: form.type, alias: spbar_blog_post_new }
-        arguments: ["@spbar.blog_theme_manager", "@spbar.blog_category_manager", "@security.authorization_checker", "@security.token_storage"]
+        arguments: ["@spbar.blog_template_manager", "@spbar.blog_category_manager", "@security.authorization_checker", "@security.token_storage"]
 
     spbar.blog_post_edit_form_type:
         class: SpBar\Bundle\BlogBundle\Form\Type\Post\EditFormType
         tags:
             - { name: form.type, alias: spbar_blog_post_edit }
-        arguments: ["@spbar.blog_theme_manager", "@spbar.blog_category_manager", "@security.authorization_checker", "@security.token_storage"]
+        arguments: ["@spbar.blog_template_manager", "@spbar.blog_category_manager", "@security.authorization_checker", "@security.token_storage"]
 
     spbar.blog_post_manager:
         class: SpBar\Bundle\BlogBundle\Model\PostManager

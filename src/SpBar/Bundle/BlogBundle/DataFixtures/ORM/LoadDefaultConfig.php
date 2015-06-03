@@ -31,7 +31,7 @@ class LoadDefaultConfig extends AbstractFixture implements OrderedFixtureInterfa
         $configManager = $this->container->get('spbar.blog_config_manager');
         $configs = array(
                 array('name'=>'Post per page' ,'content'=> '10'),
-                array('name'=>'Blog Theme' ,'content'=> $this->getReference('blog-default-theme')->getTemplate()),
+                array('name'=>'Blog Index Template' ,'content'=> $this->getReference('blog-default-template')->getTemplateFile()),
             );
 
         foreach ($configs as $configArr) {

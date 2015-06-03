@@ -1,9 +1,9 @@
 {% extends('SpBarBlogBundle::Frontend/front_base.html.twig') %}
 
-{% set theme = blog_config.get('blog_theme') %}
+{% set template = blog_config.get('blog_index_template') %}
 {% set postLimit = blog_config.get('post_per_page') %}
-{% set loadIndexTheme = 'SpBarBlogBundle::Layout/index/'~ theme %}
+{% set loadIndexTemplate = 'SpBarBlogBundle::Templates/index/'~ template %}
 
 {% block body_content %}
-	{% include loadIndexTheme with {'posts': posts} %}
+	{% include loadIndexTemplate with {'posts': posts} %}
 {% endblock body_content %}

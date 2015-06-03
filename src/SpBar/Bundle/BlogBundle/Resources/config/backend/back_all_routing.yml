@@ -2,9 +2,9 @@ sp_blog_config:
     resource: "@SpBarBlogBundle/Resources/config/backend/config_route.yml"
     prefix:   /config
 
-sp_blog_theme:
-    resource: "@SpBarBlogBundle/Resources/config/backend/theme_route.yml"
-    prefix:   /theme
+sp_blog_template:
+    resource: "@SpBarBlogBundle/Resources/config/backend/template_route.yml"
+    prefix:   /template
 
 sp_blog_post:
     resource: "@SpBarBlogBundle/Resources/config/backend/post_route.yml"

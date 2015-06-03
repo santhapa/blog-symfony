@@ -3,6 +3,6 @@ services:
     spbar.blog.twig_extension:
         class: SpBar\Bundle\BlogBundle\Twig\BlogExtension
         public: true
-        arguments: ['@spbar.blog_theme_manager']
+        arguments: ['@spbar.blog_template_manager']
         tags:
             - { name: twig.extension }

@@ -35,7 +35,7 @@ class MenuBuilder extends ContainerAware
             ->setAttribute('class', 'treeview');
             $blog['Configuration']->addChild('Settings', array('route'=>'sp_blog_config_index'))
                 ->setChildrenAttribute('icon', 'fa-circle-o');
-            $blog['Configuration']->addChild('Themes', array('route'=>'sp_blog_theme_index'))
+            $blog['Configuration']->addChild('Templates', array('route'=>'sp_blog_template_index'))
                 ->setChildrenAttribute('icon', 'fa-circle-o');
 
         $blog->addChild('Posts', array('uri'=>'#'))

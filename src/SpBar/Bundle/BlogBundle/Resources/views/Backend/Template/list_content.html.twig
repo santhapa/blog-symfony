@@ -3,24 +3,24 @@
 		<thead>
 			<tr>
 				<th>S.N.</th>
-				<th>Theme Name</th>
-				<th>Theme Type</th>
+				<th>Template Name</th>
+				<th>Template Type</th>
 				<th>Slug</th>
 				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for theme in themes %}
+			{% for template in templates %}
 		        <tr>
 					<td>{{ loop.index }}</td>
-					<td>{{ theme.name }} </td>
-					<td>{{ theme.type }}</td>
-					<td> {{ theme.slug }} </td>
+					<td>{{ template.name }} </td>
+					<td>{{ template.type }}</td>
+					<td> {{ template.slug }} </td>
 					<td>
-						<a href="{{ path('sp_blog_theme_edit',{'slug': theme.slug}) }}">
+						<a href="{{ path('sp_blog_template_edit',{'slug': template.slug}) }}">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
 						</a>
-						<a href="{{ path('sp_blog_theme_delete',{'slug': theme.slug}) }}">
+						<a href="{{ path('sp_blog_template_delete',{'slug': template.slug}) }}">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
 						</a>
 					</td>
@@ -30,8 +30,8 @@
 		<tfoot>
 			<tr>
 				<th>S.N.</th>
-				<th>Theme Name</th>
-				<th>Theme Type</th>
+				<th>Template Name</th>
+				<th>Template Type</th>
 				<th>Slug</th>
 				<th>Action</th>
 			</tr>

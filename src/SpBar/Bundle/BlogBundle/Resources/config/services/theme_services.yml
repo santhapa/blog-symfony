@@ -1,9 +1,0 @@
-services:
-    spbar.blog_theme_form_type:
-        class: SpBar\Bundle\BlogBundle\Form\Type\ThemeFormType
-        tags:
-            - { name: form.type, alias: spbar_blog_theme }
-
-    spbar.blog_theme_manager:
-        class: SpBar\Bundle\BlogBundle\Model\ThemeManager
-        arguments: ["@doctrine.orm.entity_manager"]

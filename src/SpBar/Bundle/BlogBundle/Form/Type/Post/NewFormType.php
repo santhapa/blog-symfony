@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractType;
 
-use SpBar\Bundle\BlogBundle\Model\ThemeManager;
+use SpBar\Bundle\BlogBundle\Model\TemplateManager;
 use SpBar\Bundle\BlogBundle\Model\PostManager;
 use SpBar\Bundle\BlogBundle\Model\CategoryManager;
 
@@ -26,7 +26,7 @@ class NewFormType extends AbstractType
 
     protected $token;
 
-    public function __construct(ThemeManager $tm, CategoryManager $cm, $auth=null, $token=null)
+    public function __construct(TemplateManager $tm, CategoryManager $cm, $auth=null, $token=null)
     {
         $this->tm = $tm;
         $this->cm = $cm;
@@ -36,8 +36,8 @@ class NewFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $singleType = $this->tm->getThemesByType('single');
-        $generalPost = $this->tm->getThemeBySlug('general_post');
+        $postType = $this->tm->getTemplatesByType('postType');
+        $generalPost = $this->tm->getTemplateBySlug('general');
 
         $builder->add('title', 'text', array(
                         'label' => 'Title of the Post',
@@ -59,9 +59,9 @@ class NewFormType extends AbstractType
                 ))
                 ->add('postType', 'entity', array(
                         'label' => 'Post Type',
-                        'class' => 'SpBarBlogBundle:Theme',
+                        'class' => 'SpBarBlogBundle:Template',
                         'property' => 'name',
-                        'choices' => $singleType,                        
+                        'choices' => $postType,                        
                         'preferred_choices' => array($generalPost),
                         'data' => $generalPost,
                         'expanded' => true,
@@ -140,7 +140,7 @@ class NewFormType extends AbstractType
     //     // $province = $this->em->getRepository('NoxLogicDemoBundle:Province')->find($data['province']);
     //     // $this->addElements($form, $province);
 
-    //     $postType = $this->tm->getThemeById($data['postType']);
+    //     $postType = $this->tm->getTemplateById($data['postType']);
     //     $this->addElements($form, $postType);
     // }
 
@@ -152,7 +152,7 @@ class NewFormType extends AbstractType
     //     // We might have an empty account (when we insert a new account, for instance)
     //     // $province = $account->getCity() ? $account->getCity()->getProvince() : null;
     //     // $this->addElements($form, $province);
-    //     $postType = $post->getPostType() ? $post->getPostType() : $this->tm->getThemeBySlug('general_post');
+    //     $postType = $post->getPostType() ? $post->getPostType() : $this->tm->getTemplateBySlug('general');
     //     $this->addElements($form, $postType);
     // }
 

@@ -45,7 +45,7 @@ class Post
     protected $createdAt;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Theme")
+    * @ORM\ManyToOne(targetEntity="Template")
     */
     protected $postType;
 
