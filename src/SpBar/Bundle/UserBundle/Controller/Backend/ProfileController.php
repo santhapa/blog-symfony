@@ -66,7 +66,8 @@ class ProfileController extends BaseController
 
         return $this->render('SpBarUserBundle:Backend/Profile:change_image.html.twig', array(
             'form' => $form->createView(),
-            'page_title' => "Change Image"
+            'page_title' => "Change Image",
+            'profileImage' => 'uploads/profile/'.$user->getImage()
         ));
     }
 }
