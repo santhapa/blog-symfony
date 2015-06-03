@@ -55,6 +55,7 @@ class EditFormType extends AbstractType
                 ))
                 ->add('postType', 'entity', array(
                         'label' => 'Post Type',
+                        'attr' => array('class'=>'spbar-post-type'),
                         'class' => 'SpBarBlogBundle:Template',
                         'property' => 'name',
                         'choices' => $postType,                        
@@ -66,6 +67,7 @@ class EditFormType extends AbstractType
                 // ->add('image', 'file')
                 // ->add('meta','elfinder', array('instance'=>'form', 'enable'=>true, 'required'=> false ))
                 ->add('metas', 'spbar_blog_post_meta', array(
+                        'attr' => array('class'=>'spbar-meta'),
                         'required'=> false
                     ))
                 ->add('category', 'entity', array(

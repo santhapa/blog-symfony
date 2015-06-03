@@ -36,7 +36,8 @@ class PostMetaFormType extends AbstractType
 
     public function getParent()
     {
-        return 'elfinder';
+        // return 'elfinder';
+        return 'hidden';
     }
 
     public function getName()

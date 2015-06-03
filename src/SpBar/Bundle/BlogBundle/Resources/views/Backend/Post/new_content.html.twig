@@ -33,36 +33,23 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong>Tags</strong>
-                        </h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <input class="tag-input form-control" type="text">
-                        {# {{ form_widget(form.tags) }}
-                        {{ form_errors(form.tags) }} #}
-                    </div>              
-                </div><!-- /.box -->
-
-            </div><!-- /.col -->
-
-            <div class="col-xs-12 col-sm-3">
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                            <strong id="meta-title">Featured Image</strong>
+                            <strong>Post Media<small>&emsp;<em>(<span id="meta-option"></span>)</em>)</small></strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div id="meta-form">
                             {{ form_widget(form.metas) }}
                             {{ form_errors(form.metas) }}
+                            <a href="" style="color:#000000;"><button id="elfinder_browse">Browse Server</button></a>
                         </div>                        
                         <br>
-                        <a href="" style="color:#000000;"><button id="elfinder_browse">Browse Server</button></a>
-                        <br>
-                        <div id="preview-img"></div>
+                        <div id="preview"></div>
                     </div>
                 </div><!-- /.box -->
+
+            </div><!-- /.col -->
+
+            <div class="col-xs-12 col-sm-3">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
@@ -90,6 +77,19 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
+                            <strong>Tags</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <input class="tag-input form-control" type="text">
+                        {# {{ form_widget(form.tags) }}
+                        {{ form_errors(form.tags) }} #}
+                    </div>              
+                </div><!-- /.box -->
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
                             <strong>Confirm</strong>
                         </h3>
                     </div><!-- /.box-header -->
@@ -109,6 +109,7 @@
         </div><!-- /.row -->
 
     </form>
+    <a href="" style="color:#000000;"><button id="test">Test Server</button></a>
 </div>
 
 {% block js %}
@@ -139,106 +140,138 @@
             var prevImgSrc = '';
             var prevAudioSrc = '';
             var prevVideoSrc = '';
+            var prevGallerySrc = '';
             var self = this;
             setType = function(str){
                 text = self.text;
                 meta = self.meta;
-                type = 'text';
+                // type = 'text';
                 switch(str)
                 {
-                    case "General Post":
-                        text = 'Featured Image';
+                    case "General":
+                        text = 'Set featured image';
                         meta = 'general';
 
                         break;
-                    case "Audio Post":
-                        text = 'Select Audio';
+                    case "Audio":
+                        text = 'Add Audio';
                         meta = 'audio';
                         break;
-                    case "Video Post":
-                        text = 'Select Video';
+                    case "Video":
+                        text = 'Add Video';
                         meta = 'video';
                         break;
-                    case "Gallery Post":
+                    case "Gallery":
                         text = 'Create Gallery';
                         meta = 'gallery';
-                        type='hidden';
+                        // type='hidden';
                         break;
-                    // case "Quote Post":
+                    // case "Quote":
                     //     text = 'Add Quote';
                     //     meta = 'quote';
                     //     break;
-                    // case "Slideshow Post":
+                    // case "Slideshow":
                     //     text = 'Select Slideshow Photos';
                     //     meta = 'slideshow';
                     //     break;
                 }
-                $('#meta-form input').attr('type', type);
-                $('#meta-title').html(text);
+                // $('#meta-form input').attr('type', type);
+                $('#meta-option').html(text);
                 // $('#meta-btn').html(text);
             }
 
-            postType = $("input[type='radio']:checked").parent().text();
+            postType = $(".spbar-post-type input[type='radio']:checked").parent().text();
             setType(postType);
 
-            $("input[type='radio']").change(function(){
+            $(".spbar-post-type input[type='radio']").change(function(){
                 self.postType = $(this).parent().text();
                 setType(self.postType);
 
                 var src;
-                $('#preview-img').hide();
                 if(meta == 'general')
                 {
                     src = self.prevImgSrc;
-                    $('#preview-img').show();
                 }else if(meta == 'audio')
                 {
                     src = self.prevAudioSrc;
+
                 }else if(meta == 'video')
                 {
                     src = self.prevVideoSrc;
+                    
+                }else if(meta == 'gallery')
+                {
+                    src = self.prevGallerySrc;
+                    
                 }else{
                     src = '';
                 }
+                post_preview(meta, src);
 
-                $('[data-type="elfinder-input-field"]').val(src);
+                $('input.spbar-meta').val(src);
             });
 
 
             //elfinder form url 
-            $('[data-type="elfinder-input-field"][id="spbar_blog_post_new_metas"], #elfinder_browse').on("click",function() {
+            $('#elfinder_browse').on("click",function() {
                 var mt = meta;
-                if(mt == 'gallery' || mt == 'general')
-                {
-                    mt = 'image';
-                }
-                var childWin = window.open("/blog/web/app_dev.php/elfinder/"+mt+"_form?id=spbar_blog_post_new_metas", "popupWindow", "height=450, width=900");
+                var childWin = window.open("/blog/web/app_dev.php/elfinder/"+mt+"_form?id=spbar-meta", "popupWindow", "height=450, width=900");
                 
-                $('[data-type="elfinder-input-field"][id="spbar_blog_post_new_metas"]').on('change', function(){
+                $('input.spbar-meta').on('change', function(){
                     if(meta=='general')
                     {
                         self.prevImgSrc = $(this).val();
-                        if(self.prevImgSrc)
-                        {
-                            $('#preview-img').html('<img class="img-responsive img-rounded" src="'+self.prevImgSrc+'">');
-                        }
-                    }
-                    if(meta == 'audio')
+                    }else if(meta == 'audio')
                     {
                         self.prevAudioSrc = $(this).val();
-                    }                    
-                    if(meta == 'video')
+                    }else if(meta == 'video')
                     {
                         self.prevVideoSrc = $(this).val();
-                    }                    
+                    }else if(meta == 'gallery')
+                    {
+                        self.prevGallerySrc = $(this).val();
+                    }else{
+
+                    }
+                    post_preview(meta, $(this).val());
+
                 });
                 return false;
                
             });
-            function setValue(value, element_id) {
-                $('[data-type="elfinder-input-field"]' + (element_id ? '[id="'+ element_id +'"]': '')).val(value).change();
-            }
-
         });       
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        function setValue(value, element_class) {
+            $((element_class ? 'input.'+ element_class : '')).val(value).change();
+        }
+
+        function post_preview(type=null, src=null)
+        {
+            if(type == 'general' && (typeof src !== 'undefined' && src))
+            {
+                $('#preview').html('<img class="img-responsive img-rounded" src="'+src+'">');
+            }else if(type == 'audio' && (typeof src !== 'undefined' && src))
+            {
+                $('#preview').html('<audio controls="controls"><source src="'+src+'" type="audio/mpeg"></audio>');
+            }else if(type == 'video' && (typeof src !== 'undefined' && src))
+            {
+                $('#preview').html('<video width="320" height="240" controls><source src="'+src+'"type="video/mp4"></video>');
+            }else if(type == 'gallery' && (typeof src !== 'undefined' && src))
+            {
+                console.log(src);
+                var previewImgs ='';
+                var imgs = src.split(',');
+                for(var i=0; i< imgs.length; i++)
+                {
+                    previewImgs+='<img style="width: 120px; margin:10px" class="img-responsive img-thumbnail" src="'+imgs[i]+'">';
+                }
+                $('#preview').html(previewImgs);
+            }else{
+                $('#preview').html('<small><em>Preview not available!</em></small>');
+            }
+            return;
+        }
     </script>
 {% endblock js %}
