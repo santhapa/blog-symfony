@@ -26,22 +26,16 @@
 		<div class="mb20">
 			<div class="beta-slider">							
 				<div class="beta-slider-items">
-					<img src="{{ asset('blog/images/blog/img_2.jpg') }}" alt="img1">
-					<img src="{{ asset('blog/images/blog/img_3.jpg') }}" alt="img2">
-					<img src="{{ asset('blog/images/blog/img_4.jpg') }}" alt="img3">
-					<img src="{{ asset('blog/images/blog/img_5.jpg') }}" alt="img4">
-					<img src="{{ asset('blog/images/blog/img_6.jpg') }}" alt="img5">
-					<img src="{{ asset('blog/images/blog/img_7.jpg') }}" alt="img6">
+					{% for meta in post.metas %}
+					    <img src="{{ meta.source }}" alt="">
+					{% endfor %}
 				</div>
 				
 				<div class="text-center">
 					<div class="beta-pager-gallery">
-					  <a data-slide-index="0" href="#"><img src="{{ asset('blog/images/blog/img_2.jpg') }}" alt="slider1" /></a>
-					  <a data-slide-index="1" href="#"><img src="{{ asset('blog/images/blog/img_3.jpg') }}" alt="slider2" /></a>
-					  <a data-slide-index="2" href="#"><img src="{{ asset('blog/images/blog/img_4.jpg') }}" alt="slider3" /></a>
-					  <a data-slide-index="3" href="#"><img src="{{ asset('blog/images/blog/img_5.jpg') }}" alt="slider4" /></a>
-					  <a data-slide-index="4" href="#"><img src="{{ asset('blog/images/blog/img_6.jpg') }}" alt="slider5" /></a>
-					  <a data-slide-index="5" href="#"><img src="{{ asset('blog/images/blog/img_7.jpg') }}" alt="slider6" /></a>
+					 	{% for meta in post.metas %}
+						    <a data-slide-index="{{ loop.index0 }}" href="#"><img src="{{ meta.source }}" alt="" /></a>
+						{% endfor %}
 					</div>
 				</div>
 			</div>

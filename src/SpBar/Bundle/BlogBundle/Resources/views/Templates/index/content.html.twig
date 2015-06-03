@@ -80,6 +80,56 @@
 	</div>	
 {% endset %}
 
+{% set gallery_content %}
+	<div class="row beta-blog-content">
+		<div class="col-sm-6">
+			<div class="beta-slider">							
+				<div class="beta-slider-items">
+					{% for meta in post.metas %}
+					    <img src="{{ meta.source }}" alt="">
+					{% endfor %}
+				</div>
+				
+				<div class="text-center">
+					<div class="beta-pager-gallery">
+						{% for meta in post.metas %}
+						    <a data-slide-index="{{ loop.index0 }}" href="#"><img src="{{ meta.source }}" alt="" /></a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+			<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+		</div>
+	</div>
+{% endset %}
+
+{% set gallery_slideshow_content %}
+	<div class="row beta-blog-content">
+		<div class="col-sm-6">
+			<div class="beta-slider">
+				<div class="beta-pager">
+					{% for meta in post.metas %}
+					    <a data-slide-index="{{ loop.index0 }}" href="#"><span class="beta-pager-item"></span></a>
+					{% endfor %}
+				</div>
+				
+				<div class="beta-slider-items">
+					{% for meta in post.metas %}
+					    <img src="{{ meta.source }}" alt="">
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
+			<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
+		</div>
+	</div>
+{% endset %}
+
 
 {# ###################### Contents based on Post type as twig variable ############################### #}
 
@@ -126,6 +176,8 @@
 		{{ audio_content }}
 	{% elseif postType == 'video' %}
 		{{ video_content }}
+	{% elseif postType == 'gallery' %}
+		{{ gallery_slideshow_content }}
 	{% else %}
 	    {{ general_content }}
 	{% endif %}
