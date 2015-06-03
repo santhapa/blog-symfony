@@ -32,45 +32,6 @@ class MetaTransformer implements DataTransformerInterface
             $temp[] = $meta->getSource();
         }
         return implode(',', $temp);
-
-
-
-
-        // echo "<pre>";
-        // print_r($metas);
-        // echo "</pre>";
-        // // if (!$meta) {
-        // //     echo "hello1";
-        // //     return "";
-        // // }
-        // // echo "hello2";
-        // // exit;
-        // // return $meta->getSource();
-
-
-        // $newMetas = array();
-        // echo "c".count($metas);
-        // if(count($metas)==0)
-        // {
-        //     echo "funny";
-        // }
- 
-        // if (!($metas instanceof ArrayCollection) || $metas==null) {
-        //     echo "hello1"; exit;
-        //     return new ArrayCollection();
-        // }
-        // echo "hello2";
- 
-        // foreach ($metas as $key => $value) {
-        //     $newMetas[] = $value;
-        // }
-        // echo "<pre>";
-        // print_r($newMetas);
-        // echo "</pre>";
-        // exit;
- 
-        // return new ArrayCollection($newMetas);
-
     }
 
     /**
@@ -81,15 +42,20 @@ class MetaTransformer implements DataTransformerInterface
         if (!$source) {
             return null;
         }
+        $meta = new ArrayCollection();
 
-        $meta = $this->pm->getPostMetaBySource($source);
+        foreach (explode(',', $source) as $src) {
 
-        if (null === $meta) {
-            $meta = $this->pm->createPostMeta();
-            $meta->setSource($source);
-            $this->pm->updatePostMeta($meta, false);
+            $mt = $this->pm->getPostMetaBySource($src);
+
+            if (null === $mt) {
+                $mt = $this->pm->createPostMeta();
+                $mt->setSource($src);
+                $this->pm->updatePostMeta($mt, false);
+            }
+
+            $meta[] = $mt;
         }
-
         return $meta;
     }
 }

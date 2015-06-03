@@ -207,14 +207,15 @@ class Post
     public function setMetas($metas)
     {
         if(!$metas)
-        {
             return;
-        }
 
-        $this->addMeta($metas);
-        // foreach ($metas as $meta) {
-        //     $this->addMeta($meta);
-        // }
+        foreach ($this->meta as $meta) {
+            $this->removeMeta($meta);
+        }
+        
+        foreach ($metas as $meta) {
+            $this->addMeta($meta);
+        }
     }
 
     public function getMetas()
@@ -235,6 +236,14 @@ class Post
     public function getMeta()
     {
         return $this->meta;
+    }
+
+    public function removeMeta(PostMeta $meta)
+    {
+        if ($this->getMetas()->contains($meta)) {
+            $this->getMetas()->removeElement($meta);
+        }
+        return $this;
     }
 
     public function setTags($tags)
