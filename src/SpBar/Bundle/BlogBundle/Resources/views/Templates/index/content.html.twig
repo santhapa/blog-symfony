@@ -126,31 +126,11 @@
 
 	<!-- set content based on post types -->
 	{% set postType = post.postType.slug %}
-	{% if postType == 'audio_post' %}
+	{% if postType == 'audio' %}
 		{{ audio_content }}
-	{% elseif postType == 'video_post' %}
+	{% elseif postType == 'video' %}
 		{{ video_content }}
 	{% else %}
 	    {{ general_content }}
 	{% endif %}
-{% endif %}
-
-
-<!-- content area for col 4 only -->
-{% if col == 4 %}
-	<div class="beta-blog-content-preview">
-		<div class="pull-left beta-blog-content-details">
-			<span class="beta-blog-type pull-left"><i class="fa fa-picture-o"></i></span>
-			<span class="beta-blog-date pull-left">
-				<span class="beta-blog-month">{{ post.createdAt|date('F') }}</span>
-				<span class="beta-blog-day">{{ post.createdAt|date('d') }}</span>
-			</span>
-			<div class="clearfix"></div>
-		</div>
-		<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}"><img src="{{ featuredMeta ? featuredMeta : asset('blog/images/featured/default.jpg') }}" alt="featured image"></a>
-	</div>
-	<h5 class="beta-blog-title"><a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="{{ post.title }}">{{ minifyTitle(post.title, 20, true) }}</a></h5>
-
-	<p>{{ excerpt(post.content, excerptLength)|raw }}</p>
-	<a href="{{ path('sp_blog_front_post_singlePost', {'slug': post.slug }) }}" class="beta-btn primary">Read More <i class="fa fa-chevron-right"></i></a>
 {% endif %}

@@ -4,7 +4,7 @@
 		{% for post in posts if post.status == constant('SpBar\\Bundle\\BlogBundle\\Model\\PostManager::POST_STATUS_PUBLISH') %}
 			<div class="col-sm-4">
 				<div class="beta-blog beta-blog-a beta-blog-3cols">
-					{% include 'SpBarBlogBundle:Frontend/Divs:post_content.html.twig' with {'post': post, 'length': '200', 'col': '3'} %}
+					{% include 'SpBarBlogBundle:Templates/index:content.html.twig' with {'post': post, 'length': '200', 'col': '3'} %}
 				</div> <!-- .beta-blog item -->
 			</div>
 			{% if loop.index is divisible by(3) or loop.index == posts|length %} </div> <hr class="mb50"> 
