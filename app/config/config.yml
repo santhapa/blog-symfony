@@ -150,7 +150,7 @@ fm_elfinder:
                         upload_allow: ['all']
                         # upload_deny: ['all']
                         upload_max_size: 6M
-        image_form:
+        general_form:
             locale: %locale% # defaults to current request locale
             editor: form # other choices are tinymce or simple, and form
             fullscreen: true # defaults true, applies to simple and ckeditor editors
@@ -197,6 +197,23 @@ fm_elfinder:
                         upload_allow: ['video/mp4']
                         upload_deny: ['all']
                         upload_max_size: 250M
+        gallery_form:
+            locale: %locale% # defaults to current request locale
+            editor: custom # other choices are tinymce or simple, and form
+            editor_template: FMElfinderBundle:Elfinder:gallery.html.twig
+            fullscreen: true # defaults true, applies to simple and ckeditor editors
+            theme: smoothness # jquery theme
+            include_assets: true # disable if you want to handle loading of the javascript and css assets yourself
+            relative_path: false
+            connector:
+                debug: false # defaults to false
+                roots:       # at least one root must be defined
+                    uploads:
+                        driver: LocalFileSystem
+                        path: uploads/meta/image
+                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
+                        upload_deny: ['all']
+                        upload_max_size: 4M
 
 #Ivory ckeditor Configuration
 ivory_ck_editor:

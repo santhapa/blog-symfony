@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% if includeAssets %}
+        {% include "FMElfinderBundle:Elfinder:helper/assets_css.html.twig" %}
+    {% endif %}
+</head>
+<body>
+{% if includeAssets %}
+    {% include "FMElfinderBundle:Elfinder:helper/assets_js.html.twig" %}
+{% endif %}
+
+<script type="text/javascript" charset="utf-8">
+    $().ready(function() {
+        //get the id value of the element for return path
+        var elementId = getURLParameter('id');
+
+        var $f = $('.elfinder').elfinder({
+            url : '{{path('ef_connect', { 'instance': instance, 'homeFolder': homeFolder } )}}',
+            lang : '{{locale}}',
+            commandsOptions : {
+                // configure value for "getFileCallback" used for editor integration
+                getfile : {
+                    // allow to return multiple files info
+                    multiple : true,
+                }
+            },
+            getFileCallback: function(files) {
+                var pathArray = [];
+                var urlArray = [];
+                files.forEach(function(file) {
+                    //set path to an array 
+                    pathArray.push(file.path);
+                    urlArray.push(file.url);
+                });
+
+                //convert array to string with comma separated
+                var paths = pathArray.join();
+                var urls = urlArray.join();
+
+                {% if relative_path %}
+                    window.opener.setValue('{{ pathPrefix }}'+paths, elementId);
+                {% else %}
+                    window.opener.setValue(urls, elementId);
+                {% endif %}
+                window.close();
+            }
+        });
+
+
+        {% if fullscreen %}
+        var $window = $(window);
+        $window.resize(function(){
+            var $win_height = $window.height();
+            if( $f.height() != $win_height ){
+                $f.height($win_height).resize();
+            }
+        });
+        {% endif %}
+    });
+    
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
+</script>
+<div class="elfinder"></div>
+</body>
+</html>
