@@ -146,9 +146,9 @@ fm_elfinder:
                     uploads:
                         show_hidden: false # defaults to false
                         driver: LocalFileSystem
-                        path: uploads/posts
-                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
-                        upload_deny: ['all']
+                        path: uploads/media
+                        upload_allow: ['all']
+                        # upload_deny: ['all']
                         upload_max_size: 6M
         image_form:
             locale: %locale% # defaults to current request locale
@@ -161,7 +161,7 @@ fm_elfinder:
                 roots:       # at least one root must be defined
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads/elfinder/image
+                        path: uploads/meta/image
                         upload_allow: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif']
                         upload_deny: ['all']
                         upload_max_size: 4M
@@ -177,7 +177,7 @@ fm_elfinder:
                 roots:       # at least one root must be defined
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads/elfinder/audio
+                        path: uploads/meta/audio
                         upload_allow: ['audio/mpeg']
                         upload_deny: ['all']
                         upload_max_size: 20M
@@ -193,7 +193,7 @@ fm_elfinder:
                 roots:       # at least one root must be defined
                     uploads:
                         driver: LocalFileSystem
-                        path: uploads/elfinder/video
+                        path: uploads/meta/video
                         upload_allow: ['video/mp4']
                         upload_deny: ['all']
                         upload_max_size: 250M
