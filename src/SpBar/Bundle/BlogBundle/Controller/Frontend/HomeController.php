@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /*
 * This class is mostly for posts for public view
 */ 
-class PostController extends Controller
+class HomeController extends Controller
 {
 	public function indexAction(Request $request)
 	{
@@ -36,16 +36,16 @@ class PostController extends Controller
 	    );
 
 	    $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_post_index");
-	    $breadcrumbs->addRouteItem("Blog", "sp_blog_front_post_index");
+	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
+	    $breadcrumbs->addRouteItem("Blog", "sp_blog_front_home_index");
 
-		return $this->render("SpBarBlogBundle::Frontend/Post/index.html.twig", array(
+		return $this->render("SpBarBlogBundle::Frontend/index.html.twig", array(
 			'posts'=>$posts,
 			'page_title'=> $title,
 		));
 	}
 
-	public function singlePostAction(Request $request, $slug)
+	public function singleAction(Request $request, $slug)
 	{
 		$postManager = $this->get('spbar.blog_post_manager');
 		$post = $postManager->getPostBySlug($slug);
@@ -55,10 +55,10 @@ class PostController extends Controller
 		$form = $this->createForm('spbar_blog_comment', $comment);
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_post_index");
-	    $breadcrumbs->addRouteItem("Blog", "sp_blog_front_post_index");
+	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
+	    $breadcrumbs->addRouteItem("Blog", "sp_blog_front_home_index");
 
-		return $this->render("SpBarBlogBundle::Frontend/Post/single.html.twig", array(
+		return $this->render("SpBarBlogBundle::Frontend/single.html.twig", array(
 			'post'=>$post,
 			'form' => $form->createView(),
 			'page_title'=> $post->getTitle(),
@@ -84,8 +84,8 @@ class PostController extends Controller
 	//     );
 
 	// 	$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	//     $breadcrumbs->addRouteItem("Home", "sp_blog_front_post_index");
-	//     $breadcrumbs->addRouteItem("Blog", "sp_blog_front_post_index");
+	//     $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
+	//     $breadcrumbs->addRouteItem("Blog", "sp_blog_front_home_index");
 
 	// 	return $this->render("SpBarBlogBundle::Frontend/Post/index.html.twig", array(
 	// 		'posts'=>$posts,

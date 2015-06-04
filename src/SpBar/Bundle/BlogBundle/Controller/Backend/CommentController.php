@@ -27,7 +27,7 @@ class CommentController extends Controller
         if(!$user)
         {
         	$this->addFlash('commentError', "Please login first to comment!");
-        	return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $post->getSlug()));
+        	return $this->redirectToRoute('sp_blog_front_home_single', array('slug'=> $post->getSlug()));
         }
 
 		$commentManager = $this->get('spbar.blog_comment_manager');
@@ -70,7 +70,7 @@ class CommentController extends Controller
             $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_MASTER);
             $aclProvider->updateAcl($acl);
 
-		    return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $post->getSlug()));
+		    return $this->redirectToRoute('sp_blog_front_home_single', array('slug'=> $post->getSlug()));
 		}
 
 		return $this->render("SpBarBlogBundle::Backend/Comment/new.html.twig", array(

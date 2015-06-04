@@ -2,6 +2,6 @@ sp_blog_publiccomment:
     resource: "@SpBarBlogBundle/Resources/config/frontend/front_comment.yml"
     prefix:   /comment
 
-sp_blog_publicpost:
-    resource: "@SpBarBlogBundle/Resources/config/frontend/front_post.yml"
+sp_blog_publichome:
+    resource: "@SpBarBlogBundle/Resources/config/frontend/front_home.yml"
     prefix:   /

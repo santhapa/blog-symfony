@@ -79,7 +79,7 @@ class CommentController extends Controller
             $acl->insertObjectAce($roleIdentity, MaskBuilder::MASK_MASTER);
             $aclProvider->updateAcl($acl);
 
-		    return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $post->getSlug()));
+		    return $this->redirectToRoute('sp_blog_front_home_single', array('slug'=> $post->getSlug()));
 		}
 		return $this->render("SpBarBlogBundle::Frontend/Comment/new.html.twig", array(
             'postSlug' => $post->getSlug(),
@@ -107,7 +107,7 @@ class CommentController extends Controller
     		$comment->setContent($request->request->get('content'));
     		$commentManager->updateComment($comment);
 
-		    return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $comment->getPost()->getSlug()));
+		    return $this->redirectToRoute('sp_blog_front_home_single', array('slug'=> $comment->getPost()->getSlug()));
 		}
 		return $this->render("SpBarBlogBundle::Frontend/Comment/edit.html.twig", array(
 			'comment' => $comment,
@@ -133,6 +133,6 @@ class CommentController extends Controller
         $postSlug = $comment->getPost()->getSlug();
         $commentManager->removeComment($comment);
 
-		return $this->redirectToRoute('sp_blog_front_post_singlePost', array('slug'=> $postSlug));
+		return $this->redirectToRoute('sp_blog_front_home_single', array('slug'=> $postSlug));
 	}
 }
