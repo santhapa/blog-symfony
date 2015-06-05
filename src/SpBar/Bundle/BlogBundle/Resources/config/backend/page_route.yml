@@ -1,0 +1,23 @@
+sp_blog_page_index:
+    path: /
+    defaults: { _controller: SpBarBlogBundle:Backend/Page:index }
+
+sp_blog_page_list:
+    path: /list/
+    defaults: { _controller: SpBarBlogBundle:Backend/Page:list }
+
+sp_blog_page_new:
+    path: /new/
+    defaults: { _controller: SpBarBlogBundle:Backend/Page:new }
+
+sp_blog_page_edit:
+    path: /{slug}/edit/
+    defaults: { _controller: SpBarBlogBundle:Backend/Page:edit }
+
+sp_blog_page_trash:
+    path: /{slug}/trash/
+    defaults: { _controller: SpBarBlogBundle:Backend/Page:trash}
+
+sp_blog_page_delete:
+    path: /{slug}/delete/
+    defaults: { _controller: SpBarBlogBundle:Backend/Page:delete }

@@ -1,0 +1,88 @@
+{% set trash = constant('SpBar\\Bundle\\BlogBundle\\Model\\PageManager::PAGE_STATUS_TRASH') %}
+{% set publish = constant('SpBar\\Bundle\\BlogBundle\\Model\\PageManager::PAGE_STATUS_PUBLISH') %}
+{% set draft = constant('SpBar\\Bundle\\BlogBundle\\Model\\PageManager::PAGE_STATUS_DRAFT') %}
+
+<div class="box-body">
+
+	<div class="nav-tabs-page">
+		<ul class="nav nav-tabs">
+			<li class="active"><a aria-expanded="false" href="#active_page" data-toggle="tab">Active</a></li>	
+			<li class=""><a aria-expanded="false" href="#draft_page" data-toggle="tab">Drafts</a></li>		
+			<li class=""><a aria-expanded="false" href="#trash_page" data-toggle="tab">Trash</a></li>			
+			<li class=""><a aria-expanded="true" href="#all_page" data-toggle="tab">All</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="active_page">
+				{% include 'SpBarBlogBundle:Backend/Page:list_content_table.html.twig' with {'status' : publish} %}
+			</div><!-- /.tab-pane -->
+			
+			<div class="tab-pane" id="draft_page">
+				{% include 'SpBarBlogBundle:Backend/Page:list_content_table.html.twig' with {'status' : draft } %}
+			</div><!-- /.tab-pane -->
+
+			<div class="tab-pane" id="trash_page">
+				{% include 'SpBarBlogBundle:Backend/Page:list_content_table.html.twig' with {'status' : trash } %}
+			</div><!-- /.tab-pane -->
+
+			<div class="tab-pane" id="all_page">
+				<table id="pageList" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Page Template</th>
+							<th>Created At</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for page in pages if app.user and is_granted('OPERATOR', page) %}
+					        <tr>
+					        	<td>{{ loop.index }}</td>
+								<td> {{ page.title }} </td>
+								<td> {{ page.template}} </td>
+								<td>{{ page.createdAt|date('F d, Y h:i:s A') }}</td>
+								<td> 
+									{% for key,status in staticStatus %}
+									    {% if key == page.status %}
+									    	{{ status }}
+									    {% endif %}
+									{% endfor %} 
+								</td>
+								<td>
+									<a href="{{ path('sp_blog_page_edit',{'slug': page.slug}) }}">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Edit"></span>
+									</a>
+									{% if page.status == publish %}
+										<a href="{{ path('sp_blog_page_trash',{'slug': page.slug}) }}">
+											<span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Move to Trash"></span>
+										</a>
+									{% endif %}
+									{% if page.status == draft or page.status == trash  %}
+										<a href="{{ path('sp_blog_page_delete',{'slug': page.slug}) }}">
+											<span class="glyphicon glyphicon-ban-circle" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Delete Permanently"></span>
+										</a>
+									{% endif %}
+								</td>
+							</tr>
+					    {% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>S.N.</th>
+							<th>Title</th>
+							<th>Page Template</th>
+							<th>Created At</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</tfoot>
+				</table>
+				{# knp_pagination_render(pages) #}
+			</div><!-- /.tab-pane -->
+		</div><!-- /.tab-content -->
+	</div>
+
+</div><!-- /.box-body -->

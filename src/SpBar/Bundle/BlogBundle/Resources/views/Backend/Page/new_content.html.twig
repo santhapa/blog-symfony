@@ -1,0 +1,98 @@
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig','form_errors.html.twig'] %}
+
+<div class="box-body">
+    <form class="form-horizontal" method="POST" action="{{ path('sp_blog_page_new') }}">
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Post Content</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.title) }}
+                        {{ form_errors(form.title) }}  
+                        <br>
+                        {{ form_widget(form.content) }}
+                        {{ form_errors(form.content) }} 
+                        <br>
+                    </div>              
+                </div><!-- /.box -->
+
+            </div><!-- /.col -->
+
+            <div class="col-xs-12 col-sm-3">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Featured Image</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.featuredImage) }}
+                        {{ form_errors(form.featuredImage) }}
+                        <a href="" style="color:#000000;"><button id="elfinder_browse">Browse Server</button></a>                      
+                        <br><br>
+                        <div id="preview"></div>
+                    </div>
+                </div><!-- /.box -->
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Page Template</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.template) }}
+                        {{ form_errors(form.template) }}
+                    </div>
+                </div><!-- /.box -->
+
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <strong>Confirm</strong>
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        {{ form_widget(form.status) }}
+                        {{ form_errors(form.status) }}  
+                        <br>
+                        <div class="form-group">
+					        <div class="col-xs-8">
+					            <button type="submit" class="btn btn-info" value="Create">Create</button>
+					        </div>
+					    </div>
+                    </div>              
+                </div><!-- /.box -->
+
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+    </form>
+</div>
+
+{% block js %}
+    <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+            //elfinder form url 
+            $('#elfinder_browse').on("click",function() {
+                var childWin = window.open("/blog/web/app_dev.php/elfinder/general_form?id=spbar-page-featured-image", "popupWindow", "height=450, width=900");
+                
+                $('input.spbar-page-featured-image').on('change', function(){
+                    $('#preview').html('<img class="img-responsive img-rounded" src="'+$(this).val()+'">');
+                });
+                return false;
+               
+            });
+        });
+
+        function setValue(value, element_class) {
+            $((element_class ? 'input.'+ element_class : '')).val(value).change();
+        }       
+    </script>
+{% endblock js %}
