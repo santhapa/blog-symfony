@@ -1,0 +1,8 @@
+{% extends('SpBarBlogBundle::Frontend/front_base.html.twig') %}
+
+{% set template = page.template %}
+{% set loadPageTemplate = 'SpBarBlogBundle::Templates/page/'~ template ~'.html.twig' %}
+
+{% block body_content %}
+	{% include loadPageTemplate with {'page': page} %}
+{% endblock body_content %}

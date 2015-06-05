@@ -10,6 +10,10 @@ sp_blog_front_home_single:
     path: /{cat_slug}/{slug}/
     defaults: { _controller: SpBarBlogBundle:Frontend/Home:single }
 
+sp_blog_front_home_page:
+    path: /{page_slug}/
+    defaults: { _controller: SpBarBlogBundle:Frontend/Home:page }
+
 sp_blog_front_home_category:
     path: /{cat_slug}/
     defaults: { _controller: SpBarBlogBundle:Frontend/Home:category }

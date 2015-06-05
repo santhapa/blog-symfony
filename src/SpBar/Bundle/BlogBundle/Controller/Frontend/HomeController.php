@@ -90,6 +90,26 @@ class HomeController extends Controller
 		));
 	}
 
+	public function pageAction(Request $request, $page_slug)
+	{
+		$pageManager = $this->get('spbar.blog_page_manager');
+		$page = $pageManager->getPageBySlug($page_slug);
+
+		if(!$page)
+		{
+			throw $this->createNotFoundException('Page not found!');
+		}
+
+		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
+	    $breadcrumbs->addRouteItem($page->getTitle(), "sp_blog_front_home_page", array('page_slug' => $page_slug));
+
+		return $this->render("SpBarBlogBundle::Frontend/page.html.twig", array(
+			'page'=>$page,
+			'page_title'=> $page->getTitle(),
+		));
+	}
+
 	public function getPosts($request, $array= null)
 	{
 		$postManager = $this->get('spbar.blog_post_manager');
