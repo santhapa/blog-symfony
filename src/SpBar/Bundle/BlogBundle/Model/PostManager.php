@@ -24,6 +24,7 @@ class PostManager
 		self::POST_STATUS_TRASH => 'Trash'
 	);
 
+	protected $em;
 
 	public function __construct(EntityManager $em)
 	{
