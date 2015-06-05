@@ -162,7 +162,7 @@
 					{% endif %}
 				</a></h5>
 				<p>By: 
-					<a href="{{ path('sp_blog_front_home_index', {'author': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | 
+					<a href="{{ path('sp_blog_front_home_author', {'author': post.author.getUsername}) }}">{{ post.author.getName()|trim ? : post.author.getUsername() }}</a> | 
 					<a href="{{ path('sp_blog_front_home_single', {'slug': post.slug }) }}#commentSection">{{ post.comments|length > 0 ? post.comments|length : 'No' }} Comments</a>|
 					Posted In {% for cat in post.category %} <a href="#">{{ cat.name }} </a> {% if not loop.last %},{% endif %} {% endfor %}
 				</p>

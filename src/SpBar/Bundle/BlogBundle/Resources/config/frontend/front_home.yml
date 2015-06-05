@@ -2,9 +2,9 @@ sp_blog_front_home_index:
     path: /
     defaults: { _controller: SpBarBlogBundle:Frontend/Home:index }
 
-# sp_blog_front_post_authorPost:
-#     path: /sp-{user}/posts/
-#     defaults: { _controller: SpBarBlogBundle:Frontend/Post:authorPost }
+sp_blog_front_home_author:
+    path: /author/{author}/
+    defaults: { _controller: SpBarBlogBundle:Frontend/Home:author }
 
 sp_blog_front_home_single:
     path: /{slug}/
