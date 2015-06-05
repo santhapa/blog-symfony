@@ -10,6 +10,7 @@ class BlogExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFunction('excerpt', array($this, 'truncateContent')),
             new \Twig_SimpleFunction('minifyTitle', array($this, 'getMinifiedTitle')), 
+            new \Twig_SimpleFunction('is_home', array($this, 'isHomeUrl')), 
             // new \Twig_SimpleFunction('featuredImage', array($this, 'showFeaturedImage')),
         );
     }
@@ -32,6 +33,15 @@ class BlogExtension extends \Twig_Extension
             return substr($title, 0, $length)."...";
         }else{
             return $title;
+        }
+    }
+    public function isHomeUrl($route)
+    {
+        if($route == 'sp_blog_front_home_index')
+        {
+            return true;
+        }else{
+            return false;
         }
     }
 

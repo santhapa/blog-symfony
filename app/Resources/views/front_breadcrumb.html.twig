@@ -1,7 +1,8 @@
 {% if wo_breadcrumbs()|length %}
   {% spaceless %}
     {% for b in breadcrumbs %}
-        {% if b.url and not loop.last %}
+        {# {% if b.url and not loop.last %} #}
+        {% if b.url %}
             <a href="{{ b.url }}">{{- b.text -}}</a>
         {% else %}
             <span>{{- b.text -}}</span>

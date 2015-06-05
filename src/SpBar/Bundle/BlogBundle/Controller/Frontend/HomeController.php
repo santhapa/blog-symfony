@@ -14,10 +14,6 @@ class HomeController extends Controller
 	{
 		$posts = $this->getPosts($request);
 
-	    $breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
-	    // $breadcrumbs->addRouteItem("Blog", "sp_blog_front_home_index");
-
 		return $this->render("SpBarBlogBundle::Frontend/index.html.twig", array(
 			'posts'=>$posts,
 			'page_title'=> 'Blog',
@@ -38,7 +34,7 @@ class HomeController extends Controller
 
 	    $breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
-	    $breadcrumbs->addRouteItem($catName, "sp_blog_front_home_index");
+	    $breadcrumbs->addRouteItem($catName, "sp_blog_front_home_category", array('cat_slug'=> $cat_slug));
 
 		return $this->render("SpBarBlogBundle::Frontend/index.html.twig", array(
 			'posts'=>$posts,
@@ -86,7 +82,7 @@ class HomeController extends Controller
 
 	    $breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
-	    $breadcrumbs->addItem("Author");
+	    $breadcrumbs->addRouteItem("Author", "sp_blog_front_home_author", array('author'=>$author));
 
 		return $this->render("SpBarBlogBundle::Frontend/index.html.twig", array(
 			'posts'=>$posts,
@@ -117,32 +113,4 @@ class HomeController extends Controller
 
 	    return $posts;
 	}
-
-	// public function authorPostAction(Request $request, $user)
-	// {	
-	// 	$user = $this->get('fos_user.user_manager')->findUserByUsername($user);
-	// 	if (!$user) {
-	// 		throw $this->createNotFoundException();
-	// 	}
-	// 	$author = trim($user->getName()) ? $user->getName() : $user->getUsername();
-
-	// 	$postManager = $this->get('spbar.blog_post_manager');
-	// 	$dbPosts = $postManager->getPostsByAuthor($user);
-
-	// 	$paginator  = $this->get('knp_paginator');
-	//     $posts = $paginator->paginate(
-	//         $dbPosts,
-	//         $request->query->get('page', 1)/*page number*/,
-	//         $this->get('spbar.blog_config_manager')->get('post_per_page')/*limit per page*/
-	//     );
-
-	// 	$breadcrumbs = $this->container->get("white_october_breadcrumbs");
-	//     $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
-	//     $breadcrumbs->addRouteItem("Blog", "sp_blog_front_home_index");
-
-	// 	return $this->render("SpBarBlogBundle::Frontend/Post/index.html.twig", array(
-	// 		'posts'=>$posts,
-	// 		'page_title'=> "Posts By: {$author}",
-	// 	));
-	// }
 }
