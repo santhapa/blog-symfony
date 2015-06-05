@@ -1,18 +1,13 @@
-{% block css %}
-    <script src="{{ asset('plugins/tags-manager/tagmanager.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/tags-manager/tagmanager.css') }}" />    
-{% endblock css %}
-
 {% form_theme form with ['bootstrap_3_horizontal_layout.html.twig','form_errors.html.twig'] %}
 
 <div class="box-body">
-    <form class="form-horizontal" method="POST" action="{{ path('sp_blog_post_edit', {'slug': slug}) }}">
+    <form class="form-horizontal" method="POST" action="{{ path('sp_blog_page_edit', {'slug': slug}) }}">
         <div class="row">
             <div class="col-xs-12 col-sm-9">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong>Post Content</strong>
+                            <strong>Page Content</strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
@@ -20,31 +15,8 @@
                         {{ form_errors(form.title) }}  
                         <br>
                         {{ form_widget(form.content) }}
-                        {{ form_errors(form.content) }} 
-                        <br>
-                        {% if app.user and is_granted('ROLE_BLOG_ADMIN') %}
-                        	{{ form_widget(form.author) }}
-                        	{{ form_errors(form.author) }}
-                        {% endif %}
+                        {{ form_errors(form.content) }}
                     </div>              
-                </div><!-- /.box -->
-
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                            <strong>Post Media<small>&emsp;<em>(<span id="meta-option"></span>)</em>)</small></strong>
-                        </h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <div id="meta-form">
-                            {{ form_widget(form.metas) }}
-                            {{ form_errors(form.metas) }}
-                            <a href="" style="color:#000000;"><button id="elfinder_browse">Browse Server</button></a>
-                        </div>                        
-                        <br>
-                        <div id="preview"></div>
-                    </div>
-                               
                 </div><!-- /.box -->
             </div><!-- /.col -->
 
@@ -53,38 +25,28 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong>Post Type</strong>
+                            <strong>Featured Image</strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        {{ form_widget(form.postType) }}
-                        {{ form_errors(form.postType) }}  
-                    </div>              
+                        {{ form_widget(form.featuredImage) }}
+                        {{ form_errors(form.featuredImage) }}
+                        <a href="" style="color:#000000;"><button id="elfinder_browse">Browse Server</button></a>                      
+                        <br><br>
+                        <div id="preview"></div>
+                    </div>
                 </div><!-- /.box -->
 
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">
-                            <strong>Category</strong>
+                            <strong>Page Template</strong>
                         </h3>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        {{ form_widget(form.category) }}
-                        {{ form_errors(form.category) }}  
-                    </div>              
-                </div><!-- /.box -->
-
-                <div class="box">
-                    <div class="box-header">
-                        <h3 class="box-title">
-                            <strong>Tags</strong>
-                        </h3>
-                    </div><!-- /.box-header -->
-                    <div class="box-body">
-                        <input class="tag-input form-control" type="text">
-                        {# {{ form_widget(form.tags) }}
-                        {{ form_errors(form.tags) }} #}
-                    </div>              
+                        {{ form_widget(form.template) }}
+                        {{ form_errors(form.template) }}
+                    </div>
                 </div><!-- /.box -->
 
                 <div class="box">
@@ -98,10 +60,10 @@
                         {{ form_errors(form.status) }}  
                         <br>
                         <div class="form-group">
-					        <div class="col-xs-8">
-					            <button type="submit" class="btn btn-info" value="Update">Update</button>
-					        </div>
-					    </div>
+                            <div class="col-xs-8">
+                                <button type="submit" class="btn btn-info" value="Create">Create</button>
+                            </div>
+                        </div>
                     </div>              
                 </div><!-- /.box -->
 
@@ -114,148 +76,22 @@
 
 {% block js %}
     <script src="{{ asset('bundles/ivoryckeditor/ckeditor.js') }}"></script>
-    <script type="text/javascript">
-        $(function(){
-            var tags = "{{ form.tags.vars.value|escape('js') }}";
-            var preSet = Array();
-            preSet = tags.split(',');
-        
-            $(".tag-input").tagsManager({
-                prefilled: preSet,
-                CapitalizeFirstLetter: false,
-                hiddenTagListName: 'spbar_blog_post_edit[tags]',
-                deleteTagsOnBackspace: true,
-                tagsContainer: null,
-                tagCloseIcon: '×',
-                tagClass: 'tag-input'
-            });
-        });
-    </script>
 
     <script type="text/javascript">
         $(function(){
-            var postType;
-            var text;
-            var meta;
-            var prevImgSrc = '';
-            var prevAudioSrc = '';
-            var prevVideoSrc = '';
-            var prevGallerySrc = '';
-            var self = this;
-            setType = function(str){
-                text = self.text;
-                meta = self.meta;
-                // type = 'text';
-                switch(str)
-                {
-                    case "General":
-                        text = 'Set featured image';
-                        meta = 'general';
 
-                        break;
-                    case "Audio":
-                        text = 'Add Audio';
-                        meta = 'audio';
-                        break;
-                    case "Video":
-                        text = 'Add Video';
-                        meta = 'video';
-                        break;
-                    case "Gallery":
-                        text = 'Create Gallery';
-                        meta = 'gallery';
-                        // type='hidden';
-                        break;
-                    // case "Quote":
-                    //     text = 'Add Quote';
-                    //     meta = 'quote';
-                    //     break;
-                    // case "Slideshow":
-                    //     text = 'Select Slideshow Photos';
-                    //     meta = 'slideshow';
-                    //     break;
-                }
-                // $('#meta-form input').attr('type', type);
-                $('#meta-option').html(text);
-                // $('#meta-btn').html(text);
-            }
-
-            postType = $(".spbar-post-type input[type='radio']:checked").parent().text();
-            setType(postType);            
+            {% if form.featuredImage.vars.value %}
+                var imgSrc = "{{ form.featuredImage.vars.value }}";
+                $('#preview').html('<img class="img-responsive img-rounded" src="'+imgSrc +'">');
+            {% endif %}
 
             //set the value while editing for preview and reserve
-            if(meta == 'general')
-            {
-                self.prevImgSrc = '{{ form.metas.vars.value}}';
-            }if(meta == 'audio')
-            {
-                self.prevAudioSrc = '{{ form.metas.vars.value}}';
-
-            }if(meta == 'video')
-            {
-                self.prevVideoSrc = '{{ form.metas.vars.value}}';   
-            }
-            if(meta == 'gallery')
-            {
-                self.prevGallerySrc = '{{ form.metas.vars.value}}';   
-            }
-            post_preview(meta, '{{ form.metas.vars.value }}');
-            $('input.spbar-meta').val('{{ form.metas.vars.value }}');
-            //set the value while editing for preview and reserve
-
-            $(".spbar-post-type input[type='radio']").change(function(){
-                self.postType = $(this).parent().text();
-                setType(self.postType);
-
-                var src;
-                if(meta == 'general')
-                {
-                    src = self.prevImgSrc;
-                }else if(meta == 'audio')
-                {
-                    src = self.prevAudioSrc;
-
-                }else if(meta == 'video')
-                {
-                    src = self.prevVideoSrc;
-                    
-                }else if(meta == 'gallery')
-                {
-                    src = self.prevGallerySrc;
-                    
-                }else{
-                    src = '';
-                }
-                post_preview(meta, src);
-
-                $('input.spbar-meta').val(src);
-            });
-
 
             //elfinder form url 
-            $('#elfinder_browse').on("click",function() {
-                var mt = meta;
-                
-                var childWin = window.open("/blog/web/app_dev.php/elfinder/"+mt+"_form?id=spbar-meta", "popupWindow", "height=450, width=900");
-                
-                $('input.spbar-meta').on('change', function(){
-                    if(meta=='general')
-                    {
-                        self.prevImgSrc = $(this).val();
-                    }else if(meta == 'audio')
-                    {
-                        self.prevAudioSrc = $(this).val();
-                    }else if(meta == 'video')
-                    {
-                        self.prevVideoSrc = $(this).val();
-                    }else if(meta == 'gallery')
-                    {
-                        self.prevGallerySrc = $(this).val();
-                    }else{
-
-                    }
-                    post_preview(meta, $(this).val());
-
+            $('#elfinder_browse').on("click",function() {                
+                var childWin = window.open("/blog/web/app_dev.php/elfinder/general_form?id=spbar-page-featured-image", "popupWindow", "height=450, width=900");
+                 $('input.spbar-page-featured-image').on('change', function(){
+                    $('#preview').html('<img class="img-responsive img-rounded" src="'+$(this).val()+'">');
                 });
                 return false;
                
@@ -266,33 +102,6 @@
     <script type="text/javascript" charset="utf-8">
         function setValue(value, element_class) {
             $((element_class ? 'input.'+ element_class : '')).val(value).change();
-        }
-
-        function post_preview(type=null, src=null)
-        {
-            if(type == 'general' && (typeof src !== 'undefined' && src))
-            {
-                $('#preview').html('<img class="img-responsive img-rounded" src="'+src+'">');
-            }else if(type == 'audio' && (typeof src !== 'undefined' && src))
-            {
-                $('#preview').html('<audio controls="controls"><source src="'+src+'" type="audio/mpeg"></audio>');
-            }else if(type == 'video' && (typeof src !== 'undefined' && src))
-            {
-                $('#preview').html('<video width="320" height="240" controls><source src="'+src+'"type="video/mp4"></video>');
-            }else if(type == 'gallery' && (typeof src !== 'undefined' && src))
-            {
-                console.log(src);
-                var previewImgs ='';
-                var imgs = src.split(',');
-                for(var i=0; i< imgs.length; i++)
-                {
-                    previewImgs+='<img style="width: 120px; margin:10px" class="img-responsive img-thumbnail" src="'+imgs[i]+'">';
-                }
-                $('#preview').html(previewImgs);
-            }else{
-                $('#preview').html('<small><em>Preview not available!</em></small>');
-            }
-            return;
         }
     </script>
 {% endblock js %}

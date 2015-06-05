@@ -32,7 +32,7 @@ class PageFormType extends AbstractType
                 ->add('template', 'choice', array(
                         'label' => 'Page Template',
                         'choices' => PageManager::$pageTemplate,
-                        'data' => 'fullwidth',
+                        // 'data' => 'fullwidth',
                         'required' => true
                     ))
                 ->add('status', 'choice', array(

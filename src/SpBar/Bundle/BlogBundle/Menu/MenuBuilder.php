@@ -45,6 +45,13 @@ class MenuBuilder extends ContainerAware
                 ->setChildrenAttribute('icon', 'fa-circle-o');
             $blog['Posts']->addChild('Category', array('route'=> 'sp_blog_category_index'))
                 ->setChildrenAttribute('icon', 'fa-circle-o');
+        $blog->addChild('Pages', array('route'=>'sp_blog_page_index'))
+            ->setChildrenAttribute('icon', 'fa-edit')
+            ->setAttribute('class', 'treeview');
+            $blog['Pages']->addChild('All Pages', array('route'=>'sp_blog_page_list'))
+                ->setChildrenAttribute('icon', 'fa-circle-o');
+            $blog['Pages']->addChild('Add New', array('route'=> 'sp_blog_page_new'))
+                ->setChildrenAttribute('icon', 'fa-circle-o');
 
         $blog->addChild('Users', array('uri'=> '#'))
             ->setChildrenAttribute('icon', 'fa-user')
