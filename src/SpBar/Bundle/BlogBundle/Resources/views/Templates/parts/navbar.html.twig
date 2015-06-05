@@ -47,6 +47,10 @@
 			<nav class="main-menu">
 				<ul class="l-inline ov">
 					<li><a href="{{ path('sp_blog_front_home_index') }}">Home</a></li>
+					<li><a href="{{ path('sp_blog_front_home_category', {'cat_slug' : 'blog'}) }}">Blog</a></li>
+					<li><a href="{{ path('sp_blog_front_home_category', {'cat_slug' : 'audio'}) }}">Audio</a></li>
+					<li><a href="{{ path('sp_blog_front_home_category', {'cat_slug' : 'video'}) }}">Video</a></li>
+					<li><a href="{{ path('sp_blog_front_home_category', {'cat_slug' : 'gallery'}) }}">Gallery</a></li>
 					<li><a href="#">Contact</a></li>
 				</ul>
 				<div class="clearfix"></div>
