@@ -24,12 +24,39 @@ class HomeController extends Controller
 		));
 	}
 
-	
+	public function categoryAction(Request $request, $cat_slug)
+	{
+		$categoryManager = $this->get("spbar.blog_category_manager");
+		$category = $categoryManager->getCategoryBySlug($cat_slug);
+
+		if (!$category) {
+			throw $this->createNotFoundException('Category not found!');
+		}
+		$catName = $category->getName();
+
+		$posts = $this->getPosts($request, array('category'=>$category));
+
+	    $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
+	    $breadcrumbs->addRouteItem($catName, "sp_blog_front_home_index");
+
+		return $this->render("SpBarBlogBundle::Frontend/index.html.twig", array(
+			'posts'=>$posts,
+			'page_title'=> $catName,
+		));
+	}
 
 	public function singleAction(Request $request, $slug)
 	{
 		$postManager = $this->get('spbar.blog_post_manager');
 		$post = $postManager->getPostBySlug($slug);
+
+		if(!$post)
+		{
+			throw $this->createNotFoundException('Post not found!');
+		}
+
+		$category = $post->getCategory()->first();
 
 		$commentManager = $this->get('spbar.blog_comment_manager');
         $comment = $commentManager->createComment();
@@ -37,10 +64,11 @@ class HomeController extends Controller
 
 		$breadcrumbs = $this->container->get("white_october_breadcrumbs");
 	    $breadcrumbs->addRouteItem("Home", "sp_blog_front_home_index");
-	    $breadcrumbs->addRouteItem("Blog", "sp_blog_front_home_index");
+	    $breadcrumbs->addRouteItem($category->getName(), "sp_blog_front_home_category", array('cat_slug' => $category->getSlug()));
 
 		return $this->render("SpBarBlogBundle::Frontend/single.html.twig", array(
 			'post'=>$post,
+			'catSlug' => $category->getSlug(),
 			'form' => $form->createView(),
 			'page_title'=> $post->getTitle(),
 		));
@@ -50,7 +78,7 @@ class HomeController extends Controller
 	{
 		$user = $this->get('fos_user.user_manager')->findUserByUsername($author);
 		if (!$user) {
-			throw $this->createNotFoundException();
+			throw $this->createNotFoundException('Author not found!');
 		}
 		$authorName = trim($user->getName()) ? $user->getName() : $user->getUsername();
 
@@ -75,7 +103,10 @@ class HomeController extends Controller
 		{
 			$dbPosts = $postManager->getPostsByAuthor($array['author']);
 		}
-		
+		if($array && array_key_exists('category', $array))
+		{
+			$dbPosts = $array['category']->getPosts();
+		}
 
 		$paginator  = $this->get('knp_paginator');
 	    $posts = $paginator->paginate(
