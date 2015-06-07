@@ -41,6 +41,7 @@ class AppKernel extends Kernel
 
             new SpBar\Bundle\BlogBundle\SpBarBlogBundle(),
             new SpBar\Bundle\UserBundle\SpBarUserBundle(),
+            new SpBar\Bundle\MenuBundle\SpBarMenuBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
