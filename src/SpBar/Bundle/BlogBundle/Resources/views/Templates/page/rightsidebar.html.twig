@@ -1,8 +1,13 @@
 <div class="container">
 	<div id="content">
-		<div class="beta-blog beta-blog-a">
-		<h2>{{ page.title }}</h2>
-		<p>{{ page.content|e }}</p>
+		<div class="row">
+			<div class="col-sm-9">
+				{# <h2>{{ page.title }}</h2>  #}
+				<p>{{ page.content|raw }}</p>
+			</div>
+			<div class="col-sm-3 aside-main pull-right">
+				{% include 'SpBarBlogBundle::Templates/parts/sidebar_widget.html.twig' %}
+			</div>
 		</div> <!-- .beta-blog item -->
 	</div> <!-- #content -->
 </div> <!-- .container -->
