@@ -4,4 +4,4 @@ sp_blog_publiccomment:
 
 sp_blog_publichome:
     resource: "@SpBarBlogBundle/Resources/config/frontend/front_home.yml"
-    prefix:   /public
+    prefix:   /

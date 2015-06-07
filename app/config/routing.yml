@@ -17,12 +17,11 @@
 # logout:
 #     path: /logout
 
-
-sp_blog:
-    resource: "@SpBarBlogBundle/Resources/config/routing.yml"
-
 sp_userbundle:
     resource: "@SpBarUserBundle/Resources/config/routing.yml"
+    
+sp_blog:
+    resource: "@SpBarBlogBundle/Resources/config/routing.yml"
 
 elfinder:
     resource: "@FMElfinderBundle/Resources/config/routing.yml"
