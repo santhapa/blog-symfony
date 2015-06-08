@@ -1,0 +1,292 @@
+
+/* FORMS
+------------------------------------------------------------------------- */
+#menu-title, #menu-url, #menu-class {
+	width: 90%;
+}
+#edit-menu-title, #edit-menu-url, #edit-menu-class {
+	width: 70%;
+}
+#menu-group-title {
+	width: 70%;
+}
+
+
+/* menu group
+------------------------------------------------------------------------- */
+ul#menu-group {
+	float: left;
+	font-weight: bold;
+	margin-bottom: 20px;
+	background: #fff;
+	width: 100%;
+	border-bottom: 5px solid #666;
+}
+ul#menu-group li {
+	float: left;
+}
+ul#menu-group li#add-group {
+	float: right;
+}
+ul#menu-group li#add-group a {
+	margin-right: 0;
+}
+ul#menu-group li a {
+	display: block;
+	padding: 5px 10px;
+	margin: 5px 5px 0 0;
+	color: #888;
+	background: #eee;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#eee), to(#e4e4e4));
+	background: -moz-linear-gradient(#eee, #e4e4e4);
+	background: linear-gradient(#eee, #e4e4e4);
+}
+ul#menu-group li a:hover {
+	color: #555;
+	background: #eee;
+}
+ul#menu-group li.current a {
+	color: #fff;
+	background: #666;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#888), to(#666));
+	background: -moz-linear-gradient(#888, #666);
+	background: linear-gradient(#888, #666);
+}
+
+#edit-form {
+	display: none;
+	border: 1px solid #ccc;
+	background: #fcfcfc;
+	border-top: none;
+	padding: 10px 0;
+}
+
+#menu-group-add {
+	display: none;
+}
+
+/* nested sortable
+------------------------------------------------------------------------- */
+.ns-helper {
+	border: 1px dashed #C6C486;
+	background: #FAFAE0;
+}
+.sortable {
+	margin: 5px 0;
+	clear: both;
+}
+.sortable img {
+	vertical-align: bottom;
+}
+#ns-header {
+	padding: 8px 10px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #555;
+	background: #fff;
+	border: none;
+}
+#ns-header div {
+	border: none;
+}
+#ns-footer {
+	text-align: right;
+	margin-top: 10px;
+}
+.ns-row {
+	font: 11px Tahoma, sans-serif;
+	line-height: 18px;
+	padding: 7px 10px;
+	border: 1px solid #d5d5d5;
+	background: #f7f7f7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f9f9f9), to(#f5f5f5));
+	background: -moz-linear-gradient(#f9f9f9, #f5f5f5);
+	background: linear-gradient(#f9f9f9, #f5f5f5);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 0 #fff;
+	-moz-box-shadow: inset 0 1px 0 #fff;
+	box-shadow: inset 0 1px 0 #fff;
+	position: relative;
+}
+.ns-row div {
+	border-left: 1px solid #e3e3e3;
+	height: 18px;
+	overflow: hidden;
+	position: absolute;
+	top: 6px;
+	padding-left: 10px;
+}
+div.ns-title {
+	position: static;
+	border: none;
+	font-weight: bold;
+	padding-left: 0;
+	cursor: move;
+}
+.ns-actions {
+	width: 80px;
+	right: 10px;
+}
+.ns-class {
+	width: 100px;
+	right: 60px;
+}
+.ns-url {
+	width: 140px;
+	right: 170px;
+}
+.ns-actions a {
+	margin-left: 5px;
+}
+
+/* error
+------------------------------------------------------------------------- */
+span.error {
+	color: red;
+}
+
+/* loading
+------------------------------------------------------------------------- */
+#loading {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 44%;
+	width: 120px;
+	text-align: center;
+	background: #444;
+	background: rgba(0, 0, 0, 0.7);
+	color: #fff;
+	font-size: 14px;
+	padding: 3px 10px;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	z-index: 10003;
+}
+#loading img {
+	vertical-align: text-bottom;
+	margin-right: 2px;
+}
+
+/* modal box
+------------------------------------------------------------------------- */
+#gbox {
+	position: absolute;
+	position: fixed;
+	display: none;
+	z-index: 10002;
+	width: 370px;
+	border: 1px solid #acacac;
+	color: #222;
+	background: #fff;
+	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#gbox_header {
+	padding: 5px 10px;
+	color: #000;
+	font-size: 14px;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+}
+#gbox h2 {
+	font: 15px Arial, sans-serif;
+	font-weight: bold;
+	color: #333;
+	border-bottom: 1px dashed #eaeaea;
+	margin: 0 0 10px;
+	padding: 0 0 8px;
+}
+#gbox_content {
+	padding: 15px 12px;
+	overflow: auto;
+	max-height: 400px;
+}
+#gbox_footer {
+	padding: 10px 15px;
+	border-top: 1px solid #eee;
+	background: #f9f9f9;
+	text-align: right;
+}
+#gbox_footer button {
+	border: 1px solid #aaa;
+	background: #eee;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#eee), to(#ddd));
+	background: -moz-linear-gradient(#eee, #ddd);
+	background: linear-gradient(#eee, #ddd);
+	font: 11px Tahoma, sans-serif;
+	margin-left: 7px;
+	padding: 6px 9px;
+	outline: none;
+	cursor: pointer;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .4), 1px 1px 1px #eee;
+	-moz-box-shadow: inset 0 1px 1px rgba(255, 255, 255, .4), 1px 1px 1px #eee;
+	box-shadow: inset 0 1px 1px rgba(255, 255, 255, .4), 1px 1px 1px #eee;
+}
+#gbox_footer button:hover {
+	opacity: 0.9;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	filter: alpha(opacity=90);
+}
+#gbox_footer button.primary {
+	color: #fff;
+	font-weight: bold;
+	border: 1px solid #3b6e22;
+	background: #75ae5c;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#75ae5c), to(#649552));
+	background: -moz-linear-gradient(#75ae5c, #649552);
+	background: linear-gradient(#75ae5c, #649552);
+}
+#gbox_form input[type="text"] {
+	width: 95%;
+}
+#gbox_bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	background: #ddd;
+	opacity: 0.6;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
+	z-index: 10001;
+	cursor: pointer;
+}
+#gbox_loading {
+	font-size: 18px;
+	color: #aaa;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+#gbox input[type="text"] {
+	width: 95%;
+}
+
+
+/* new library update
+-------------------------- */
+ul#easymm{
+	list-style: none;
+}
+
+#easymm ul {
+	margin-left: 30px;
+	list-style: none;
+}
+.ns-helper {
+	margin: 5px 0;
+}
+.ns-row div {
+	top: 7px;
+}

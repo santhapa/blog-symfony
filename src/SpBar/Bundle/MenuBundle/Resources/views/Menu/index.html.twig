@@ -1,0 +1,136 @@
+{% extends('SpBarBlogBundle::Backend/back_base.html.twig') %}
+
+{% block body_container %}
+    <link href="{{ asset('menu/css/style.css') }}" rel="stylesheet">
+
+	<script src="{{ asset('menu/js/jquery-ui-1.10.3.custom.min.js') }}"></script>
+    <script src="{{ asset('menu/js/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="{{ asset('menu/js/jquery.mjs.nestedSortable.js') }}"></script>
+    <script src="{{ asset('menu/js/menu.js') }}"></script>
+
+    <script>
+        var _BASE_URL = 'index.html';
+        var current_group_id = 1;
+    </script>
+
+    <!-- Main content -->
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">
+							<strong>Menu Manager</strong>
+						</h3>
+					</div><!-- /.box-header -->
+					<div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-9">
+                                {% include 'SpBarMenuBundle:Menu:menu_content.html.twig' %}
+                            </div>
+                            <div class="col-xs-12 col-sm-3">
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">
+                                            <strong>Add To Menu</strong>
+                                        </h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <form action="http://demo.gawibowo.com/easymenu/emm/index.php?act=menu.add"id="form-add-menu" method="post" name="form-add-menu">
+                                                <p><label for="menu-title">Title</label> <input id=
+                                                "menu-title" name="title" type="text"></p>
+
+                                                <p><label for="menu-url">URL</label> <input id=
+                                                "menu-url" name="url" type="text"></p>
+
+                                                <p><label for="menu-class">Class</label> <input id=
+                                                "menu-class" name="class" type="text"></p>
+
+                                                <p class="buttons"><input name="group_id" type=
+                                                "hidden" value="1"> <button class=
+                                                "button green small" id="add-menu" type=
+                                                "submit">Add Menu Item</button></p>
+                                        </form>
+                                    </div>              
+                                </div><!-- /.box -->
+                                <div class="box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">
+                                            <strong>Preview</strong>
+                                        </h3>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <input type="submit" name="serialize" id="serialize" value="Serialize" />
+                                        <pre id="serializeOutput"></pre>
+
+                                        <input type="submit" name="toArray" id="toArray" value="To array" />
+                                        <pre id="toArrayOutput"></pre>
+
+                                        <input type="submit" name="toHierarchy" id="toHierarchy" value="To hierarchy" />
+                                        <pre id="toHierarchyOutput"></pre>
+                                    </div>              
+                                </div><!-- /.box -->
+                            </div>
+                        </div>
+					</div>
+				</div><!-- /.box -->
+			</div><!-- /.col -->
+		</div><!-- /.row -->
+	</section><!-- /.content -->
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('#serialize').click(function(){
+                serialized = $('#easymm').nestedSortable('serialize');
+                $('#serializeOutput').text(serialized+'\n\n');
+            });
+
+            $('#toHierarchy').click(function(e){
+                console.log('hierarchy');
+                hiered = $('#easymm').nestedSortable('toHierarchy', {startDepthCount: 0});
+                $('#toHierarchyOutput').text(hiered+'\n\n');
+                // console.log(hiered);
+                hiered = dump(hiered);
+                (typeof($('#toHierarchyOutput')[0].textContent) != 'undefined') ?
+                $('#toHierarchyOutput')[0].textContent = hiered : $('#toHierarchyOutput')[0].innerText = hiered;
+            });
+
+            $('#toArray').click(function(e){
+                console.log('array');
+                arraied = $('#easymm').nestedSortable('toArray', {startDepthCount: 0});
+                arraied = dump(arraied);
+                // console.log(arraied);
+
+                (typeof($('#toArrayOutput')[0].textContent) != 'undefined') ?
+                $('#toArrayOutput')[0].textContent = arraied : $('#toArrayOutput')[0].innerText = arraied;
+            });
+
+        });
+        function dump(arr,level) {
+            var dumped_text = "";
+            if(!level) level = 0;
+
+            //The padding given at the beginning of the line.
+            var level_padding = "";
+            for(var j=0;j<level+1;j++) level_padding += "    ";
+
+            if(typeof(arr) == 'object') { //Array/Hashes/Objects
+                for(var item in arr) {
+                    var value = arr[item];
+
+                    if(typeof(value) == 'object') { //If it is an array,
+                        dumped_text += level_padding + "'" + item + "' ...\n";
+                        dumped_text += dump(value,level+1);
+                    } else {
+                        dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+                    }
+                }
+            } else { //Strings/Chars/Numbers etc.
+                dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+            }
+            return dumped_text;
+        }
+    </script>
+{% endblock body_container %}
+	
