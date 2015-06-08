@@ -8,6 +8,13 @@ class MenuController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('SpBarMenuBundle:Menu:index.html.twig');
-    }
+    	$menuManager = $this->get('spbar.menu_manager');
+
+    	$menus = $menuManager->getMenu();
+
+        return $this->render('SpBarMenuBundle:Menu:index.html.twig', array(
+        	'page_title' => 'Menu',
+			'menus' => $menus,
+        ));
+    }	
 }

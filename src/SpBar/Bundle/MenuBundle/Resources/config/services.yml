@@ -1,4 +1,4 @@
 services:            
-    spbar.blog_menu_manager:
-        class: SpBar\Bundle\BlogBundle\Model\MenuManager
+    spbar.menu_manager:
+        class: SpBar\Bundle\MenuBundle\Model\MenuManager
         arguments: ["@doctrine.orm.entity_manager"]

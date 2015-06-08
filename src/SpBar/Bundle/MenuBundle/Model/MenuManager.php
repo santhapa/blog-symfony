@@ -1,9 +1,9 @@
 <?php
 
-namespace SpBar\Bundle\BlogBundle\Model;
+namespace SpBar\Bundle\MenuBundle\Model;
 
 use Doctrine\ORM\EntityManager;
-use SpBar\Bundle\BlogBundle\Entity\Menu;
+use SpBar\Bundle\MenuBundle\Entity\Menu;
 
 class MenuManager
 {
@@ -38,11 +38,11 @@ class MenuManager
 
 	public function getMenuById($id)
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Menu")->findOneBy(array('id'=>$id));
+		return $this->em->getRepository("SpBarMenuBundle:Menu")->findOneBy(array('id'=>$id));
 	}
 
 	public function getMenu()
 	{
-		return $this->em->getRepository("SpBarBlogBundle:Menu")->findBy(array(), array('order'=>'asc'));
+		return $this->em->getRepository("SpBarMenuBundle:Menu")->findBy(array(), array('order'=>'asc'));
 	}
 }

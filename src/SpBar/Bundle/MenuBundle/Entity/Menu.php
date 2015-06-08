@@ -1,13 +1,14 @@
 <?php
-namespace SpBar\Bundle\BlogBundle\Entity;
+namespace SpBar\Bundle\MenuBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\Validator\Constraints as Assert;
 /**
 * @ORM\Entity
-* @ORM\Table(name="spbar_blog_menu")
+* @ORM\Table(name="spbar_menu")
 */
 class Menu
 {
@@ -36,9 +37,15 @@ class Menu
     protected $order;
 
     /**
-    * @ORM\Column(name="parent_id", type="integer", nullable=true)
-    */
-    protected $parentId;
+     * @ORM\OneToMany(targetEntity="Menu", mappedBy="parent")
+     **/
+    private $child;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Menu", inversedBy="child")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     **/
+    private $parent;
 
     /**
     * @ORM\Column(type="integer", nullable=true)
@@ -51,6 +58,10 @@ class Menu
     */
     protected $menuType;
 
+    public function __construct() {
+        $this->child = new ArrayCollection();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -58,7 +69,7 @@ class Menu
 
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = ucfirst($name);
     }
 
     public function getName()
@@ -86,14 +97,24 @@ class Menu
         $this->order = $o;
     }
 
-    public function setParentId($pid)
+    public function setParent(Menu $p)
     {
-        $this->parentId = $pid;
+        $this->parent = $p;
     }
 
-    public function getParentId()
+    public function getParent()
     {
-        return $this->parentId;
+        return $this->parent;
+    }
+
+    public function setChild($id)
+    {
+        $this->child = $id;
+    }
+
+    public function getChild()
+    {
+        return $this->child;
     }
 
     public function setDepth($d)

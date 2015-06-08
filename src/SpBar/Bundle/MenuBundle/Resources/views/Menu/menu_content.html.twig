@@ -9,54 +9,62 @@
         "http://demo.gawibowo.com/easymenu/emm/index.php?act=menu.save_position" id="form-menu" method="post" name="form-menu">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <ul id="easymm">
-                    <li class="sortable" id="menu-0">
+                {% for menu in menus if menu.parent == null %}
+                    <li class="sortable" id="menu-{{ menu.id }}">
                         <div class="panel panel-default">
-                            <div class="panel-heading ns-title" role="tab" id="home-heading">
+                            <div class="panel-heading ns-title" role="tab" id="{{menu.id}}-heading">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h4 class="panel-title" id="home-title">
-                                            <span>Home</span>
+                                        <h4 class="panel-title" id="{{menu.id}}-title">
+                                            <span>{{ menu.name }}</span>
                                         </h4>
                                     </div>
                                     <div class="col-md-4">
                                         <span class="pull-right">
-                                            (Custom Link) &emsp;
-                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#home-list-group" aria-expanded="false" aria-controls="home-list-group">
+                                            ({{ menu.menuType }}) &emsp;
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{menu.id}}-list-group" aria-expanded="false" aria-controls="{{menu.id}}-list-group">
                                                 <i class="fa fa-caret-down"></i>
                                             </a>
                                         </span>                                    
                                     </div>
                                 </div>
                             </div>
-                            <div id="home-list-group" class="panel-collapse collapse" role="tabpanel" aria-labelledby="home-heading" aria-expanded="false">
+                            <div id="{{menu.id}}-list-group" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{menu.id}}-heading" aria-expanded="false">
                                 Home
                             </div>
                         </div>
                     </li>
-                    <li class="sortable" id="menu-1">
-                        <div class="panel panel-default">
-                            <div class="panel-heading ns-title" role="tab" id="contact-heading">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <h4 class="panel-title" id="contact-title">
-                                            <span>Contact</span>
-                                        </h4>
+                    {% if menu.child %}
+                    <ul>
+                        {% for child in menu.child %}
+                            <li class="sortable" id="menu-{{ child.id }}">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading ns-title" role="tab" id="{{child.id}}-heading">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h4 class="panel-title" id="{{child.id}}-title">
+                                                    <span>{{ child.name }}</span>
+                                                </h4>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="pull-right">
+                                                    ({{ child.menuType }}) &emsp;
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{child.id}}-list-group" aria-expanded="false" aria-controls="{{child.id}}-list-group">
+                                                        <i class="fa fa-caret-down"></i>
+                                                    </a>
+                                                </span>                                    
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <span class="pull-right">
-                                            (Custom Link) &emsp;
-                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#contact-list-group" aria-expanded="false" aria-controls="contact-list-group">
-                                                <i class="fa fa-caret-down"></i>
-                                            </a>
-                                        </span>                                    
+                                    <div id="{{child.id}}-list-group" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{child.id}}-heading" aria-expanded="false">
+                                        Home
                                     </div>
                                 </div>
-                            </div>
-                            <div id="contact-list-group" class="panel-collapse collapse" role="tabpanel" aria-labelledby="contact-heading" aria-expanded="false">
-                                Contact
-                            </div>
-                        </div>
-                    </li>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
                 </ul>
             </div>
 
