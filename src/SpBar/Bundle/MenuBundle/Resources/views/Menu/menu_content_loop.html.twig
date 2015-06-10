@@ -8,7 +8,7 @@
         <div class="col-xs-12 col-md-3 ns-actions">
             <span class="pull-right">
                 <em>({{ mmenu.menuType }})</em>&emsp;
-                <a class="edit-menu" href="#" title="Edit"><img alt="Edit" src="{{ asset('menu/images/edit.png')}}"></a>
+                <a class="edit-menu" href="{{ url('sp_menu_edit', {'id' : mmenu.id}) }}" title="Edit"><img alt="Edit" src="{{ asset('menu/images/edit.png')}}"></a>
                 <a class="delete-menu" href="#" title="Delete"><img alt="Delete" src="{{ asset("menu/images/cross.png")}}"></a><input name="menu_id"type="hidden" value="1">
             </span>
         </div>

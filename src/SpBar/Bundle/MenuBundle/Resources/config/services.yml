@@ -2,3 +2,8 @@ services:
     spbar.menu_manager:
         class: SpBar\Bundle\MenuBundle\Model\MenuManager
         arguments: ["@doctrine.orm.entity_manager"]
+
+    spbar.menu_form_type:
+        class: SpBar\Bundle\MenuBundle\Form\Type\MenuFormType
+        tags:
+            - { name: form.type, alias: spbar_menu }

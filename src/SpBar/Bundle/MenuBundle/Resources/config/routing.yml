@@ -1,3 +1,7 @@
 sp_menu_index:
     path:     /admin/menu
     defaults: { _controller: SpBarMenuBundle:Menu:index }
+
+sp_menu_edit:
+    path:     /admin/menu/edit/{id}
+    defaults: { _controller: SpBarMenuBundle:Menu:edit }

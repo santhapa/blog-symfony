@@ -132,11 +132,15 @@ jQuery(function($) {
 	------------------------------------------------------------------------- */
 	$('body').on('click', '.edit-menu', function() {
 		var menu_id = $(this).next().next().val();
-		var menu_div = $(this).parent().parent();
+		var menu_div = $(this).parent().parent().parent();
 		var li = $(this).closest('li');
+		var path = $(this).attr('href');
+		console.log(path);
+		console.log(menu_div);
+
 		gbox.show({
 			type: 'ajax',
-			url: site_url('menu.edit&id=' + menu_id),
+			url: path,
 			buttons: {
 				'Save': function() {
 					$.ajax({
@@ -144,21 +148,27 @@ jQuery(function($) {
 						url: $('#gbox form').attr('action'),
 						data: $('#gbox form').serialize(),
 						success: function(data) {
-							switch (data.status) {
-								case 1:
-									gbox.hide();
-									menu_div.find('.ns-title').html(data.menu.title);
-									menu_div.find('.ns-url').html(data.menu.url);
-									menu_div.find('.ns-class').html(data.menu.klass);
-									break;
-								case 2:
-									gbox.hide();
-									break;
-								case 4:
-									gbox.hide();
-									li.remove();
-									break;
-							}
+							console.log("success"+ data);
+							// switch (data.status) {
+							// 	case '1':
+							// 		console.log('1 success');
+							// 		gbox.hide();
+							// 		menu_div.find('.ns-title').html(data.menu);
+							// 		// menu_div.find('.ns-url').html(data.menu.url);
+							// 		// menu_div.find('.ns-class').html(data.menu.klass);
+							// 		break;
+							// 	case '2':
+							// 		console.log('2 success');
+							// 		gbox.hide();
+							// 		break;
+							// 	case '4':
+							// 		console.log('4 success');
+							// 		gbox.hide();
+							// 		li.remove();
+							// 		break;
+							// }
+							gbox.hide();
+
 						}
 					});
 				},

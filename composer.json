@@ -28,7 +28,10 @@
         "helios-ag/fm-elfinder-bundle": "5.0.3",
         "hwi/oauth-bundle": "0.4.*@dev",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "facebook/php-sdk-v4": "4.0.*"
+        "facebook/php-sdk-v4": "4.0.*",
+        "friendsofsymfony/rest-bundle": "@dev",
+        "jms/serializer-bundle": "@dev",
+        "nelmio/api-doc-bundle": "@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
