@@ -1,0 +1,20 @@
+sp_api_menu_list:
+    type: rest
+    pattern: /list/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:list, _format:json }
+    requirements:
+       _method: GET
+
+sp_api_menu_new:
+    type: rest
+    pattern: /new/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:new, _format:json }
+    requirements:
+       _method: POST
+
+sp_api_menu_edit:
+    type: rest
+    pattern: /edit/{id}/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:edit, _format:json }
+    requirements:
+       _method: PUT

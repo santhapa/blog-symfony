@@ -34,7 +34,7 @@ jQuery(function($) {
 			var winWidth = $(window).width();
 			var box =
 				'<div id="gbox">' +
-					'<div id="gbox_content"></div>' +
+					'<span id="gbox-error"></span><div id="gbox_content"></div>' +
 				'</div>' +
 				'<div id="gbox_bg"></div>';
 
@@ -136,7 +136,6 @@ jQuery(function($) {
 		var li = $(this).closest('li');
 		var path = $(this).attr('href');
 		console.log(path);
-		console.log(menu_div);
 
 		gbox.show({
 			type: 'ajax',
@@ -144,35 +143,23 @@ jQuery(function($) {
 			buttons: {
 				'Save': function() {
 					$.ajax({
-						type: 'POST',
+						type: 'PUT',
 						url: $('#gbox form').attr('action'),
 						data: $('#gbox form').serialize(),
 						success: function(data) {
-							console.log("success"+ data);
-							// switch (data.status) {
-							// 	case '1':
-							// 		console.log('1 success');
-							// 		gbox.hide();
-							// 		menu_div.find('.ns-title').html(data.menu);
-							// 		// menu_div.find('.ns-url').html(data.menu.url);
-							// 		// menu_div.find('.ns-class').html(data.menu.klass);
-							// 		break;
-							// 	case '2':
-							// 		console.log('2 success');
-							// 		gbox.hide();
-							// 		break;
-							// 	case '4':
-							// 		console.log('4 success');
-							// 		gbox.hide();
-							// 		li.remove();
-							// 		break;
-							// }
+							menu_div.find('.ns-title').html(data.name);
+							$('#gbox #gbox-error').html('');
 							gbox.hide();
-
+						},
+						error: function(){
+							$('#gbox #gbox-error').html('Please recheck and submit.');
 						}
 					});
 				},
-				'Cancel': gbox.hide
+				'Cancel': function(){
+					$('#gbox #gbox-error').html('');
+					gbox.hide();
+				}
 			}
 		});
 		return false;

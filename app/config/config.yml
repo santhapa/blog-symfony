@@ -112,6 +112,14 @@ fos_user:
         form:
             type: spbar_user_change_password
 
+#Fos Rest configuration
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: true
+    view:
+        view_response_listener: 'force'
+
 #Knp Menu Bundle Configuration
 #default config(optional)
 knp_menu:

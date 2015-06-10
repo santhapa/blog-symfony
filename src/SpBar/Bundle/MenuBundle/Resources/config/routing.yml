@@ -1,7 +1,12 @@
 sp_menu_index:
-    path:     /admin/menu
+    path:     /admin/menu/
     defaults: { _controller: SpBarMenuBundle:Menu:index }
 
 sp_menu_edit:
-    path:     /admin/menu/edit/{id}
+    path:     /admin/menu/edit/{id}/
     defaults: { _controller: SpBarMenuBundle:Menu:edit }
+
+sp_api_menu:
+    type: rest
+    resource: "@SpBarMenuBundle/Resources/config/api_routing.yml"
+    prefix: /admin/menu/api

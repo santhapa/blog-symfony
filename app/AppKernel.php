@@ -24,6 +24,9 @@ class AppKernel extends Kernel
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new FM\ElfinderBundle\FMElfinderBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             // new JMS\SerializerBundle\JMSSerializerBundle(),
 
             // new Sonata\CoreBundle\SonataCoreBundle(),

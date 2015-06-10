@@ -188,6 +188,10 @@ span.error {
 	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+#gbox #gbox-error{
+	color: #F23E3E;	
+}
+
 #gbox_header {
 	padding: 5px 10px;
 	color: #000;
