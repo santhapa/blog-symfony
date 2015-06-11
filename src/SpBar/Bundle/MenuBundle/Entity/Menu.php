@@ -53,7 +53,7 @@ class Menu
     protected $depth;
     
     /**
-    * @Assert\NotBlank(message="Url cannot be empty")
+    * @Assert\NotBlank(message="Menu Type cannot be empty")
     * @ORM\Column(name="menu_type", type="string")
     */
     protected $menuType;
