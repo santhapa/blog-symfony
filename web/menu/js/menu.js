@@ -169,19 +169,22 @@ jQuery(function($) {
 	------------------------------------------------------------------------- */
 	$('body').on('click', '.delete-menu', function() {
 		var li = $(this).closest('li');
-		var param = { id : $(this).next().val() };
-		var menu_title = $(this).parent().parent().children('.ns-title').text();
+		var path = $(this).attr('href');
+		var menu_title = $(this).parent().parent().parent().children('.ns-title').text();
 		gbox.show({
 			content: '<h2>Delete Menu Item</h2>Are you sure you want to delete this menu item?<br><b>'
 				+ menu_title +
 				'</b><br><br>This will also delete all sub items.',
 			buttons: {
 				'Yes': function() {
-					$.post(site_url('menu.delete'), param, function(data) {
-						if (data.success) {
+					$.ajax({
+						type: 'POST',
+						url: path,
+						success: function() {
 							gbox.hide();
 							li.remove();
-						} else {
+						},
+						error: function(){
 							gbox.show({
 								content: 'Failed to delete this menu item.'
 							});
@@ -196,10 +199,13 @@ jQuery(function($) {
 
 	/* add menu item
 	------------------------------------------------------------------------- */
-	$('#form-add-menu').submit(function() {
-		if ($('#menu-title').val() == '') {
-			$('#menu-title').focus();
-		} else {
+	$('#form-add-custom-menu').submit(function() {
+		if ($('.custom-menu-name').val() == '') {
+			$('.custom-menu-name').focus();
+		}else if ($('.custom-menu-url').val() == '') {
+			$('.custom-menu-url').focus();
+		}else {
+			console.log($(this).serialize());
 			$.ajax({
 				type: 'POST',
 				url: $(this).attr('action'),
@@ -211,22 +217,24 @@ jQuery(function($) {
 					});
 				},
 				success: function(data) {
-					switch (data.status) {
-						case 1:
-							$('#form-add-menu')[0].reset();
-							$('#easymm')
-								.append(data.li);
-							break;
-						case 2:
-							gbox.show({
-								content: data.msg,
-								autohide: 1000
-							});
-							break;
-						case 3:
-							$('#menu-title').val('').focus();
-							break;
-					}
+					$('#form-add-custom-menu')[0].reset();
+					console.log('success');
+					// switch (data.status) {
+					// 	case 1:
+					// 		$('#form-add-custom-menu')[0].reset();
+					// 		$('#easymm')
+					// 			.append(data.li);
+					// 		break;
+					// 	case 2:
+					// 		gbox.show({
+					// 			content: data.msg,
+					// 			autohide: 1000
+					// 		});
+					// 		break;
+					// 	case 3:
+					// 		$('#menu-title').val('').focus();
+					// 		break;
+					// }
 				}
 			});
 		}

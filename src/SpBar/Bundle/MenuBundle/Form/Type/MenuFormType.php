@@ -11,16 +11,15 @@ class MenuFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', 'text', array(
-                        'label' => 'Menu Name',
+                        'label' => 'Menu Title',
                         'required'=>true
                     ))
-                ->add('url', 'text', array(
+                ->add('url', 'url', array(
                         'label' => 'Url',
                         'required'=>true
                     ))
-                ->add('menuType', 'text', array(
-                        'label' => 'Menu Type',
-                        'read_only'=>true,
+                ->add('menuType', 'hidden', array(
+                        'label' => 'Type',
                         'required'=>true
                     ))
 

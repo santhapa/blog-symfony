@@ -29,27 +29,81 @@
                                 {% include 'SpBarMenuBundle:Menu:menu_content.html.twig' %}
                             </div>
                             <div class="col-xs-12 col-sm-3">
-                                <div class="box">
+                                <div class="box collapsed-box">
                                     <div class="box-header">
                                         <h3 class="box-title">
-                                            <strong>Add To Menu</strong>
+                                            <strong>Categories</strong>
                                         </h3>
+                                        <div class="box-tools pull-right">
+                                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                        </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
-                                        <form action="http://demo.gawibowo.com/easymenu/emm/index.php?act=menu.add"id="form-add-menu" method="post" name="form-add-menu">
-                                                <p><label for="menu-title">Title</label> <input id=
-                                                "menu-title" name="title" type="text"></p>
+                                        <form>
+                                        {% for category in categorys %}
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="{{ path('sp_blog_front_home_category', {'cat_slug' : category.slug }) }}" name="cat-{{ category.id }}"> {{ category.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                        </form>
+                                    </div>
+                                </div>
 
-                                                <p><label for="menu-url">URL</label> <input id=
-                                                "menu-url" name="url" type="text"></p>
+                                <div class="box collapsed-box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">
+                                            <strong>Pages</strong>
+                                        </h3>
+                                        <div class="box-tools pull-right">
+                                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <form>
+                                        {% for page in pages %}
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="{{ path('sp_blog_front_home_page', {'page_slug' : page.slug }) }}" name="page-{{ page.id }}"> {{ page.title }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                        </form>
+                                    </div>
+                                </div>  
 
-                                                <p><label for="menu-class">Class</label> <input id=
-                                                "menu-class" name="class" type="text"></p>
+                                <div class="box collapsed-box">
+                                    <div class="box-header">
+                                        <h3 class="box-title">
+                                            <strong>Custom URL</strong>
+                                        </h3>
+                                        <div class="box-tools pull-right">
+                                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div><!-- /.box-header -->
+                                    <div class="box-body">
+                                        <form action="{{ path('sp_api_menu_new') }}" id="form-add-custom-menu" method="post" name="form-add-custom-menu">
+                                            <div class="form-group">
+                                                {{ form_label(form.name) }}
+                                                {{form_widget(form.name, {"attr" : {"class": "form-control custom-menu-name"}})}}
+                                                <!-- <label for="menu-name">Name</label> 
+                                                <input id="menu-name" name="name" type="text" class="form-control"> -->
+                                            </div>
 
-                                                <p class="buttons"><input name="group_id" type=
-                                                "hidden" value="1"> <button class=
-                                                "button green small" id="add-menu" type=
-                                                "submit">Add Menu Item</button></p>
+                                            <div class="form-group">
+                                                {{ form_label(form.url) }}
+                                                {{form_widget(form.url, {"attr" : {"value" : "http://", "class": "form-control custom-menu-url"}})}}
+<!-- 
+                                                <label for="menu-url">URL</label> 
+                                                <input id="menu-url" name="url" type="url" value="http://" class="form-control"> -->
+                                            </div>
+                                            <div class="form-group">
+                                                {{form_widget(form.menuType, {"attr" : {"value" : "Custom", "class": "form-control"}})}}
+
+                                                <!-- <input type="hidden" name="type" value="Custom"> -->
+                                                <button type="submit" id="add-menu" class="btn btn-info">Add To Menu</button>
+                                            </div>
                                         </form>
                                     </div>              
                                 </div><!-- /.box -->

@@ -18,3 +18,10 @@ sp_api_menu_edit:
     defaults: { _controller:SpBarMenuBundle:Api/Menu:edit, _format:json }
     requirements:
        _method: PUT
+
+sp_api_menu_delete:
+    type: rest
+    pattern: /delete/{id}/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:delete, _format:json }
+    requirements:
+       _method: POST

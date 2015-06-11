@@ -11,12 +11,24 @@ class MenuController extends Controller
     public function indexAction()
     {
     	$menuManager = $this->get('spbar.menu_manager');
-
     	$menus = $menuManager->getMenu();
+
+    	$categoryManager = $this->get('spbar.blog_category_manager');
+    	$categorys = $categoryManager->getCategorys();
+
+    	$pageManager = $this->get('spbar.blog_page_manager');
+    	$pages = $pageManager->getPages();
+
+    	$menu = $menuManager->createMenu();
+        $form = $this->createForm('spbar_menu', $menu);
+
 
         return $this->render('SpBarMenuBundle:Menu:index.html.twig', array(
         	'page_title' => 'Menu',
 			'menus' => $menus,
+			'categorys'=> $categorys,
+			'pages'=> $pages,
+			'form' => $form->createView()
         ));
     }
 

@@ -110,4 +110,30 @@ class MenuController extends FOSRestController
             'menu' => $menu,
         );
     }
+
+    /**
+     * Deletes the Menu of submitted id.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Delete a Menu for a given id",
+     *   output = "Rest\ApiBundle\Entity\Post",
+     *   statusCodes = {
+     *     204 = "Returned when deleted successfully",
+     *     404 = "Returned when the post is not found"
+     *   }
+     * )
+     * Delete action
+     * @var integer $id Id of the entity
+     * @return View
+     */
+    public function deleteAction($id)
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+        $menu = $menuManager->getMenuById($id);
+
+        $menuManager-> removeMenu($menu);
+
+        return $this->view(null, Codes::HTTP_NO_CONTENT);
+    }
 }
