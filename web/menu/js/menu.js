@@ -210,25 +210,8 @@ jQuery(function($) {
 				url: $(this).attr('action'),
 				data: $(this).serialize(),
 				success: function(data) {
-					console.log(data);
 					$('#form-add-custom-menu')[0].reset();
 					$('#easymm').append(data.li);
-					// switch (data.status) {
-					// 	case 1:
-					// 		$('#form-add-custom-menu')[0].reset();
-					// 		$('#easymm')
-					// 			.append(data.li);
-					// 		break;
-					// 	case 2:
-					// 		gbox.show({
-					// 			content: data.msg,
-					// 			autohide: 1000
-					// 		});
-					// 		break;
-					// 	case 3:
-					// 		$('#menu-title').val('').focus();
-					// 		break;
-					// }
 				},
 				error: function() {
 					gbox.show({
