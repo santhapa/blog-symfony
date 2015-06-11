@@ -32,9 +32,9 @@ class Menu
     protected $url;
 
     /**
-	* @ORM\Column(type="integer", nullable=true)
+	* @ORM\Column(type="integer", name="menu_order", nullable=true)
 	*/
-    protected $order;
+    protected $menuOrder;
 
     /**
      * @ORM\OneToMany(targetEntity="Menu", mappedBy="parent")
@@ -87,14 +87,14 @@ class Menu
         return $this->url;
     }
 
-    public function getOrder()
+    public function getMenuOrder()
     {
-        return $this->order;
+        return $this->menuOrder;
     }
 
-    public function setOrder($o)
+    public function setMenuOrder($o)
     {
-        $this->order = $o;
+        $this->menuOrder = $o;
     }
 
     public function setParent(Menu $p)

@@ -43,6 +43,6 @@ class MenuManager
 
 	public function getMenu()
 	{
-		return $this->em->getRepository("SpBarMenuBundle:Menu")->findBy(array(), array('order'=>'asc'));
+		return $this->em->getRepository("SpBarMenuBundle:Menu")->findBy(array(), array('menuOrder'=>'asc'));
 	}
 }
