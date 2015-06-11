@@ -174,7 +174,7 @@ jQuery(function($) {
 		gbox.show({
 			content: '<h2>Delete Menu Item</h2>Are you sure you want to delete this menu item?<br><b>'
 				+ menu_title +
-				'</b><br><br>This will also delete all sub items.',
+				'</b><br><br>Your menu order might be lost',
 			buttons: {
 				'Yes': function() {
 					$.ajax({
@@ -205,20 +205,14 @@ jQuery(function($) {
 		}else if ($('.custom-menu-url').val() == '') {
 			$('.custom-menu-url').focus();
 		}else {
-			console.log($(this).serialize());
 			$.ajax({
 				type: 'POST',
 				url: $(this).attr('action'),
 				data: $(this).serialize(),
-				error: function() {
-					gbox.show({
-						content: 'Add menu item error. Please try again.',
-						autohide: 1000
-					});
-				},
 				success: function(data) {
+					console.log(data);
 					$('#form-add-custom-menu')[0].reset();
-					console.log('success');
+					$('#easymm').append(data.li);
 					// switch (data.status) {
 					// 	case 1:
 					// 		$('#form-add-custom-menu')[0].reset();
@@ -235,6 +229,12 @@ jQuery(function($) {
 					// 		$('#menu-title').val('').focus();
 					// 		break;
 					// }
+				},
+				error: function() {
+					gbox.show({
+						content: 'Add menu item error. Please try again.',
+						autohide: 1000
+					});
 				}
 			});
 		}

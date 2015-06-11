@@ -78,7 +78,20 @@ class MenuController extends FOSRestController
         if ($form->isValid()) {
             $menuManager->updateMenu($menu);
 
-            return $this->view($menu, Codes::HTTP_CREATED);
+            $li = '<li class="sortable" id="menu-'. $menu->getId() .'">
+                    <div class="row ns-row">
+                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
+                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
+                            <em>'. $menu->getMenuType() .'</em>&emsp;
+                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
+                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
+                        </span></div>
+                    </div>
+                </li>';
+
+            $ret = array('menu'=>$menu, 'li'=> $li);
+
+            return $this->view($ret, Codes::HTTP_CREATED);
         }
 
         return array(
