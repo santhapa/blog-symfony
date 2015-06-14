@@ -149,4 +149,38 @@ class MenuController extends FOSRestController
 
         return $this->view(null, Codes::HTTP_NO_CONTENT);
     }
+
+
+     /**
+     * Saves a menu order - works only with nested sortable
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Save menu order.",
+     *   statusCodes = {
+     *     200 = "Returned when saved successfully",
+     *     400 = "Returned when there  is error"
+     *   }
+     * )
+     *
+     * @var Request $request
+     * @return View|array
+     */
+    
+    public function saveOrderAction(Request $request)
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+
+        if($request->getMethod() == 'POST'){
+            $menus = $this->get('request')->request->all();
+
+            foreach ($menus as $mm) {
+                foreach ($mm as $key => $value) {
+                    $mmm = $key;
+                }
+            }
+
+            
+            return $this->view($mmm, Codes::HTTP_OK);
+        }
+    }
 }

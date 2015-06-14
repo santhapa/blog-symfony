@@ -5,7 +5,7 @@
         </h3>
     </div><!-- /.box-header -->
     <div class="box-body">
-        <form action="#" id="form-menu" method="post" name="form-menu">
+        <form action="{{ path('sp_api_menu_saveOrder') }}" id="form-spbar-menu" method="post" name="form-spbar-menu">
             <ul id="easymm">
             {% for menu in menus if menu.parent == null %}
                 {% include 'SpBarMenuBundle:Menu:menu_content_loop.html.twig' with {'menu' : menu} %}
@@ -27,8 +27,7 @@
             </ul>
 
             <div id="ns-footer">
-                <button class="button green small" id="btn-save-menu"
-                type="submit">Save Menu</button>
+                <button class="btn btn-info" id="btn-save-menu" type="submit">Save Menu Order</button>
             </div>
         </form>
         <div id="loading">

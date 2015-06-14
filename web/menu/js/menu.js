@@ -284,8 +284,9 @@ jQuery(function($) {
 	/* update menu / save order
 	------------------------------------------------------------------------- */
 	$('#btn-save-menu').attr('disabled', true);
-	$('#form-menu').submit(function() {
+	$('#form-spbar-menu').submit(function() {
 		$('#btn-save-menu').attr('disabled', true);
+		console.log(menu_serialized);
 		$.ajax({
 			type: 'POST',
 			url: $(this).attr('action'),
@@ -298,6 +299,7 @@ jQuery(function($) {
 				});
 			},
 			success: function(data) {
+				console.log(data);
 				gbox.show({
 					content: '<h2>Success</h2>Menu has been saved',
 					autohide: 1000

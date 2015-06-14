@@ -12,6 +12,13 @@ sp_api_menu_new:
     requirements:
        _method: POST
 
+sp_api_menu_saveOrder:
+    type: rest
+    pattern: /save-order/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:saveOrder, _format:json }
+    requirements:
+       _method: POST
+
 sp_api_menu_edit:
     type: rest
     pattern: /edit/{id}/
