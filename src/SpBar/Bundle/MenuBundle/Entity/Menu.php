@@ -46,11 +46,6 @@ class Menu
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      **/
     private $parent;
-
-    /**
-    * @ORM\Column(type="integer", nullable=true)
-    */
-    protected $depth;
     
     /**
     * @Assert\NotBlank(message="Menu Type cannot be empty")
@@ -97,7 +92,7 @@ class Menu
         $this->menuOrder = $o;
     }
 
-    public function setParent(Menu $p)
+    public function setParent(Menu $p = null)
     {
         $this->parent = $p;
     }
@@ -115,16 +110,6 @@ class Menu
     public function getChild()
     {
         return $this->child;
-    }
-
-    public function setDepth($d)
-    {
-        $this->depth = $d;
-    }
-
-    public function getDepth()
-    {
-        return $this->depth;
     }
 
     public function setMenuType($mt)

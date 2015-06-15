@@ -6,23 +6,24 @@
     </div><!-- /.box-header -->
     <div class="box-body">
         <form action="{{ path('sp_api_menu_saveOrder') }}" id="form-spbar-menu" method="post" name="form-spbar-menu">
-            <ul id="easymm">
+            <ul id="easymm" class="ui-sortable">
             {% for menu in menus if menu.parent == null %}
                 {% include 'SpBarMenuBundle:Menu:menu_content_loop.html.twig' with {'menu' : menu} %}
-                {% if menu.child %}
-                    <ul>
-                        {% for child in menu.child %}
-                            {% include 'SpBarMenuBundle:Menu:menu_content_loop.html.twig' with {'menu' : child} %}
-                            {% if child.child %}
-                                <ul>
-                                    {% for cchild in child.child %}
-                                        {% include 'SpBarMenuBundle:Menu:menu_content_loop.html.twig' with {'menu' : cchild} %}
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        {% endfor %}               
-                    </ul>   
+                {% if menu.child|length  %}
+                <ul>
+                    {% for cchild in menu.child %}
+                        {% include 'SpBarMenuBundle:Menu:menu_content_loop.html.twig' with {'menu' : cchild} %}
+                        {% if cchild.child|length %}
+                        <ul>
+                            {% for ccchild in cchild.child %}
+                                {% include 'SpBarMenuBundle:Menu:menu_content_loop.html.twig' with {'menu' : ccchild} %}
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    {% endfor %} 
+                </ul>
                 {% endif %}
+
             {% endfor %}
             </ul>
 

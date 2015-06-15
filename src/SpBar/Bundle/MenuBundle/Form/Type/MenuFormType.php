@@ -18,12 +18,7 @@ class MenuFormType extends AbstractType
                         'label' => 'Url',
                         'required'=>true
                     ))
-                ->add('menuType', 'hidden', array(
-                        'label' => 'Type',
-                        'required'=>true
-                    ))
-
-            ;
+                ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -50,9 +50,8 @@ class MenuController extends FOSRestController
         );
     }
 
-
     /**
-     * Create a menu
+     * Create a menu with custom url
      * @ApiDoc(
      *   resource = true,
      *   description = "Creates a new menu.",
@@ -72,10 +71,12 @@ class MenuController extends FOSRestController
         $menuManager = $this->get('spbar.menu_manager');
         $menu = $menuManager->createMenu();
 
+        $menu->setMenuType('Custom');
         $form = $this->createForm('spbar_menu', $menu);
         $form->bind($request);
 
         if ($form->isValid()) {
+            $menu->setMenuType('Custom');
             $menuManager->updateMenu($menu);
 
             $li = '<li class="sortable" id="menu-'. $menu->getId() .'">
@@ -98,6 +99,80 @@ class MenuController extends FOSRestController
             'form' => $form,
             'menu' => $menu
         );
+    }
+
+    public function newCategoryAction(Request $request)
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+
+        if($request->getMethod() == 'POST' && !empty($request->request->get('category_menu'))){
+            $cat_selected = $request->request->get('category_menu');
+            $categoryManager = $this->get('spbar.blog_category_manager');
+
+            $li = '';
+            foreach ($cat_selected as $cat_slug) {
+                $cat = $categoryManager->getCategoryBySlug($cat_slug);
+                $menu = $menuManager->createMenu();
+
+                $menu->setName($cat->getName());
+                $menu->setUrl($this->generateUrl('sp_blog_front_home_category', array('cat_slug'=> $cat_slug)));
+                $menu->setMenuType('Category');
+
+                $menuManager->updateMenu($menu);
+
+                $li .= '<li class="sortable" id="menu-'. $menu->getId() .'">
+                    <div class="row ns-row">
+                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
+                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
+                            <em>('. $menu->getMenuType() .')</em>&emsp;
+                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
+                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
+                        </span></div>
+                    </div>
+                </li>';
+
+            }
+            $ret = array('menu'=>$menu, 'li'=> $li);
+
+            return $this->view($ret, Codes::HTTP_CREATED);
+        }
+    }
+
+    public function newPageAction(Request $request)
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+
+        if($request->getMethod() == 'POST' && !empty($request->request->get('page_menu'))){
+            $page_selected = $request->request->get('page_menu');
+            $pageManager = $this->get('spbar.blog_page_manager');
+
+            $li = '';
+            foreach ($page_selected as $page_slug) {
+                $page = $pageManager->getPageBySlug($page_slug);
+                $menu = $menuManager->createMenu();
+                
+                $menu->setName($page->getTitle());
+                $menu->setUrl($this->generateUrl('sp_blog_front_home_page', array('page_slug'=> $page_slug)));
+                $menu->setMenuType('Page');
+
+                $menuManager->updateMenu($menu);
+
+                $li .= '<li class="sortable" id="menu-'. $menu->getId() .'">
+                    <div class="row ns-row">
+                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
+                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
+                            <em>('. $menu->getMenuType() .')</em>&emsp;
+                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
+                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
+                        </span></div>
+                    </div>
+                </li>';
+
+            }
+            $ret = array('menu'=>$menu, 'li'=> $li);
+
+            return $this->view($ret, Codes::HTTP_CREATED);
+        }
     }
 
     /**
@@ -174,13 +249,24 @@ class MenuController extends FOSRestController
             $menus = $this->get('request')->request->all();
 
             foreach ($menus as $mm) {
-                foreach ($mm as $key => $value) {
-                    $mmm = $key;
-                }
+                $i= 0;
+                foreach ($mm as $id => $parent) {
+                    $i++;
+                    $menu = $menuManager->getMenuById($id);
+                    $menu->setMenuOrder($i);
+                    if($parent != 'null' ){
+                        $menu->setParent($menuManager->getMenuById($parent));
+                        $hello = $parent;
+                    }else{
+                        $hello= $parent;
+                        $menu->setParent(null);
+                    }
+                    $menuManager->updateMenu($menu, false);
+                }   
             }
+            $this->getDoctrine()->getManager()->flush(); 
 
-            
-            return $this->view($mmm, Codes::HTTP_OK);
+            return $this->view('OK' , Codes::HTTP_OK);
         }
     }
 }

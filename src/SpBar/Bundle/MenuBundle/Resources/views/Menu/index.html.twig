@@ -39,14 +39,17 @@
                                         </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
-                                        <form>
-                                        {% for category in categorys %}
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="{{ path('sp_blog_front_home_category', {'cat_slug' : category.slug }) }}" name="cat-{{ category.id }}"> {{ category.name }}
-                                                </label>
+                                        <form id="form-add-category-menu" action="{{ path('sp_api_menu_new_category') }}" method="POST">
+                                            {% for category in categorys %}
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" value="{{ category.slug }}" name="category_menu[]"> {{ category.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="form-group">
+                                                <button type="submit" id="add-category-menu" class="btn btn-info">Add To Menu</button>
                                             </div>
-                                        {% endfor %}
                                         </form>
                                     </div>
                                 </div>
@@ -61,25 +64,28 @@
                                         </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
-                                        <form>
-                                        {% for page in pages %}
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="{{ path('sp_blog_front_home_page', {'page_slug' : page.slug }) }}" name="page-{{ page.id }}"> {{ page.title }}
-                                                </label>
+                                        <form id="form-add-page-menu" action="{{ path('sp_api_menu_new_page') }}" method="POST">
+                                            {% for page in pages %}
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" value="{{ page.slug }}" name="page_menu[]"> {{ page.title }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="form-group">
+                                                <button type="submit" id="add-page-menu" class="btn btn-info">Add To Menu</button>
                                             </div>
-                                        {% endfor %}
                                         </form>
                                     </div>
                                 </div>  
 
-                                <div class="box collapsed-box">
+                                <div class="box">
                                     <div class="box-header">
                                         <h3 class="box-title">
                                             <strong>Custom URL</strong>
                                         </h3>
                                         <div class="box-tools pull-right">
-                                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                         </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
@@ -87,26 +93,19 @@
                                             <div class="form-group">
                                                 {{ form_label(form.name) }}
                                                 {{form_widget(form.name, {"attr" : {"class": "form-control custom-menu-name"}})}}
-                                                <!-- <label for="menu-name">Name</label> 
-                                                <input id="menu-name" name="name" type="text" class="form-control"> -->
                                             </div>
 
                                             <div class="form-group">
                                                 {{ form_label(form.url) }}
                                                 {{form_widget(form.url, {"attr" : {"value" : "http://", "class": "form-control custom-menu-url"}})}}
-<!-- 
-                                                <label for="menu-url">URL</label> 
-                                                <input id="menu-url" name="url" type="url" value="http://" class="form-control"> -->
                                             </div>
                                             <div class="form-group">
-                                                {{form_widget(form.menuType, {"attr" : {"value" : "Custom", "class": "form-control"}})}}
-
-                                                <!-- <input type="hidden" name="type" value="Custom"> -->
                                                 <button type="submit" id="add-menu" class="btn btn-info">Add To Menu</button>
                                             </div>
                                         </form>
                                     </div>              
                                 </div><!-- /.box -->
+                                {# 
                                 <div class="box">
                                     <div class="box-header">
                                         <h3 class="box-title">
@@ -124,6 +123,7 @@
                                         <pre id="toHierarchyOutput"></pre>
                                     </div>              
                                 </div><!-- /.box -->
+                                 #}
                             </div>
                         </div>
 					</div>

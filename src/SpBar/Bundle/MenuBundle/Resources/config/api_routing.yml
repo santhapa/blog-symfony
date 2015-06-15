@@ -12,6 +12,20 @@ sp_api_menu_new:
     requirements:
        _method: POST
 
+sp_api_menu_new_category:
+    type: rest
+    pattern: /new/category/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:newCategory, _format:json }
+    requirements:
+       _method: POST
+
+sp_api_menu_new_page:
+    type: rest
+    pattern: /new/page/
+    defaults: { _controller:SpBarMenuBundle:Api/Menu:newPage, _format:json }
+    requirements:
+       _method: POST
+
 sp_api_menu_saveOrder:
     type: rest
     pattern: /save-order/

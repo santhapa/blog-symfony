@@ -19,7 +19,9 @@ class MenuController extends Controller
     	$pageManager = $this->get('spbar.blog_page_manager');
     	$pages = $pageManager->getPages();
 
+    	//form for adding custom menu type
     	$menu = $menuManager->createMenu();
+    	$menu->setMenuType('Custom');
         $form = $this->createForm('spbar_menu', $menu);
 
 

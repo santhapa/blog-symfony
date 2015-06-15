@@ -197,7 +197,7 @@ jQuery(function($) {
 		return false;
 	});
 
-	/* add menu item
+	/* add custom menu item
 	------------------------------------------------------------------------- */
 	$('#form-add-custom-menu').submit(function() {
 		if ($('.custom-menu-name').val() == '') {
@@ -221,6 +221,50 @@ jQuery(function($) {
 				}
 			});
 		}
+		return false;
+	});
+
+	/* add category menu item
+	------------------------------------------------------------------------- */
+	$('#form-add-category-menu').submit(function() {
+		$.ajax({
+			type: 'POST',
+			url: $(this).attr('action'),
+			data: $(this).serialize(),
+			success: function(data) {
+				console.log(data);
+				$('#form-add-category-menu')[0].reset();
+				$('#easymm').append(data.li);
+			},
+			error: function() {
+				gbox.show({
+					content: 'Add menu item error. Please try again.',
+					autohide: 1000
+				});
+			}
+		});
+		return false;
+	});
+
+	/* add category menu item
+	------------------------------------------------------------------------- */
+	$('#form-add-page-menu').submit(function() {
+		$.ajax({
+			type: 'POST',
+			url: $(this).attr('action'),
+			data: $(this).serialize(),
+			success: function(data) {
+				console.log(data);
+				$('#form-add-page-menu')[0].reset();
+				$('#easymm').append(data.li);
+			},
+			error: function() {
+				gbox.show({
+					content: 'Add menu item error. Please try again.',
+					autohide: 1000
+				});
+			}
+		});
 		return false;
 	});
 
