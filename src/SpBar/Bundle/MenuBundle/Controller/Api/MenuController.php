@@ -35,11 +35,16 @@ class MenuController extends FOSRestController
     {
         $menuManager = $this->get('spbar.menu_manager');
         $menu = $menuManager->getMenuById($id);
+        $menuUrl = $menu->getUrl();
 
         $form = $this->createForm('spbar_menu', $menu);
         $form->bind($request);
 
         if ($form->isValid()) {
+            if($menu->getMenuType()!= 'Custom')
+            {
+                $menu->setUrl($menuUrl);
+            }
             $menuManager->updateMenu($menu);
 
             return $this->view($menu, Codes::HTTP_OK);

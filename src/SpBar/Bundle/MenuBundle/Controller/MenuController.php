@@ -38,22 +38,21 @@ class MenuController extends Controller
     {
     	$menuManager = $this->get('spbar.menu_manager');
     	$menu = $menuManager->getMenuById($id);
+        $menuUrl = $menu->getUrl();
 
     	$form = $this->createForm('spbar_menu', $menu);
 
-		if ($request->getMethod() == 'POST') { // save
-	        $form->handleRequest($request);
+	    $form->handleRequest($request);
 
-	        if ($form->isValid()) {
-	    		$menuManager->updateMenu($menu);   
-	            $response = new Response();
-				$response->headers->set('Content-Type', 'text/json');
-				$response->setStatusCode(Response::HTTP_OK);
-				$response->setContent($menu);
-
-				return $response;
-	        }
-	    }
+        if ($form->isValid()) {
+            if($menu->getMenuType()!= 'Custom')
+            {
+                $menu->setUrl($menuUrl);
+            }
+    		$menuManager->updateMenu($menu);   
+            
+			return $this->redirectToRoute('sp_menu_index');
+        }
 
     	return $this->render('SpBarMenuBundle:Menu:edit.html.twig', array(
         	'page_title' => 'EditMenu',

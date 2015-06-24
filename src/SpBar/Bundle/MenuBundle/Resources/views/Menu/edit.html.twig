@@ -8,10 +8,15 @@
 			</div>
 		</div>
 
+		{% set readonly = true %}
+		{% if menu.menuType == 'Custom' %}
+			{% set readonly = false %}
+		{% endif %}
+
 		<div class="form-group">
 			<label class="col-sm-4 control-label">{{ form_label(form.url) }}:</label>
 			<div class="col-sm-6">
-				{{ form_widget(form.url, {"attr" : {"placeholder" : "Type Menu Url", "class": "form-control"}}) }}
+				{{ form_widget(form.url, {"attr" : {"placeholder" : "Type Menu Url", "class": "form-control", "readonly" : readonly }}) }}
 			</div>
 		</div>
 
