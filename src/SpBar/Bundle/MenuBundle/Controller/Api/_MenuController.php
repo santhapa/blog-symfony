@@ -15,86 +15,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class MenuController extends FOSRestController
 {
-
-    /**
-     * List all menus.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   statusCodes = {
-     *     200 = "Returned when successful"
-     *   }
-     * )
-     *
-     * @return array
-     *
-     * @Rest\View()
-     */
-    public function listAction()
-    {
-        $menuManager = $this->get('spbar.menu_manager');
-        $menu = $menuManager->getMenu();
-
-        $view = $this->view($menu, 200);
-
-        return $this->handleView($view);
-
-    }
-
-     /**
-     * Create a menu with custom url
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Creates a new menu.",
-     *   input = "SpBar\Bundle\MenuBundle\Form\Type\MenuFormType",
-     *   statusCodes = {
-     *     201 = "Returned when menu is created",
-     *     400 = "Returned when the form has errors"
-     *   }
-     * )
-     *
-     * @Rest\View()
-     * @var Request $request
-     * @return View|array
-     */
-    public function newAction(Request $request)
-    {
-        $menuManager = $this->get('spbar.menu_manager');
-        $menu = $menuManager->createMenu();
-
-        $menu->setMenuType('Custom');
-        $form = $this->createForm('spbar_menu', $menu);
-
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $menu->setMenuType('Custom');
-            $menuManager->updateMenu($menu);
-
-            $li = '<li class="sortable" id="menu-'. $menu->getId() .'">
-                    <div class="row ns-row">
-                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
-                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
-                            <em>('. $menu->getMenuType() .')</em>&emsp;
-                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
-                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
-                        </span></div>
-                    </div>
-                </li>';
-
-            $ret = array('li'=> $li);
-
-            return $this->view($ret, Codes::HTTP_CREATED);
-        }
-
-        $view = $this->view($form, Codes::HTTP_BAD_REQUEST )
-            ->setTemplate("SpBarMenuBundle:Menu:new.html.twig")
-            ->setTemplateVar('form')
-        ;
-
-        return $this->handleView($view);
-    }
-
     /**
      * Update existing menu.
      *
@@ -135,7 +55,57 @@ class MenuController extends FOSRestController
         );
     }
 
-   
+    /**
+     * Create a menu with custom url
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new menu.",
+     *   input = "SpBar\Bundle\MenuBundle\Form\Type\MenuFormType",
+     *   statusCodes = {
+     *     201 = "Returned when menu is created",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     *
+     * @var Request $request
+     * @return View|array
+     */
+    
+    public function newAction(Request $request)
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+        $menu = $menuManager->createMenu();
+
+        $menu->setMenuType('Custom');
+        $form = $this->createForm('spbar_menu', $menu);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $menu->setMenuType('Custom');
+            $menuManager->updateMenu($menu);
+
+            $li = '<li class="sortable" id="menu-'. $menu->getId() .'">
+                    <div class="row ns-row">
+                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
+                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
+                            <em>('. $menu->getMenuType() .')</em>&emsp;
+                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
+                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
+                        </span></div>
+                    </div>
+                </li>';
+
+            $ret = array('menu'=>$menu, 'li'=> $li);
+
+            return $this->view($ret, Codes::HTTP_CREATED);
+        }
+
+        return array(
+            'form' => $form,
+            'menu' => $menu
+        );
+    }
+
     public function newCategoryAction(Request $request)
     {
         $menuManager = $this->get('spbar.menu_manager');
@@ -208,6 +178,30 @@ class MenuController extends FOSRestController
 
             return $this->view($ret, Codes::HTTP_CREATED);
         }
+    }
+
+    /**
+     * List all menus.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     *
+     * @return array
+     *
+     * @Rest\View()
+     */
+    public function listAction()
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+        $menu = $menuManager->getMenu();
+
+        return array(
+            'menu' => $menu,
+        );
     }
 
     /**
