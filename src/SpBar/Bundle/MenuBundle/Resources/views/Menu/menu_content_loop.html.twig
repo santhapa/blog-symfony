@@ -2,14 +2,14 @@
 
 <li class="sortable" id="menu-{{ mmenu.id }}">
     <div class="row ns-row">
-        <div class="col-xs-12 col-md-9 ns-title">
+        <div class="col-xs-12 col-sm-6 col-md-9 ns-title">
             {{ mmenu.name }}
         </div>
-        <div class="col-xs-12 col-md-3 ns-actions">
+        <div class="col-xs-12 col-sm-6 col-md-3 ns-actions">
             <span class="pull-right">
                 <em>({{ mmenu.menuType }})</em>&emsp;
-                <a class="edit-menu" href="{{ url('sp_menu_edit', {'id' : mmenu.id}) }}" title="Edit"><img alt="Edit" src="{{ asset('menu/images/edit.png')}}"></a>
-                <a class="delete-menu" href="{{ url('sp_api_menu_delete' , {'id' : mmenu.id}) }}" title="Delete"><img alt="Delete" src="{{ asset("menu/images/cross.png")}}"></a>
+                <a class="edit-menu" href="{{ url('sp_api_menu_edit_menu', {'id' : mmenu.id, '_format': 'html'}) }}" title="Edit"><img alt="Edit" src="{{ asset('menu/images/edit.png')}}"></a>
+                <a class="delete-menu" href="{{ url('sp_api_menu_delete_menu' , {'id' : mmenu.id}) }}" title="Delete"><img alt="Delete" src="{{ asset("menu/images/cross.png")}}"></a>
             </span>
         </div>
     </div>

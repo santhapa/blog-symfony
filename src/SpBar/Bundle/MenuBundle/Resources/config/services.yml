@@ -7,3 +7,13 @@ services:
         class: SpBar\Bundle\MenuBundle\Form\Type\MenuFormType
         tags:
             - { name: form.type, alias: spbar_menu }
+
+    spbar.menu_category_form_type:
+        class: SpBar\Bundle\MenuBundle\Form\Type\CategoryMenuFormType
+        tags:
+            - { name: form.type, alias: spbar_menu_category }
+
+    spbar.menu_page_form_type:
+        class: SpBar\Bundle\MenuBundle\Form\Type\PageMenuFormType
+        tags:
+            - { name: form.type, alias: spbar_menu_page }

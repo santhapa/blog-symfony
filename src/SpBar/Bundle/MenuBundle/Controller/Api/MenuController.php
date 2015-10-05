@@ -25,20 +25,46 @@ class MenuController extends FOSRestController
      *     200 = "Returned when successful"
      *   }
      * )
-     *
-     * @return array
-     *
-     * @Rest\View()
      */
-    public function listAction()
+    // get_menus [GET] /menus
+    public function getMenusAction()
     {
         $menuManager = $this->get('spbar.menu_manager');
         $menu = $menuManager->getMenu();
 
-        $view = $this->view($menu, 200);
+        $view = $this->view($menu, Codes::HTTP_OK);
 
         return $this->handleView($view);
+    }
 
+    /**
+     * Create menu with custom url form
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Returns menu form for custom url.",
+     *   statusCodes = {
+     *     200 = "Returned when successful"
+     *   }
+     * )
+     */
+    // new_menus [GET] /menus/new
+    public function newMenusAction()
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+        $menu = $menuManager->createMenu();
+
+        $menu->setMenuType('Custom');
+        $form = $this->createForm('spbar_menu', $menu);
+        // $form = $this->get('form.factory')->createNamed('', "spbar_menu", $menu);
+
+        $view = $this->view($form, Codes::HTTP_OK )
+            ->setTemplate("SpBarMenuBundle:Menu/Form:new.html.twig")
+            ->setTemplateVar('form')
+            ->setTemplateData(array('menu' => $menu))
+        ;
+
+        return $this->handleView($view);
     }
 
      /**
@@ -52,18 +78,16 @@ class MenuController extends FOSRestController
      *     400 = "Returned when the form has errors"
      *   }
      * )
-     *
-     * @Rest\View()
-     * @var Request $request
-     * @return View|array
      */
-    public function newAction(Request $request)
+    // post_menus [POST] /menus
+    public function postMenusAction(Request $request)
     {
         $menuManager = $this->get('spbar.menu_manager');
         $menu = $menuManager->createMenu();
 
         $menu->setMenuType('Custom');
         $form = $this->createForm('spbar_menu', $menu);
+        // $form = $this->get('form.factory')->createNamed('', "spbar_menu", $menu);
 
         $form->bind($request);
 
@@ -71,25 +95,46 @@ class MenuController extends FOSRestController
             $menu->setMenuType('Custom');
             $menuManager->updateMenu($menu);
 
-            $li = '<li class="sortable" id="menu-'. $menu->getId() .'">
-                    <div class="row ns-row">
-                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
-                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
-                            <em>('. $menu->getMenuType() .')</em>&emsp;
-                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
-                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
-                        </span></div>
-                    </div>
-                </li>';
+            $li = $this->get('twig')->render('SpBarMenuBundle:Menu:menu_content_loop.html.twig', array('menu'=>$menu));
 
             $ret = array('li'=> $li);
 
-            return $this->view($ret, Codes::HTTP_CREATED);
+            return $this->view($li, Codes::HTTP_CREATED);
         }
 
         $view = $this->view($form, Codes::HTTP_BAD_REQUEST )
-            ->setTemplate("SpBarMenuBundle:Menu:new.html.twig")
+            ->setTemplate("SpBarMenuBundle:Menu/Form:new.html.twig")
             ->setTemplateVar('form')
+            ->setTemplateData(array('menu' => $menu))
+        ;
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * Update existing menu.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Displays form for edit",
+     *   statusCodes = {
+     *     200 = "Returned when successfull"
+     *   }
+     * )
+     */
+    // edit_menu [GET] /menus/{id}/edit
+    public function editMenuAction($id)
+    {
+        $menuManager = $this->get('spbar.menu_manager');
+        $menu = $menuManager->getMenuById($id);
+
+        $form = $this->createForm('spbar_menu', $menu);
+        // $form = $this->get('form.factory')->createNamed('', "spbar_menu", $menu);
+
+        $view = $this->view($form, Codes::HTTP_OK )
+            ->setTemplate("SpBarMenuBundle:Menu/Form:edit.html.twig")
+            ->setTemplateVar('form')
+            ->setTemplateData(array('menu' => $menu))
         ;
 
         return $this->handleView($view);
@@ -106,18 +151,17 @@ class MenuController extends FOSRestController
      *     400 = "Returned when the form has errors"
      *   }
      * )
-     * Post action
-     * @var Request $request
-     * @var integer $id Id of the entity
-     * @return View|array
      */
-    public function editAction(Request $request, $id)
+    // put_menus [PUT] /menus/{id}
+    public function putMenusAction(Request $request, $id)
     {
         $menuManager = $this->get('spbar.menu_manager');
         $menu = $menuManager->getMenuById($id);
         $menuUrl = $menu->getUrl();
 
         $form = $this->createForm('spbar_menu', $menu);
+        // $form = $this->get('form.factory')->createNamed('', "spbar_menu", $menu);
+
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -128,86 +172,15 @@ class MenuController extends FOSRestController
             $menuManager->updateMenu($menu);
 
             return $this->view($menu, Codes::HTTP_OK);
+        }else{
+             $view = $this->view($form, Codes::HTPP_BAD_REQUEST )
+                ->setTemplate("SpBarMenuBundle:Menu/Form:edit.html.twig")
+                ->setTemplateVar('form')
+                ->setTemplateData(array('menu' => $menu))
+            ;
         }
 
-        return array(
-            'form' => $form
-        );
-    }
-
-   
-    public function newCategoryAction(Request $request)
-    {
-        $menuManager = $this->get('spbar.menu_manager');
-
-        if($request->getMethod() == 'POST' && !empty($request->request->get('category_menu'))){
-            $cat_selected = $request->request->get('category_menu');
-            $categoryManager = $this->get('spbar.blog_category_manager');
-
-            $li = '';
-            foreach ($cat_selected as $cat_slug) {
-                $cat = $categoryManager->getCategoryBySlug($cat_slug);
-                $menu = $menuManager->createMenu();
-
-                $menu->setName($cat->getName());
-                $menu->setUrl($this->generateUrl('sp_blog_front_home_category', array('cat_slug'=> $cat_slug)));
-                $menu->setMenuType('Category');
-
-                $menuManager->updateMenu($menu);
-
-                $li .= '<li class="sortable" id="menu-'. $menu->getId() .'">
-                    <div class="row ns-row">
-                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
-                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
-                            <em>('. $menu->getMenuType() .')</em>&emsp;
-                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
-                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
-                        </span></div>
-                    </div>
-                </li>';
-
-            }
-            $ret = array('menu'=>$menu, 'li'=> $li);
-
-            return $this->view($ret, Codes::HTTP_CREATED);
-        }
-    }
-
-    public function newPageAction(Request $request)
-    {
-        $menuManager = $this->get('spbar.menu_manager');
-
-        if($request->getMethod() == 'POST' && !empty($request->request->get('page_menu'))){
-            $page_selected = $request->request->get('page_menu');
-            $pageManager = $this->get('spbar.blog_page_manager');
-
-            $li = '';
-            foreach ($page_selected as $page_slug) {
-                $page = $pageManager->getPageBySlug($page_slug);
-                $menu = $menuManager->createMenu();
-                
-                $menu->setName($page->getTitle());
-                $menu->setUrl($this->generateUrl('sp_blog_front_home_page', array('page_slug'=> $page_slug)));
-                $menu->setMenuType('Page');
-
-                $menuManager->updateMenu($menu);
-
-                $li .= '<li class="sortable" id="menu-'. $menu->getId() .'">
-                    <div class="row ns-row">
-                        <div class="col-xs-12 col-md-9 ns-title">'. $menu->getName().'</div>
-                        <div class="col-xs-12 col-md-3 ns-actions"><span class="pull-right">
-                            <em>('. $menu->getMenuType() .')</em>&emsp;
-                            <a class="edit-menu" href="'. $this->generateUrl("sp_menu_edit", array("id"=> $menu->getId())) .'" title="Edit"><img alt="Edit" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/edit.png").'"></a>
-                            <a class="delete-menu" href="'.$this->generateUrl("sp_api_menu_delete", array("id"=> $menu->getId())).'" title="Delete"><img alt="Delete" src="'.$this->get("templating.helper.assets")->getUrl("menu/images/cross.png").' "></a>
-                        </span></div>
-                    </div>
-                </li>';
-
-            }
-            $ret = array('menu'=>$menu, 'li'=> $li);
-
-            return $this->view($ret, Codes::HTTP_CREATED);
-        }
+        return $this->handleView($view);
     }
 
     /**
@@ -223,19 +196,110 @@ class MenuController extends FOSRestController
      *   }
      * )
      * Delete action
-     * @var integer $id Id of the entity
-     * @return View
      */
-    public function deleteAction($id)
+    // delete_menu  [DElETE] /menus/{id}
+    public function deleteMenuAction($id)
     {
         $menuManager = $this->get('spbar.menu_manager');
         $menu = $menuManager->getMenuById($id);
 
+        if(!$menu)
+            return $this->view(null, Codes::HTTP_NOT_FOUND);
+        
         $menuManager-> removeMenu($menu);
 
         return $this->view(null, Codes::HTTP_NO_CONTENT);
     }
 
+     /**
+     * Create a menu with categories
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new menu from category.",
+     *   input = "SpBar\Bundle\MenuBundle\Form\Type\CategoryMenuFormType",
+     *   statusCodes = {
+     *     201 = "Returned when menu is created",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     */
+    // post_menus_categorys [POST] /menus
+    public function postMenusCategorysAction(Request $request)
+    {
+        $form = $this->createForm('spbar_menu_category', null);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $menuManager = $this->get('spbar.menu_manager');
+            $data = $form->get('categoryMenu')->getData();
+
+            $li = '';
+            foreach ($data as $cat) {
+                $menu = $menuManager->createMenu();
+                $menu->setName($cat->getName());
+                $menu->setUrl($this->generateUrl('sp_blog_front_home_category', array('cat_slug'=> $cat->getSlug())));
+                $menu->setMenuType('Category');
+
+                $menuManager->updateMenu($menu);
+
+                $li .= $this->get('twig')->render('SpBarMenuBundle:Menu:menu_content_loop.html.twig', array('menu'=>$menu));
+            }
+
+            $view = $this->view($li, Codes::HTTP_CREATED);
+        }else{
+            $view = $this->view($form, Codes::HTTP_BAD_REQUEST )
+                ->setTemplate("SpBarMenuBundle:Menu/Form:category.html.twig")
+                ->setTemplateVar('form')
+                ->setTemplateData(array('menu' => $menu));
+        }
+        return $this->handleView($view);
+    }
+
+    /**
+     * Create a menu with pages
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Creates a new menu from page.",
+     *   input = "SpBar\Bundle\MenuBundle\Form\Type\PageMenuFormType",
+     *   statusCodes = {
+     *     201 = "Returned when menu is created",
+     *     400 = "Returned when the form has errors"
+     *   }
+     * )
+     */
+    // post_menus_pages [POST] /menus
+    public function postMenusPagesAction(Request $request)
+    {
+        $form = $this->createForm('spbar_menu_page', null);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $menuManager = $this->get('spbar.menu_manager');
+
+            $pages = $form->get('pageMenu')->getData();
+
+            $li = '';
+            foreach ($pages as $page) {
+                $menu = $menuManager->createMenu();
+                $menu->setName($page->getTitle());
+                $menu->setUrl($this->generateUrl('sp_blog_front_home_page', array('page_slug'=> $page->getSlug())));
+                $menu->setMenuType('Page');
+
+                $menuManager->updateMenu($menu);
+
+                $li .= $this->get('twig')->render('SpBarMenuBundle:Menu:menu_content_loop.html.twig', array('menu'=>$menu));
+            }
+
+            $view =  $this->view($li, Codes::HTTP_CREATED);
+        }else{
+            $view = $this->view($form, Codes::HTTP_BAD_REQUEST )
+                ->setTemplate("SpBarMenuBundle:Menu/Form:page.html.twig")
+                ->setTemplateVar('form')
+                ->setTemplateData(array('menu' => $menu));
+        }
+
+        return $this->handleView($view);
+    }
 
      /**
      * Saves a menu order - works only with nested sortable
@@ -252,11 +316,11 @@ class MenuController extends FOSRestController
      * @return View|array
      */
     
-    public function saveOrderAction(Request $request)
+    public function postMenusOrdersAction(Request $request)
     {
         $menuManager = $this->get('spbar.menu_manager');
 
-        if($request->getMethod() == 'POST'){
+        try {
             $menus = $this->get('request')->request->all();
 
             foreach ($menus as $mm) {
@@ -265,19 +329,27 @@ class MenuController extends FOSRestController
                     $i++;
                     $menu = $menuManager->getMenuById($id);
                     $menu->setMenuOrder($i);
+                    // if($parent != 'null' ){
+                    //     $menu->setParent($menuManager->getMenuById($parent));
+                    //     $hello = $parent;
+                    // }else{
+                    //     $hello= $parent;
+                    //     $menu->setParent(null);
+                    // }
                     if($parent != 'null' ){
                         $menu->setParent($menuManager->getMenuById($parent));
-                        $hello = $parent;
                     }else{
-                        $hello= $parent;
                         $menu->setParent(null);
                     }
                     $menuManager->updateMenu($menu, false);
                 }   
             }
-            $this->getDoctrine()->getManager()->flush(); 
+            $this->getDoctrine()->getManager()->flush();
 
-            return $this->view('OK' , Codes::HTTP_OK);
+            $view = $this->view('OK' , Codes::HTTP_OK);            
+        } catch (\Exception $e) {
+            $view = $this->view(null , Codes::HTTP_BAD_REQUEST);
         }
+        return $this->handleView($view);
     }
 }

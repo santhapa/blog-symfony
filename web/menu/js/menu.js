@@ -57,7 +57,7 @@ jQuery(function($) {
 					$.ajax({
 						type: 'GET',
 						global: false,
-						datatype: 'html',
+						dataType: 'html',
 						url: options.url,
 						success: function(data) {
 							options.content = data;
@@ -112,15 +112,22 @@ jQuery(function($) {
 	------------------------------------------------------------------------- */
 	var menu_serialized;
 	$('#easymm').nestedSortable({
+		forcePlaceholderSize: true,
 		listType: 'ul',
 		handle: 'div',
+		helper: 'clone',
 		items: 'li',
 		placeholder: 'ns-helper',
 		opacity: .8,
 		handle: '.ns-title',
+		tolerance: 'pointer',
 		toleranceElement: '> div',
 		forcePlaceholderSize: true,
-		tabSize: 15,
+		tabSize: 10,
+		maxLevels: 3,
+		isTree: true,
+		expandOnHover: 700,
+		startCollapsed: true,
 		update: function() {
 			menu_serialized = $('#easymm').nestedSortable('serialize');
 			$('#btn-save-menu').attr('disabled', false);
@@ -135,7 +142,6 @@ jQuery(function($) {
 		var menu_div = $(this).parent().parent().parent();
 		var li = $(this).closest('li');
 		var path = $(this).attr('href');
-		console.log(path);
 
 		gbox.show({
 			type: 'ajax',
@@ -178,7 +184,7 @@ jQuery(function($) {
 			buttons: {
 				'Yes': function() {
 					$.ajax({
-						type: 'POST',
+						type: 'DELETE',
 						url: path,
 						success: function() {
 							gbox.hide();
@@ -209,9 +215,9 @@ jQuery(function($) {
 				type: 'POST',
 				url: $(this).attr('action'),
 				data: $(this).serialize(),
-				success: function(data) {
+				success: function(li) {
 					$('#form-add-custom-menu')[0].reset();
-					$('#easymm').append(data.li);
+					$('#easymm').append(li);
 				},
 				error: function() {
 					gbox.show({
@@ -231,10 +237,9 @@ jQuery(function($) {
 			type: 'POST',
 			url: $(this).attr('action'),
 			data: $(this).serialize(),
-			success: function(data) {
-				console.log(data);
+			success: function(li) {
 				$('#form-add-category-menu')[0].reset();
-				$('#easymm').append(data.li);
+				$('#easymm').append(li);
 			},
 			error: function() {
 				gbox.show({
@@ -246,21 +251,48 @@ jQuery(function($) {
 		return false;
 	});
 
-	/* add category menu item
+	/* add page menu item
 	------------------------------------------------------------------------- */
 	$('#form-add-page-menu').submit(function() {
 		$.ajax({
 			type: 'POST',
 			url: $(this).attr('action'),
 			data: $(this).serialize(),
-			success: function(data) {
-				console.log(data);
+			success: function(li) {
 				$('#form-add-page-menu')[0].reset();
-				$('#easymm').append(data.li);
+				$('#easymm').append(li);
 			},
 			error: function() {
 				gbox.show({
 					content: 'Add menu item error. Please try again.',
+					autohide: 1000
+				});
+			}
+		});
+		return false;
+	});
+
+	/* update menu / save order
+	------------------------------------------------------------------------- */
+	$('#btn-save-menu').attr('disabled', true);
+	$('#form-spbar-menu').submit(function() {
+		$('#btn-save-menu').attr('disabled', true);
+		console.log(menu_serialized);
+		$.ajax({
+			type: 'POST',
+			url: $(this).attr('action'),
+			data: menu_serialized,
+			error: function() {
+				$('#btn-save-menu').attr('disabled', false);
+				gbox.show({
+					content: '<h2>Error</h2>Save menu error. Please try again.',
+					autohide: 1000
+				});
+			},
+			success: function(data) {
+				console.log(data);
+				gbox.show({
+					content: '<h2>Success</h2>Menu has been saved',
 					autohide: 1000
 				});
 			}
@@ -325,33 +357,7 @@ jQuery(function($) {
 		return false;
 	});
 
-	/* update menu / save order
-	------------------------------------------------------------------------- */
-	$('#btn-save-menu').attr('disabled', true);
-	$('#form-spbar-menu').submit(function() {
-		$('#btn-save-menu').attr('disabled', true);
-		console.log(menu_serialized);
-		$.ajax({
-			type: 'POST',
-			url: $(this).attr('action'),
-			data: menu_serialized,
-			error: function() {
-				$('#btn-save-menu').attr('disabled', false);
-				gbox.show({
-					content: '<h2>Error</h2>Save menu error. Please try again.',
-					autohide: 1000
-				});
-			},
-			success: function(data) {
-				console.log(data);
-				gbox.show({
-					content: '<h2>Success</h2>Menu has been saved',
-					autohide: 1000
-				});
-			}
-		});
-		return false;
-	});
+
 
 	/* edit group
 	------------------------------------------------------------------------- */

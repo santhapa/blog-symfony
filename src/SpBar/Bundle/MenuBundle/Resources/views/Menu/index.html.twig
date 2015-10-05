@@ -39,6 +39,7 @@
                                         </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
+                                        {# 
                                         <form id="form-add-category-menu" action="{{ path('sp_api_menu_new_category') }}" method="POST">
                                             {% for category in categorys %}
                                                 <div class="checkbox">
@@ -50,7 +51,8 @@
                                             <div class="form-group">
                                                 <button type="submit" id="add-category-menu" class="btn btn-info">Add To Menu</button>
                                             </div>
-                                        </form>
+                                        </form> #}
+                                        {% include "SpBarMenuBundle:Menu/Form:category.html.twig" with {'form': categoryForm} %}
                                     </div>
                                 </div>
 
@@ -64,6 +66,7 @@
                                         </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
+                                        {# 
                                         <form id="form-add-page-menu" action="{{ path('sp_api_menu_new_page') }}" method="POST">
                                             {% for page in pages %}
                                                 <div class="checkbox">
@@ -76,6 +79,9 @@
                                                 <button type="submit" id="add-page-menu" class="btn btn-info">Add To Menu</button>
                                             </div>
                                         </form>
+                                        #}
+                                        {% include "SpBarMenuBundle:Menu/Form:page.html.twig" with {'form': pageForm} %}
+
                                     </div>
                                 </div>  
 
@@ -89,7 +95,7 @@
                                         </div>
                                     </div><!-- /.box-header -->
                                     <div class="box-body">
-                                        <form action="{{ path('sp_api_menu_new') }}" id="form-add-custom-menu" method="post" name="form-add-custom-menu">
+                                        <form action="{{ path('sp_api_menu_post_menus') }}" id="form-add-custom-menu" method="POST" name="form-add-custom-menu">
                                             <div class="form-group">
                                                 {{ form_label(form.name) }}
                                                 {{form_widget(form.name, {"attr" : {"class": "form-control custom-menu-name"}})}}

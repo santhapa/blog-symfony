@@ -1,0 +1,24 @@
+<div class="box-body">
+	<form class="form-horizontal" method="POST" action="{{ path('sp_api_menu_post_menus') }}">
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">{{ form_label(form.name) }}:</label>
+			<div class="col-sm-6">
+				{{ form_widget(form.name, {"attr" : {"placeholder" : "Type Menu Name", "class": "form-control"}}) }}
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-4 control-label">{{ form_label(form.url) }}:</label>
+			<div class="col-sm-6">
+				{{ form_widget(form.url, {"attr" : {"placeholder" : "Type Menu Url", "class": "form-control" }}) }}
+			</div>
+		</div>
+
+		{#  <div class="form-group">
+	        <div class="col-sm-offset-4 col-sm-8">
+	            <button type="submit" class="btn btn-info" value="Update">Update</button>
+	        </div>
+	    </div> #}
+	</form>
+</div><!-- /.box-body -->

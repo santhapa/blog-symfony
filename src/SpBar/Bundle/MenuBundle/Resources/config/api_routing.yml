@@ -1,48 +1,53 @@
+sp_api_menu:
+    type: rest
+    resource: SpBar\Bundle\MenuBundle\Controller\Api\MenuController
+    name_prefix: sp_api_menu_
+
 sp_api_menu_list:
     type: rest
     pattern: /list/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:list, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:list, _format:json }
     requirements:
        _method: GET
 
 sp_api_menu_new:
     type: rest
     pattern: /new/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:new, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:new, _format:json }
     requirements:
        _method: POST
 
 sp_api_menu_new_category:
     type: rest
     pattern: /new/category/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:newCategory, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:newCategory, _format:json }
     requirements:
        _method: POST
 
 sp_api_menu_new_page:
     type: rest
     pattern: /new/page/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:newPage, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:newPage, _format:json }
     requirements:
        _method: POST
 
 sp_api_menu_saveOrder:
     type: rest
     pattern: /save-order/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:saveOrder, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:saveOrder, _format:json }
     requirements:
        _method: POST
 
 sp_api_menu_edit:
     type: rest
     pattern: /edit/{id}/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:edit, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:edit, _format:json }
     requirements:
        _method: PUT
 
 sp_api_menu_delete:
     type: rest
     pattern: /delete/{id}/
-    defaults: { _controller:SpBarMenuBundle:Api/Menu:delete, _format:json }
+    defaults: { _controller:SpBarMenuBundle:Api/MenuManual:delete, _format:json }
     requirements:
        _method: POST

@@ -23,14 +23,17 @@ class MenuController extends Controller
     	$menu = $menuManager->createMenu();
     	$menu->setMenuType('Custom');
         $form = $this->createForm('spbar_menu', $menu);
-
+        $categoryForm = $this->createForm('spbar_menu_category', null);
+        $pageForm = $this->createForm('spbar_menu_page', null);
 
         return $this->render('SpBarMenuBundle:Menu:index.html.twig', array(
         	'page_title' => 'Menu',
 			'menus' => $menus,
 			'categorys'=> $categorys,
 			'pages'=> $pages,
-			'form' => $form->createView()
+            'form' => $form->createView(),
+            'categoryForm' => $categoryForm->createView(),
+			'pageForm' => $pageForm->createView()
         ));
     }
 

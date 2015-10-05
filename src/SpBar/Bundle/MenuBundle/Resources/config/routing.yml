@@ -6,7 +6,7 @@ sp_menu_edit:
     path:     /admin/menu/edit/{id}/
     defaults: { _controller: SpBarMenuBundle:Menu:edit }
 
-sp_api_menu:
+sp_api_menus:
     type: rest
     resource: "@SpBarMenuBundle/Resources/config/api_routing.yml"
     prefix: /admin/menu/api

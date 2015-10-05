@@ -114,11 +114,14 @@ fos_user:
 
 #Fos Rest configuration
 fos_rest:
+    disable_csrf_role:    true
     param_fetcher_listener: true
     body_listener: true
     format_listener: true
     view:
         view_response_listener: 'force'
+    routing_loader:
+        default_format:       json
 
 #Knp Menu Bundle Configuration
 #default config(optional)

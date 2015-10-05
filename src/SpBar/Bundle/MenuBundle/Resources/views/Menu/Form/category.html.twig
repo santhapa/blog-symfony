@@ -1,0 +1,12 @@
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig','form_errors.html.twig'] %}
+<form class="form-horizontal" id="form-add-category-menu" action="{{ path('sp_api_menu_post_menus_categorys') }}" method="POST">
+
+    {{ form_widget(form.categoryMenu) }}
+    {{ form_errors(form.categoryMenu) }}
+    
+    <br>    
+    
+    <div class="form-group">
+        <button type="submit" id="add-category-menu" class="btn btn-info">Add To Menu</button>
+    </div>
+</form>
